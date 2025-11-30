@@ -23,7 +23,8 @@ body {
   background-color: var(--color-ink);
   color: var(--color-paper);
   overflow-x: hidden;
-  cursor: none; /* Ocultamos cursor por defecto para usar el custom */
+  cursor: none;
+  /* Ocultamos cursor por defecto para usar el custom */
   overscroll-behavior-y: none;
 }
 
@@ -44,12 +45,14 @@ textarea,
   left: 0;
   width: 20px;
   height: 20px;
-  background: var(--color-acid); /* ACTUALIZADO */
+  background: var(--color-acid);
+  /* ACTUALIZADO */
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  mix-blend-mode: difference; /* Efecto de inversión de color */
-  transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease;
+  mix-blend-mode: difference;
+  /* Efecto de inversión de color */
+  transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
   transform: translate(-50%, -50%);
 }
 
@@ -66,9 +69,12 @@ body.hovering #cursor {
   color: transparent;
   transition: all 0.3s ease;
 }
+
 .outline-text:hover {
-  -webkit-text-stroke: 1px var(--color-acid); /* ACTUALIZADO */
-  color: var(--color-acid); /* ACTUALIZADO */
+  -webkit-text-stroke: 1px var(--color-acid);
+  /* ACTUALIZADO */
+  color: var(--color-acid);
+  /* ACTUALIZADO */
 }
 
 /* --- MARQUEE (ARREGLADO) --- */
@@ -78,6 +84,7 @@ body.hovering #cursor {
   user-select: none;
   gap: 2rem;
 }
+
 .marquee-content {
   display: flex;
   flex-shrink: 0;
@@ -86,10 +93,12 @@ body.hovering #cursor {
   min-width: 100%;
   animation: scroll 20s linear infinite;
 }
+
 @keyframes scroll {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(calc(-100% - 2rem));
   }
@@ -100,14 +109,18 @@ body.hovering #cursor {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .project-item:last-child {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .project-item:hover {
   padding-left: 2vw;
-  background-color: var(--color-acid); /* ACTUALIZADO */
+  background-color: var(--color-acid);
+  /* ACTUALIZADO */
   color: var(--color-ink);
 }
+
 .project-item:hover .project-meta {
   color: var(--color-ink);
 }
@@ -122,9 +135,8 @@ body.hovering #cursor {
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.8);
   transition: opacity 0.3s, transform 0.3s;
-  background-size: cover;
-  background-position: center;
-  border: 1px solid var(--color-acid); /* ACTUALIZADO */
+  overflow: hidden;
+  /* Ensure images stay inside */
 }
 
 /* --- UTILITIES --- */
@@ -156,16 +168,19 @@ body.hovering #cursor {
     bottom: -100px;
     opacity: 0;
   }
+
   to {
     bottom: -37px;
     opacity: 1;
   }
 }
+
 @keyframes slide-down {
   from {
     bottom: -37px;
     opacity: 1;
   }
+
   to {
     bottom: -100px;
     opacity: 0;
