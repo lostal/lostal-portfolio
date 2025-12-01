@@ -43,8 +43,8 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
           <div class="projects-carousel__slide swiper-slide">
             <div class="carousel-item">
               <Picture
-                src={vivenzaImg}
-                alt="Rediseño Vivenza Expo"
+                src={parkingImg}
+                alt="Vivenza Parking"
                 widths={[285, 400, 800]}
                 sizes="(max-width: 768px) 285px, (max-width: 1024px) 400px, 500px"
                 formats={['avif', 'webp']}
@@ -52,38 +52,12 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                 quality={80}
                 class="carousel-item__image"
               />
+
               <div class="carousel-item__content">
                 <div class="carousel-item__header">
                   <div class="carousel-item__header-inner">
                     <div class="carousel-item__price">
                       <div class="carousel-item__tech modal-tags">
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/html5.svg"
-                            alt="HTML5"
-                            class="tech-mini-icon"
-                            loading="lazy"
-                          />
-                          HTML5
-                        </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/css3.svg"
-                            alt="CSS3"
-                            class="tech-mini-icon"
-                            loading="lazy"
-                          />
-                          CSS3
-                        </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/javascript.svg"
-                            alt="JavaScript"
-                            class="tech-mini-icon"
-                            loading="lazy"
-                          />
-                          JavaScript
-                        </span>
                         <span class="tag">
                           <img
                             src="/assets/tech-icons/nextjs.svg"
@@ -93,6 +67,33 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                           />
                           Next.js
                         </span>
+                        <span class="tag">
+                          <img
+                            src="/assets/tech-icons/typescript.svg"
+                            alt="TypeScript"
+                            class="tech-mini-icon"
+                            loading="lazy"
+                          />
+                          TypeScript
+                        </span>
+                        <span class="tag">
+                          <img
+                            src="/assets/tech-icons/mongodb.svg"
+                            alt="MongoDB"
+                            class="tech-mini-icon"
+                            loading="lazy"
+                          />
+                          MongoDB
+                        </span>
+                        <span class="tag">
+                          <img
+                            src="/assets/tech-icons/tailwind.svg"
+                            alt="Tailwind CSS"
+                            class="tech-mini-icon"
+                            loading="lazy"
+                          />
+                          Tailwind CSS
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -101,16 +102,17 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                 <div class="carousel-item__info">
                   <h2
                     class="carousel-item__title"
-                    data-i18n="projects.vivenza.title"
+                    data-i18n="projects.parking.title"
                   >
-                    Rediseño Vivenza Expo
+                    Vivenza Parking
                   </h2>
                   <div
                     class="carousel-item__text"
-                    data-i18n="projects.vivenza.description"
+                    data-i18n="projects.parking.description"
                   >
-                    Rediseño completo de la landing page de Vivenza Expo,
-                    aplicando principios de diseño moderno.
+                    Sistema inteligente de gestión de reservas de parking
+                    corporativo con roles diferenciados, validaciones robustas y
+                    prevención de conflictos en tiempo real.
                   </div>
                 </div>
 
@@ -118,7 +120,7 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                   <div class="carousel-item__actions">
                     <a
                       class="carousel-item__action"
-                      href="https://vivenza.netlify.app/"
+                      href="https://gruposiete-parking.vercel.app/"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -128,7 +130,7 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                     </a>
                     <a
                       class="carousel-item__action"
-                      href="https://github.com/lostal/vivenza-redesign"
+                      href="https://github.com/lostal/gruposiete-parking"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -246,8 +248,8 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
           <div class="projects-carousel__slide swiper-slide">
             <div class="carousel-item">
               <Picture
-                src={parkingImg}
-                alt="Vivenza Parking"
+                src={vivenzaImg}
+                alt="Rediseño Vivenza Expo"
                 widths={[285, 400, 800]}
                 sizes="(max-width: 768px) 285px, (max-width: 1024px) 400px, 500px"
                 formats={['avif', 'webp']}
@@ -255,12 +257,38 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                 quality={80}
                 class="carousel-item__image"
               />
-
               <div class="carousel-item__content">
                 <div class="carousel-item__header">
                   <div class="carousel-item__header-inner">
                     <div class="carousel-item__price">
                       <div class="carousel-item__tech modal-tags">
+                        <span class="tag">
+                          <img
+                            src="/assets/tech-icons/html5.svg"
+                            alt="HTML5"
+                            class="tech-mini-icon"
+                            loading="lazy"
+                          />
+                          HTML5
+                        </span>
+                        <span class="tag">
+                          <img
+                            src="/assets/tech-icons/css3.svg"
+                            alt="CSS3"
+                            class="tech-mini-icon"
+                            loading="lazy"
+                          />
+                          CSS3
+                        </span>
+                        <span class="tag">
+                          <img
+                            src="/assets/tech-icons/javascript.svg"
+                            alt="JavaScript"
+                            class="tech-mini-icon"
+                            loading="lazy"
+                          />
+                          JavaScript
+                        </span>
                         <span class="tag">
                           <img
                             src="/assets/tech-icons/nextjs.svg"
@@ -270,33 +298,6 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                           />
                           Next.js
                         </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/typescript.svg"
-                            alt="TypeScript"
-                            class="tech-mini-icon"
-                            loading="lazy"
-                          />
-                          TypeScript
-                        </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/mongodb.svg"
-                            alt="MongoDB"
-                            class="tech-mini-icon"
-                            loading="lazy"
-                          />
-                          MongoDB
-                        </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/tailwind.svg"
-                            alt="Tailwind CSS"
-                            class="tech-mini-icon"
-                            loading="lazy"
-                          />
-                          Tailwind CSS
-                        </span>
                       </div>
                     </div>
                   </div>
@@ -305,17 +306,16 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                 <div class="carousel-item__info">
                   <h2
                     class="carousel-item__title"
-                    data-i18n="projects.parking.title"
+                    data-i18n="projects.vivenza.title"
                   >
-                    Vivenza Parking
+                    Rediseño Vivenza Expo
                   </h2>
                   <div
                     class="carousel-item__text"
-                    data-i18n="projects.parking.description"
+                    data-i18n="projects.vivenza.description"
                   >
-                    Sistema inteligente de gestión de reservas de parking
-                    corporativo con roles diferenciados, validaciones robustas y
-                    prevención de conflictos en tiempo real.
+                    Rediseño completo de la landing page de Vivenza Expo,
+                    aplicando principios de diseño moderno.
                   </div>
                 </div>
 
@@ -323,7 +323,7 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                   <div class="carousel-item__actions">
                     <a
                       class="carousel-item__action"
-                      href="https://gruposiete-parking.vercel.app/"
+                      href="https://vivenza.netlify.app/"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -333,7 +333,7 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                     </a>
                     <a
                       class="carousel-item__action"
-                      href="https://github.com/lostal/gruposiete-parking"
+                      href="https://github.com/lostal/vivenza-redesign"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
