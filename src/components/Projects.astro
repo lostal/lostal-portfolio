@@ -2,6 +2,7 @@
 import { Picture } from 'astro:assets';
 import vivenzaImg from '../assets/projects/vivenza-preview.png';
 import creativeHandsImg from '../assets/projects/creative-hands-preview.png';
+import parkingImg from '../assets/projects/gruposiete-parking.png';
 ---
 
 <section class="projects-section section-alt" id="projects">
@@ -127,13 +128,12 @@ import creativeHandsImg from '../assets/projects/creative-hands-preview.png';
                     </a>
                     <a
                       class="carousel-item__action"
-                      href="https://vivenzaexpo.es/"
+                      href="https://github.com/lostal/vivenza-redesign"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <i class="fas fa-link" aria-hidden="true"></i>
-                      <span data-i18n="projects.vivenza.original">Original</span
-                      >
+                      <i class="fab fa-github" aria-hidden="true"></i>
+                      <span>GitHub</span>
                     </a>
                   </div>
                 </div>
@@ -227,6 +227,118 @@ import creativeHandsImg from '../assets/projects/creative-hands-preview.png';
                       <i class="fas fa-external-link-alt" aria-hidden="true"
                       ></i>
                       <span data-i18n="projects.creative.preview">Preview</span>
+                    </a>
+                    <a
+                      class="carousel-item__action"
+                      href="https://github.com/lostal/creative-hands"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i class="fab fa-github" aria-hidden="true"></i>
+                      <span>GitHub</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="projects-carousel__slide swiper-slide">
+            <div class="carousel-item">
+              <Picture
+                src={parkingImg}
+                alt="Vivenza Parking"
+                widths={[285, 400, 800]}
+                sizes="(max-width: 768px) 285px, (max-width: 1024px) 400px, 500px"
+                formats={['avif', 'webp']}
+                loading="lazy"
+                quality={80}
+                class="carousel-item__image"
+              />
+
+              <div class="carousel-item__content">
+                <div class="carousel-item__header">
+                  <div class="carousel-item__header-inner">
+                    <div class="carousel-item__price">
+                      <div class="carousel-item__tech modal-tags">
+                        <span class="tag">
+                          <img
+                            src="/assets/tech-icons/nextjs.svg"
+                            alt="Next.js"
+                            class="tech-mini-icon"
+                            loading="lazy"
+                          />
+                          Next.js
+                        </span>
+                        <span class="tag">
+                          <img
+                            src="/assets/tech-icons/typescript.svg"
+                            alt="TypeScript"
+                            class="tech-mini-icon"
+                            loading="lazy"
+                          />
+                          TypeScript
+                        </span>
+                        <span class="tag">
+                          <img
+                            src="/assets/tech-icons/mongodb.svg"
+                            alt="MongoDB"
+                            class="tech-mini-icon"
+                            loading="lazy"
+                          />
+                          MongoDB
+                        </span>
+                        <span class="tag">
+                          <img
+                            src="/assets/tech-icons/tailwind.svg"
+                            alt="Tailwind CSS"
+                            class="tech-mini-icon"
+                            loading="lazy"
+                          />
+                          Tailwind CSS
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="carousel-item__info">
+                  <h2
+                    class="carousel-item__title"
+                    data-i18n="projects.parking.title"
+                  >
+                    Vivenza Parking
+                  </h2>
+                  <div
+                    class="carousel-item__text"
+                    data-i18n="projects.parking.description"
+                  >
+                    Sistema inteligente de gestión de reservas de parking
+                    corporativo con roles diferenciados, validaciones robustas y
+                    prevención de conflictos en tiempo real.
+                  </div>
+                </div>
+
+                <div class="carousel-item__footer">
+                  <div class="carousel-item__actions">
+                    <a
+                      class="carousel-item__action"
+                      href="https://gruposiete-parking.vercel.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i class="fas fa-external-link-alt" aria-hidden="true"
+                      ></i>
+                      <span data-i18n="projects.view">Preview</span>
+                    </a>
+                    <a
+                      class="carousel-item__action"
+                      href="https://github.com/lostal/gruposiete-parking"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i class="fab fa-github" aria-hidden="true"></i>
+                      <span>GitHub</span>
                     </a>
                   </div>
                 </div>

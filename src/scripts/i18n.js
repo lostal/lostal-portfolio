@@ -71,6 +71,12 @@ const translations = {
       'Diseño responsivo con tema claro/oscuro automático',
     'projects.creative.preview': 'Preview',
     'projects.creative.repository': 'Repositorio',
+    'projects.parking.title': 'Vivenza Parking',
+    'projects.parking.subtitle': 'Sistema de Gestión de Parking',
+    'projects.parking.description':
+      'Sistema inteligente de gestión de reservas de parking corporativo con roles diferenciados, validaciones robustas y prevención de conflictos en tiempo real.',
+    'projects.parking.preview': 'Preview',
+    'projects.parking.repository': 'GitHub',
     'projects.modal.close': 'Cerrar modal',
 
     // Journey
@@ -189,6 +195,12 @@ const translations = {
       'Responsive design with automatic light/dark theme',
     'projects.creative.preview': 'Preview',
     'projects.creative.repository': 'Repository',
+    'projects.parking.title': 'Vivenza Parking',
+    'projects.parking.subtitle': 'Parking Management System',
+    'projects.parking.description':
+      'Intelligent corporate parking reservation management system with differentiated roles, robust validations and real-time conflict prevention.',
+    'projects.parking.preview': 'Preview',
+    'projects.parking.repository': 'GitHub',
     'projects.modal.close': 'Close modal',
 
     // Journey
