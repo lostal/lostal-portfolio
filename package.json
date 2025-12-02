@@ -3,8 +3,8 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "npm run build:scripts && astro dev",
-    "build": "npm run build:scripts && astro build",
+    "dev": "pnpm run build:scripts && astro dev",
+    "build": "pnpm run build:scripts && astro build",
     "build:scripts": "node ./scripts/build-scripts.mjs",
     "watch:scripts": "node ./scripts/build-scripts.mjs --watch",
     "rebuild:all": "node ./scripts/rebuild-all.mjs",
@@ -35,5 +35,14 @@
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "sharp": "^0.34.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "netlify-cli",
+      "sharp",
+      "unix-dgram"
+    ]
   }
 }
