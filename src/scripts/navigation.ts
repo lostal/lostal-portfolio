@@ -81,23 +81,37 @@ if (langBtn && langPopover && langMenu) {
     let newPath;
 
     if (lang === 'en') {
+      // Cambiar a inglés
       if (currentPath === '/' || currentPath === '') {
-        newPath = '/en/' + currentHash;
+        newPath = '/en/';
       } else if (!currentPath.startsWith('/en')) {
-        newPath = '/en' + currentPath + currentHash;
+        newPath = '/en' + currentPath;
       } else {
-        return;
+        return; // Ya estamos en inglés
       }
     } else {
-      if (currentPath.startsWith('/en')) {
+      // Cambiar a español
+      if (currentPath.startsWith('/en/')) {
+        // Remover /en/ del inicio
+        newPath = currentPath.replace(/^\/en/, '');
+        if (newPath === '' || newPath === '/') {
+          newPath = '/';
+        }
+      } else if (currentPath.startsWith('/en')) {
         newPath = currentPath.replace(/^\/en/, '') || '/';
-        newPath += currentHash;
       } else {
-        return;
+        return; // Ya estamos en español
       }
     }
 
-    window.location.href = newPath;
+    // Agregar hash al final si existe
+    if (currentHash) {
+      newPath += currentHash;
+    }
+
+    // Usar pathname completo con origin para evitar problemas en deploy
+    const fullUrl = window.location.origin + newPath;
+    window.location.href = fullUrl;
   };
 
   const selectNextLanguage = () => {
