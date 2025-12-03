@@ -72,6 +72,7 @@ if (langBtn && langPopover && langMenu) {
 
   const getCurrentLang = (): 'es' | 'en' => {
     const path = window.location.pathname;
+    console.log('[i18n] pathname:', path);
     // Chequear si estamos en /en o /en/
     return path.startsWith('/en/') || path === '/en' ? 'en' : 'es';
   };
@@ -80,8 +81,11 @@ if (langBtn && langPopover && langMenu) {
     const currentHash = window.location.hash;
     const currentLang = getCurrentLang();
 
+    console.log('[i18n] navigateToLanguage called:', { targetLang, currentLang, currentHash });
+
     // Si ya estamos en el idioma objetivo, no hacer nada
     if (targetLang === currentLang) {
+      console.log('[i18n] Already in target language, returning');
       return;
     }
 
@@ -98,18 +102,23 @@ if (langBtn && langPopover && langMenu) {
     // Construir URL completa
     const fullUrl = window.location.origin + newPath + currentHash;
 
+    console.log('[i18n] Navigating to:', fullUrl);
+
     // Navegar
     window.location.assign(fullUrl);
   };
 
   const selectNextLanguage = () => {
+    console.log('[i18n] selectNextLanguage called');
     const current = getCurrentLang();
     const next = current === 'es' ? 'en' : 'es';
+    console.log('[i18n] Switching from', current, 'to', next);
     navigateToLanguage(next);
     if (navigator.vibrate) navigator.vibrate(20);
   };
 
   langBtn.addEventListener('click', e => {
+    console.log('[i18n] langBtn clicked');
     e.stopPropagation();
     if (langIcon) {
       const icon = langIcon as LangIconElement;
