@@ -5,7 +5,6 @@ import 'swiper/css/navigation';
 
 interface CarouselElement extends HTMLElement {
   swiperInstance?: Swiper | null;
-  // eslint-disable-next-line no-unused-vars
   _keyNavigationHandler?: ((_e: KeyboardEvent) => void) | null;
   destroy?: () => void;
 }

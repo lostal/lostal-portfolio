@@ -37,8 +37,6 @@ async function buildAll() {
         outfile,
         bundle: false,
         minify: true,
-        // Remove console/debugger from production bundles for smaller, cleaner output
-        drop: ['console', 'debugger'],
         format: 'iife',
         target: ['es2017'],
         sourcemap: false,
