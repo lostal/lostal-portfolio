@@ -1,10 +1,18 @@
 // src/scripts/floating-contact.js - OPTIMIZADO PARA PERFORMANCE
 
 class FloatingContactWidget {
+  widget: HTMLElement | null;
+  contactSection: HTMLElement | null;
+  projectsSection: HTMLElement | null;
+  isVisible: boolean;
+  isAnimating: boolean;
+  cachedPositions: { projectsTop: number; contactTop: number; lastUpdate: number };
+  ticking: boolean;
+
   constructor() {
-    this.widget = null;
-    this.contactSection = null;
-    this.projectsSection = null;
+    this.widget = null as HTMLElement | null;
+    this.contactSection = null as HTMLElement | null;
+    this.projectsSection = null as HTMLElement | null;
     this.isVisible = false;
     this.isAnimating = false;
 
@@ -20,6 +28,9 @@ class FloatingContactWidget {
 
     // Solo inicializar en desktop
     if (!this.isMobile()) {
+      this.cachedPositions = { projectsTop: 0, contactTop: 0, lastUpdate: 0 };
+      this.ticking = false;
+
       this.init();
     }
   }
@@ -72,9 +83,11 @@ class FloatingContactWidget {
   }
 
   updateCachedPositions() {
+    if (!this.projectsSection || !this.contactSection) return;
+
     // Usar getBoundingClientRect() y calcular una sola vez
-    const projectsRect = this.projectsSection.getBoundingClientRect();
-    const contactRect = this.contactSection.getBoundingClientRect();
+    const projectsRect = (this.projectsSection as HTMLElement).getBoundingClientRect();
+    const contactRect = (this.contactSection as HTMLElement).getBoundingClientRect();
     const scrollY = window.scrollY;
 
     this.cachedPositions = {
@@ -87,7 +100,7 @@ class FloatingContactWidget {
   handleScroll() {
     this.ticking = false;
 
-    if (this.isAnimating) return;
+    if (this.isAnimating || !this.widget) return;
 
     // Actualizar cache si es muy antigua (más de 5 segundos)
     if (Date.now() - this.cachedPositions.lastUpdate > 5000) {
@@ -124,23 +137,25 @@ class FloatingContactWidget {
     this.isVisible = true;
 
     // Remover clases de animación previa
-    this.widget.classList.remove('slide-down');
+    this.widget!.classList.remove('slide-down');
 
     // Mostrar widget
-    this.widget.classList.add('visible');
+    this.widget!.classList.add('visible');
 
     // Agregar animación de deslizamiento hacia arriba
-    this.widget.classList.add('slide-up');
+    this.widget!.classList.add('slide-up');
 
     // Limpiar animación después
     setTimeout(() => {
-      this.widget.classList.remove('slide-up');
+      this.widget!.classList.remove('slide-up');
       this.isAnimating = false;
     }, 500);
   }
 
   hide() {
-    if (!this.isVisible || this.isAnimating) return;
+    if (!this.isVisible || !this.widget) return;
+
+    if (this.isAnimating) return;
 
     this.isAnimating = true;
     this.isVisible = false;
@@ -149,11 +164,11 @@ class FloatingContactWidget {
     this.widget.classList.remove('slide-up');
 
     // Agregar animación de deslizamiento hacia abajo
-    this.widget.classList.add('slide-down');
+    this.widget!.classList.add('slide-down');
 
     // Después de la animación, ocultar completamente
     setTimeout(() => {
-      this.widget.classList.remove('visible', 'slide-down');
+      this.widget!.classList.remove('visible', 'slide-down');
       this.isAnimating = false;
     }, 400);
   }

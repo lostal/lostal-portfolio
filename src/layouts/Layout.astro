@@ -43,10 +43,11 @@ const ogImage = propOgImage || defaultOgImage;
     <!-- Google Analytics 4 - Optimizado para rendimiento -->
     <link rel="preconnect" href="https://www.googletagmanager.com" />
     <script
+      is:inline
       type="text/partytown"
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-0Q34SCCETB"></script>
-    <script type="text/partytown">
+    <script is:inline type="text/partytown">
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
@@ -98,7 +99,7 @@ const ogImage = propOgImage || defaultOgImage;
     </noscript>
 
     <!-- Inline theme setter (very small) -->
-    <script>
+    <script is:inline>
       try {
         const prefersDark =
           window.matchMedia &&
@@ -134,7 +135,11 @@ const ogImage = propOgImage || defaultOgImage;
     <meta name="theme-color" content="#ffffff" />
   </head>
   <body>
-    <a href="#main" class="skip-link">{lang === 'es' ? 'Saltar al contenido principal' : 'Skip to main content'}</a>
+    <a href="#main" class="skip-link"
+      >{
+        lang === 'es' ? 'Saltar al contenido principal' : 'Skip to main content'
+      }</a
+    >
 
     <!-- Elemento para notificaciones relacionadas con el tema (controlado por theme.js) -->
     <div id="theme-notification" class="theme-notification" aria-hidden="true">
@@ -142,7 +147,7 @@ const ogImage = propOgImage || defaultOgImage;
     <slot />
 
     <!-- Deferred loader moved to external file for reliability and easier debugging -->
-    <script defer src="/scripts/deferred-loader.js"></script>
+    <script is:inline defer src="/scripts/deferred-loader.js"></script>
 
     <style is:global>
       @import '../styles/variables.css';

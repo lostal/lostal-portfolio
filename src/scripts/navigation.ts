@@ -1,11 +1,11 @@
 const navbar = document.getElementById('navbar');
 const scrollDown = document.getElementById('scrollDown');
-// detector táctil
+
 function isTouchDevice() {
   return (
     'ontouchstart' in window ||
     navigator.maxTouchPoints > 0 ||
-    navigator.msMaxTouchPoints > 0 ||
+    (navigator.msMaxTouchPoints || 0) > 0 ||
     window.innerWidth <= 1024
   );
 }
@@ -31,7 +31,6 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// Mobile Menu
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 const mobileLinks = document.querySelectorAll('.mobile-link');
@@ -56,7 +55,11 @@ const langBtn = document.getElementById('langBtn');
 const langPopover = document.getElementById('langPopover');
 const langMenu = document.querySelector('.lang-menu');
 const langIcon = document.getElementById('langIcon');
-if (langMenu) langMenu.dataset.ready = '0';
+interface LangIconElement extends HTMLElement {
+  _langAnimTimeout?: number | null;
+}
+
+if (langMenu) (langMenu as HTMLElement).dataset.ready = '0';
 if (langBtn && langPopover && langMenu) {
   const closeMenu = () => {
     langBtn.setAttribute('aria-expanded', 'false');
@@ -72,27 +75,25 @@ if (langBtn && langPopover && langMenu) {
     return path.startsWith('/en') ? 'en' : 'es';
   };
 
-  const navigateToLanguage = lang => {
+  const navigateToLanguage = (lang: string) => {
     const currentPath = window.location.pathname;
     const currentHash = window.location.hash;
     let newPath;
 
     if (lang === 'en') {
-      // Cambiar a inglés
       if (currentPath === '/' || currentPath === '') {
         newPath = '/en/' + currentHash;
       } else if (!currentPath.startsWith('/en')) {
         newPath = '/en' + currentPath + currentHash;
       } else {
-        return; // Ya está en inglés
+        return;
       }
     } else {
-      // Cambiar a español
       if (currentPath.startsWith('/en')) {
         newPath = currentPath.replace(/^\/en/, '') || '/';
         newPath += currentHash;
       } else {
-        return; // Ya está en español
+        return;
       }
     }
 
@@ -109,21 +110,19 @@ if (langBtn && langPopover && langMenu) {
   langBtn.addEventListener('click', e => {
     e.stopPropagation();
     if (langIcon) {
-      langIcon.classList.remove('clicked');
-      void langIcon.offsetWidth;
-      langIcon.classList.add('clicked');
-      clearTimeout(langIcon._langAnimTimeout);
-      langIcon._langAnimTimeout = setTimeout(
-        () => langIcon.classList.remove('clicked'),
+      const icon = langIcon as LangIconElement;
+      icon.classList.remove('clicked');
+      void icon.offsetWidth;
+      icon.classList.add('clicked');
+      if (icon._langAnimTimeout) clearTimeout(icon._langAnimTimeout);
+      icon._langAnimTimeout = window.setTimeout(
+        () => icon.classList.remove('clicked'),
         580
       );
     }
-    // Siempre cambiar el idioma al hacer clic en el icono
     selectNextLanguage();
   });
 
-  // En desktop con hover, remover la clase .open cuando el ratón entre
-  // para que el hover tome control completo
   if (!isTouchDevice || !isTouchDevice()) {
     langMenu.addEventListener('mouseenter', () => {
       closeMenu();
@@ -137,8 +136,9 @@ if (langBtn && langPopover && langMenu) {
         (e.animationName.indexOf('lang-click-bounce-icon') >= 0 ||
           e.animationName === 'lang-click-bounce-icon')
       ) {
-        langIcon.classList.remove('clicked');
-        clearTimeout(langIcon._langAnimTimeout);
+        const icon = langIcon as LangIconElement;
+        icon.classList.remove('clicked');
+        if (icon._langAnimTimeout) clearTimeout(icon._langAnimTimeout);
       }
     });
   }
@@ -155,7 +155,7 @@ if (langBtn && langPopover && langMenu) {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       const first = langPopover.querySelector('button[data-lang]');
-      first && first.focus();
+      first && (first as HTMLElement).focus();
       openMenu();
     } else if (e.key === 'Escape') {
       closeMenu();
@@ -163,12 +163,13 @@ if (langBtn && langPopover && langMenu) {
     } else if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
       e.preventDefault();
       if (langIcon) {
-        langIcon.classList.remove('clicked');
-        void langIcon.offsetWidth;
-        langIcon.classList.add('clicked');
-        clearTimeout(langIcon._langAnimTimeout);
-        langIcon._langAnimTimeout = setTimeout(
-          () => langIcon.classList.remove('clicked'),
+        const icon = langIcon as LangIconElement;
+        icon.classList.remove('clicked');
+        void icon.offsetWidth;
+        icon.classList.add('clicked');
+        if (icon._langAnimTimeout) window.clearTimeout(icon._langAnimTimeout);
+        icon._langAnimTimeout = window.setTimeout(
+          () => icon.classList.remove('clicked'),
           580
         );
       } else {
@@ -176,7 +177,6 @@ if (langBtn && langPopover && langMenu) {
         void langBtn.offsetWidth;
         langBtn.classList.add('clicked');
       }
-      // Siempre cambiar el idioma al presionar Enter/Space
       selectNextLanguage();
     }
   });
@@ -186,12 +186,13 @@ if (langBtn && langPopover && langMenu) {
       e.preventDefault();
       const selected = btn.getAttribute('data-lang');
       if (langIcon) {
-        langIcon.classList.remove('clicked');
-        void langIcon.offsetWidth;
-        langIcon.classList.add('clicked');
-        clearTimeout(langIcon._langAnimTimeout);
-        langIcon._langAnimTimeout = setTimeout(
-          () => langIcon.classList.remove('clicked'),
+        const icon = langIcon as LangIconElement;
+        icon.classList.remove('clicked');
+        void icon.offsetWidth;
+        icon.classList.add('clicked');
+        if (icon._langAnimTimeout) window.clearTimeout(icon._langAnimTimeout);
+        icon._langAnimTimeout = window.setTimeout(
+          () => icon.classList.remove('clicked'),
           580
         );
       } else {
@@ -199,14 +200,14 @@ if (langBtn && langPopover && langMenu) {
         void langBtn.offsetWidth;
         langBtn.classList.add('clicked');
       }
-      navigateToLanguage(selected);
+      if (selected) navigateToLanguage(selected);
       closeMenu();
     });
     btn.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ' || (e as KeyboardEvent).key === 'Spacebar') {
         e.preventDefault();
         const selected = btn.getAttribute('data-lang');
-        navigateToLanguage(selected);
+        if (selected) navigateToLanguage(selected);
         closeMenu();
         return;
       }
@@ -214,21 +215,21 @@ if (langBtn && langPopover && langMenu) {
         langPopover.querySelectorAll('button[data-lang]')
       );
       const idx = items.indexOf(btn);
-      if (e.key === 'ArrowDown') {
+      if ((e as KeyboardEvent).key === 'ArrowDown') {
         e.preventDefault();
         const next = items[(idx + 1) % items.length];
-        next && next.focus();
-      } else if (e.key === 'ArrowUp') {
+        next && (next as HTMLElement).focus();
+      } else if ((e as KeyboardEvent).key === 'ArrowUp') {
         e.preventDefault();
         const prev = items[(idx - 1 + items.length) % items.length];
-        prev && prev.focus();
-      } else if (e.key === 'Home') {
+        prev && (prev as HTMLElement).focus();
+      } else if ((e as KeyboardEvent).key === 'Home') {
         e.preventDefault();
-        items[0] && items[0].focus();
-      } else if (e.key === 'End') {
+        items[0] && (items[0] as HTMLElement).focus();
+      } else if ((e as KeyboardEvent).key === 'End') {
         e.preventDefault();
-        items[items.length - 1] && items[items.length - 1].focus();
-      } else if (e.key === 'Escape') {
+        items[items.length - 1] && (items[items.length - 1] as HTMLElement).focus();
+      } else if ((e as KeyboardEvent).key === 'Escape') {
         e.preventDefault();
         closeMenu();
         langBtn.focus();
@@ -247,7 +248,6 @@ if (langBtn && langPopover && langMenu) {
       langBtn.title = 'English';
     }
 
-    // Update visual selection inside the popover
     try {
       const items = langPopover.querySelectorAll('button[data-lang]');
       items.forEach(b => {
@@ -280,7 +280,7 @@ if (langBtn && langPopover && langMenu) {
     }
     try {
       setTimeout(() => {
-        langMenu.dataset.ready = '1';
+        (langMenu as HTMLElement).dataset.ready = '1';
       }, 50);
     } catch {
       // setTimeout not available
@@ -288,27 +288,22 @@ if (langBtn && langPopover && langMenu) {
   })();
 }
 
-// Smooth scroll mejorado
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', e => {
     e.preventDefault();
 
     const href = anchor.getAttribute('href');
 
-    // Tratamiento especial para el logo AL
     if (href === '#top') {
-      // Notificar al auto-scroll
       if (window.setManualNavigation) {
         window.setManualNavigation(true);
       }
 
-      // Scroll al top
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
 
-      // Resetear el auto-scroll después de llegar al top
       setTimeout(() => {
         if (window.resetAutoScroll) {
           window.resetAutoScroll();
@@ -318,7 +313,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       return;
     }
 
-    // Para otros enlaces, comportamiento normal
     if (window.setManualNavigation) {
       window.setManualNavigation(true);
     }
@@ -327,9 +321,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       const target = document.querySelector(href);
       if (target) {
         const offset = 60;
-        const targetPosition = target.offsetTop - offset;
+        const targetPosition = (target as HTMLElement).offsetTop - offset;
 
-        // Usar requestAnimationFrame para asegurar que setManualNavigation se ejecute primero
         requestAnimationFrame(() => {
           window.scrollTo({
             top: targetPosition,

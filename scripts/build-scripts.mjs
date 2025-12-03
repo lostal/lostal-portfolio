@@ -20,15 +20,17 @@ async function buildAll() {
   }
   if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 
-  const files = fs.readdirSync(SRC_DIR).filter(f => f.endsWith('.js'));
+  const files = fs.readdirSync(SRC_DIR).filter(f => f.endsWith('.ts') || f.endsWith('.js'));
   if (files.length === 0) {
-    console.log('No hay archivos .js en', SRC_DIR);
+    console.log('No hay archivos .ts/.js en', SRC_DIR);
     return;
   }
 
   for (const file of files) {
     const entry = path.join(SRC_DIR, file);
-    const outfile = path.join(OUT_DIR, file);
+    // Ensure output is always .js
+    const outFileDisplay = file.replace(/\.ts$/, '.js');
+    const outfile = path.join(OUT_DIR, outFileDisplay);
     try {
       await build({
         entryPoints: [entry],
@@ -69,7 +71,7 @@ const watch = args.includes('--watch');
       let timer = null;
       const onChange = (evt, filename) => {
         if (!filename) return;
-        if (!filename.endsWith('.js')) return;
+        if (!filename.endsWith('.ts') && !filename.endsWith('.js')) return;
         clearTimeout(timer);
         timer = setTimeout(() => {
           console.log(
@@ -91,7 +93,7 @@ const watch = args.includes('--watch');
       let timer = null;
       fs.watch(SRC_DIR, { recursive: true }, (eventType, filename) => {
         if (!filename) return;
-        if (!filename.endsWith('.js')) return;
+        if (!filename.endsWith('.ts') && !filename.endsWith('.js')) return;
         clearTimeout(timer);
         timer = setTimeout(() => {
           console.log(

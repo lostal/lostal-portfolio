@@ -9,7 +9,7 @@
     '/scripts/theme.js',
   ];
 
-  function loadScript(src) {
+  function loadScript(src: string) {
     try {
       const s = document.createElement('script');
       s.src = src;
@@ -32,8 +32,8 @@
   } else if (document.readyState === 'complete') {
     setTimeout(run, 0);
   } else {
-    window.addEventListener('load', function onload() {
-      window.removeEventListener('load', onload);
+    (window as Window).addEventListener('load', function onload() {
+      (window as Window).removeEventListener('load', onload);
       setTimeout(run, 0);
     });
   }

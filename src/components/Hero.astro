@@ -48,8 +48,7 @@ const t = useTranslations(lang);
         <i class="fas fa-arrow-right"></i>
         <span>{t('hero.cta.contact')}</span>
       </a>
-      <a href="#projects" class="btn btn-secondary"
-        >{t('hero.cta.portfolio')}</a
+      <a href="#projects" class="btn btn-secondary">{t('hero.cta.portfolio')}</a
       >
     </div>
   </div>
@@ -100,8 +99,21 @@ const t = useTranslations(lang);
 
 <script>
   // Hero Card Manager - Funcionalidad interactiva del card flotante
-  // @ts-nocheck
+
   class HeroCardManager {
+    heroImage: HTMLElement | null;
+    heroImageWrapper: HTMLElement | null;
+    aboutCard: HTMLElement | null;
+    closeButton: HTMLElement | null;
+    overlay: HTMLElement | null;
+    profileIndicator: HTMLElement | null;
+    isCardOpen: boolean;
+    isMobile: boolean;
+    cachedHeaderHeight: number | null;
+    toggleCardBound: ((e: Event) => void) | null;
+    hideCardBound: (() => void) | null;
+    showCardBound: (() => void) | null;
+
     constructor() {
       this.heroImage = document.getElementById('heroImage');
       this.heroImageWrapper = document.querySelector('.hero-image-wrapper');
@@ -112,6 +124,9 @@ const t = useTranslations(lang);
       this.isCardOpen = false;
       this.isMobile = window.innerWidth <= 768;
       this.cachedHeaderHeight = null; // Cache para evitar reflows
+      this.toggleCardBound = null;
+      this.hideCardBound = null;
+      this.showCardBound = null;
 
       this.init();
     }
@@ -138,23 +153,22 @@ const t = useTranslations(lang);
         this.hideCardBound = () => this.hideCard();
 
         // Solo el wrapper controla la apertura/cierre
-        this.heroImageWrapper.addEventListener(
+        this.heroImageWrapper?.addEventListener(
           'mouseenter',
           this.showCardBound
         );
-        this.heroImageWrapper.addEventListener(
+        this.heroImageWrapper?.addEventListener(
           'mouseleave',
           this.hideCardBound
         );
-        // Remover eventos de hover en la card para evitar que se mantenga abierta
       } else {
         // Mobile: touch events en el wrapper para mayor área táctil
-        this.toggleCardBound = e => {
+        this.toggleCardBound = (e: Event) => {
           e.preventDefault();
           this.toggleCard();
         };
 
-        this.heroImageWrapper.addEventListener('click', this.toggleCardBound);
+        this.heroImageWrapper?.addEventListener('click', this.toggleCardBound);
       }
 
       // Eventos que no cambian con el tipo de dispositivo
@@ -170,7 +184,7 @@ const t = useTranslations(lang);
       this.overlay?.addEventListener('click', () => this.hideCard());
 
       // Teclado - usar el wrapper para mayor área de interacción
-      this.heroImageWrapper.addEventListener('keydown', e => {
+      this.heroImageWrapper?.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           this.toggleCard();
@@ -186,19 +200,19 @@ const t = useTranslations(lang);
 
     removeAllEvents() {
       if (this.showCardBound) {
-        this.heroImageWrapper.removeEventListener(
+        this.heroImageWrapper?.removeEventListener(
           'mouseenter',
           this.showCardBound
         );
       }
       if (this.hideCardBound) {
-        this.heroImageWrapper.removeEventListener(
+        this.heroImageWrapper?.removeEventListener(
           'mouseleave',
           this.hideCardBound
         );
       }
       if (this.toggleCardBound) {
-        this.heroImageWrapper.removeEventListener(
+        this.heroImageWrapper?.removeEventListener(
           'click',
           this.toggleCardBound
         );
@@ -283,13 +297,15 @@ const t = useTranslations(lang);
 
       // Fase 3: SOLO escrituras del DOM en siguiente frame (batch write)
       requestAnimationFrame(() => {
-        this.aboutCard.style.left = `${Math.round(cardX)}px`;
-        this.aboutCard.style.top = `${Math.round(cardY)}px`;
+        if (this.aboutCard) {
+          this.aboutCard.style.left = `${Math.round(cardX)}px`;
+          this.aboutCard.style.top = `${Math.round(cardY)}px`;
+        }
       });
     }
 
     showCard() {
-      if (this.isCardOpen) return;
+      if (this.isCardOpen || !this.aboutCard) return;
 
       this.isCardOpen = true;
 
@@ -305,7 +321,7 @@ const t = useTranslations(lang);
       this.aboutCard.classList.add('show');
       this.aboutCard.setAttribute('aria-hidden', 'false');
 
-      if (this.isMobile) {
+      if (this.isMobile && this.overlay) {
         this.overlay.classList.add('show');
         this.overlay.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
@@ -327,7 +343,7 @@ const t = useTranslations(lang);
     }
 
     hideCard(force = false) {
-      if (!this.isCardOpen && !force) return;
+      if ((!this.isCardOpen && !force) || !this.aboutCard) return;
 
       this.isCardOpen = false;
 
@@ -340,7 +356,7 @@ const t = useTranslations(lang);
       this.aboutCard.classList.remove('show');
       this.aboutCard.setAttribute('aria-hidden', 'true');
 
-      if (this.isMobile) {
+      if (this.isMobile && this.overlay) {
         this.overlay.classList.remove('show');
         this.overlay.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
