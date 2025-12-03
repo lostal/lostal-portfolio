@@ -70,48 +70,36 @@ if (langBtn && langPopover && langMenu) {
     langMenu.classList.add('open');
   };
 
-  const getCurrentLang = () => {
+  const getCurrentLang = (): 'es' | 'en' => {
     const path = window.location.pathname;
-    return path.startsWith('/en') ? 'en' : 'es';
+    // Chequear si estamos en /en o /en/
+    return path.startsWith('/en/') || path === '/en' ? 'en' : 'es';
   };
 
-  const navigateToLanguage = (lang: string) => {
-    const currentPath = window.location.pathname;
+  const navigateToLanguage = (targetLang: string) => {
     const currentHash = window.location.hash;
-    let newPath;
+    const currentLang = getCurrentLang();
 
-    if (lang === 'en') {
-      // Cambiar a inglés
-      if (currentPath === '/' || currentPath === '') {
-        newPath = '/en/';
-      } else if (!currentPath.startsWith('/en')) {
-        newPath = '/en' + currentPath;
-      } else {
-        return; // Ya estamos en inglés
-      }
+    // Si ya estamos en el idioma objetivo, no hacer nada
+    if (targetLang === currentLang) {
+      return;
+    }
+
+    let newPath: string;
+
+    if (targetLang === 'en') {
+      // Español → Inglés: añadir /en/ al inicio
+      newPath = '/en/';
     } else {
-      // Cambiar a español
-      if (currentPath.startsWith('/en/')) {
-        // Remover /en/ del inicio
-        newPath = currentPath.replace(/^\/en/, '');
-        if (newPath === '' || newPath === '/') {
-          newPath = '/';
-        }
-      } else if (currentPath.startsWith('/en')) {
-        newPath = currentPath.replace(/^\/en/, '') || '/';
-      } else {
-        return; // Ya estamos en español
-      }
+      // Inglés → Español: ir a raíz
+      newPath = '/';
     }
 
-    // Agregar hash al final si existe
-    if (currentHash) {
-      newPath += currentHash;
-    }
+    // Construir URL completa
+    const fullUrl = window.location.origin + newPath + currentHash;
 
-    // Usar pathname completo con origin para evitar problemas en deploy
-    const fullUrl = window.location.origin + newPath;
-    window.location.href = fullUrl;
+    // Navegar
+    window.location.assign(fullUrl);
   };
 
   const selectNextLanguage = () => {
