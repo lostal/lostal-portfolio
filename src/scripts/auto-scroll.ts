@@ -1,4 +1,5 @@
-// src/scripts/auto-scroll.js
+import { isTouchDevice } from '../utils/dom';
+
 class AutoScrollManager {
   isAutoScrolling: boolean;
   isManualNavigation: boolean;
@@ -20,24 +21,12 @@ class AutoScrollManager {
     this.lastScrollY = window.scrollY;
     this.consecutiveScrollDown = 0;
 
-    this.isTouchDevice = this.detectTouchDevice();
+    this.isTouchDevice = isTouchDevice();
 
     if (this.isTouchDevice) {
       return;
     }
     this.init();
-  }
-
-  detectTouchDevice() {
-    return (
-      'ontouchstart' in window ||
-      navigator.maxTouchPoints > 0 ||
-      (navigator.msMaxTouchPoints || 0) > 0 ||
-      window.innerWidth <= 1024 ||
-      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      )
-    );
   }
 
   init() {

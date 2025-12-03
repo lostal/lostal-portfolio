@@ -1,5 +1,5 @@
 ---
-import { useTranslations } from '../i18n/utils';
+import { useTranslations, getLocalizedPath } from '../i18n/utils';
 
 interface Props {
   lang: 'es' | 'en';
@@ -8,9 +8,6 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
-
-<script src="../scripts/navigation.ts"></script>
-<script src="../scripts/theme.ts"></script>
 
 <nav id="navbar">
   <div class="container">
@@ -28,7 +25,7 @@ const t = useTranslations(lang);
         <!-- Language menu: emoji/flag-only button that shows a mini popover on hover/click -->
         <div class="lang-menu">
           <a
-            href={lang === 'es' ? '/en/' : '/'}
+            href={getLocalizedPath('/', lang === 'es' ? 'en' : 'es')}
             class="lang-btn"
             id="langBtn"
             data-lang={lang}
