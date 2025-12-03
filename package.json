@@ -3,11 +3,8 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "pnpm run build:scripts && astro dev",
-    "build": "pnpm run build:scripts && astro build",
-    "build:scripts": "node ./scripts/build-scripts.mjs",
-    "watch:scripts": "node ./scripts/build-scripts.mjs --watch",
-    "rebuild:all": "node ./scripts/rebuild-all.mjs",
+    "dev": "astro dev",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint . --ext .js,.ts,.astro",

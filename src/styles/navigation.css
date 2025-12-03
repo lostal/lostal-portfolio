@@ -46,11 +46,9 @@ nav.scrolled {
     'Helvetica Neue',
     Arial,
     sans-serif;
-  background: linear-gradient(
-    135deg,
-    var(--accent-primary),
-    var(--accent-dark)
-  );
+  background: linear-gradient(135deg,
+      var(--accent-primary),
+      var(--accent-dark));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -141,6 +139,7 @@ nav.scrolled {
   width: 40px;
   height: 40px;
   -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
 }
 
 .lang-btn:hover {
@@ -167,15 +166,19 @@ nav.scrolled {
   0% {
     transform: translateY(0) scale(1);
   }
+
   25% {
     transform: translateY(-3px) scale(1.05);
   }
+
   50% {
     transform: translateY(-1px) scale(1.02);
   }
+
   75% {
     transform: translateY(-0.5px) scale(1.01);
   }
+
   100% {
     transform: translateY(0) scale(1);
   }
@@ -221,7 +224,7 @@ nav.scrolled {
   padding: 6px 8px;
 }
 
-.lang-item > button {
+.lang-item>a {
   width: 100%;
   display: flex;
   gap: 8px;
@@ -233,22 +236,23 @@ nav.scrolled {
   cursor: pointer;
   color: var(--text-primary);
   font-size: 14px;
+  text-decoration: none;
 }
 
-.lang-item > button img {
+.lang-item>a img {
   width: 22px;
   height: 22px;
   border-radius: 4px;
 }
 
-.lang-item > button:hover,
-.lang-item > button:focus {
+.lang-item>a:hover,
+.lang-item>a:focus {
   background: var(--bg-secondary);
   outline: none;
 }
 
 /* Selected language in the popover: slightly bolder label to highlight */
-.lang-popover button.selected .lang-label {
+.lang-popover a.selected .lang-label {
   font-weight: 600;
 }
 
@@ -285,7 +289,8 @@ nav.scrolled {
   position: absolute;
   left: 0;
   right: 0;
-  top: -12px; /* span the gap between button and popover */
+  top: -12px;
+  /* span the gap between button and popover */
   height: 12px;
   pointer-events: none;
 }
@@ -312,6 +317,7 @@ nav.scrolled {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .lang-btn,
   .lang-popover,
   .logo,
@@ -499,15 +505,19 @@ nav.scrolled {
 .mobile-menu.active .mobile-menu-links li:nth-child(1) {
   transition-delay: 0.1s;
 }
+
 .mobile-menu.active .mobile-menu-links li:nth-child(2) {
   transition-delay: 0.15s;
 }
+
 .mobile-menu.active .mobile-menu-links li:nth-child(3) {
   transition-delay: 0.2s;
 }
+
 .mobile-menu.active .mobile-menu-links li:nth-child(4) {
   transition-delay: 0.25s;
 }
+
 .mobile-menu.active .mobile-menu-links li:nth-child(5) {
   transition-delay: 0.3s;
 }

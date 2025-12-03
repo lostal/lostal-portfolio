@@ -8,11 +8,7 @@ const navbar = document.getElementById('navbar');
 const scrollDown = document.getElementById('scrollDown');
 
 function isTouchDevice(): boolean {
-  return (
-    'ontouchstart' in window ||
-    navigator.maxTouchPoints > 0 ||
-    window.innerWidth <= 1024
-  );
+  return window.matchMedia('(pointer: coarse)').matches;
 }
 
 window.addEventListener('scroll', () => {
@@ -49,16 +45,9 @@ if (mobileMenuBtn && mobileMenu) {
   });
 }
 
-// Type-safe window access for auto-scroll integration
-interface WindowWithAutoScroll {
-  setManualNavigation?: (_val: boolean) => void;
-  resetAutoScroll?: () => void;
-}
-const win = window as unknown as WindowWithAutoScroll;
-
 mobileLinks.forEach(link => {
   link.addEventListener('click', () => {
-    if (win.setManualNavigation) win.setManualNavigation(true);
+    if (window.setManualNavigation) window.setManualNavigation(true);
     if (mobileMenu) mobileMenu.classList.remove('active');
     if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
   });
@@ -90,26 +79,6 @@ if (langBtn && langPopover && langMenu) {
     return path.startsWith('/en/') || path === '/en' ? 'en' : 'es';
   };
 
-  // Navigate to target language
-  const navigateToLanguage = (targetLang: string) => {
-    const currentLang = getCurrentLang();
-    if (targetLang === currentLang) return;
-
-    const hash = window.location.hash;
-    const newPath = targetLang === 'en' ? '/en/' : '/';
-
-    // Use full URL to ensure proper navigation
-    window.location.href = window.location.origin + newPath + hash;
-  };
-
-  // Toggle language
-  const toggleLanguage = () => {
-    const current = getCurrentLang();
-    const next = current === 'es' ? 'en' : 'es';
-    navigateToLanguage(next);
-    if (navigator.vibrate) navigator.vibrate(20);
-  };
-
   // Animate icon on click
   const animateIcon = () => {
     if (langIcon) {
@@ -122,15 +91,15 @@ if (langBtn && langPopover && langMenu) {
   };
 
   // Main button click handler
-  langBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
+  langBtn.addEventListener('click', () => {
+    // Allow default navigation
     animateIcon();
-    toggleLanguage();
   });
 
   // Desktop hover behavior
   if (!isTouchDevice()) {
-    langMenu.addEventListener('mouseenter', closeMenu);
+    langMenu.addEventListener('mouseenter', openMenu);
+    langMenu.addEventListener('mouseleave', closeMenu);
   }
 
   // Animation end handlers
@@ -153,42 +122,35 @@ if (langBtn && langPopover && langMenu) {
   langBtn.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
-      const first = langPopover.querySelector('button[data-lang]') as HTMLElement;
+      const first = langPopover.querySelector('a[data-lang]') as HTMLElement;
       first?.focus();
       openMenu();
     } else if (e.key === 'Escape') {
       closeMenu();
       langBtn.focus();
-    } else if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      animateIcon();
-      toggleLanguage();
     }
   });
 
-  // Popover button handlers
-  langPopover.querySelectorAll('button[data-lang]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const lang = btn.getAttribute('data-lang');
+  // Popover link handlers
+  langPopover.querySelectorAll('a[data-lang]').forEach(link => {
+    // Just close menu on click, navigation happens naturally
+    link.addEventListener('click', () => {
       animateIcon();
-      if (lang) navigateToLanguage(lang);
       closeMenu();
     });
 
-    btn.addEventListener('keydown', (e) => {
+    link.addEventListener('keydown', (e) => {
       const key = (e as KeyboardEvent).key;
 
-      if (key === 'Enter' || key === ' ') {
+      if (key === 'Escape') {
         e.preventDefault();
-        const lang = btn.getAttribute('data-lang');
-        if (lang) navigateToLanguage(lang);
         closeMenu();
+        langBtn.focus();
         return;
       }
 
-      const items = Array.from(langPopover.querySelectorAll('button[data-lang]')) as HTMLElement[];
-      const idx = items.indexOf(btn as HTMLElement);
+      const items = Array.from(langPopover.querySelectorAll('a[data-lang]')) as HTMLElement[];
+      const idx = items.indexOf(link as HTMLElement);
 
       if (key === 'ArrowDown') {
         e.preventDefault();
@@ -202,10 +164,6 @@ if (langBtn && langPopover && langMenu) {
       } else if (key === 'End') {
         e.preventDefault();
         items[items.length - 1]?.focus();
-      } else if (key === 'Escape') {
-        e.preventDefault();
-        closeMenu();
-        langBtn.focus();
       }
     });
   });
@@ -220,8 +178,8 @@ if (langBtn && langPopover && langMenu) {
     langBtn.title = current === 'es' ? 'Español' : 'English';
 
     // Update popover selection
-    langPopover.querySelectorAll('button[data-lang]').forEach(b => {
-      b.classList.toggle('selected', b.getAttribute('data-lang') === current);
+    langPopover.querySelectorAll('a[data-lang]').forEach(a => {
+      a.classList.toggle('selected', a.getAttribute('data-lang') === current);
     });
 
     // Clean up initial state
@@ -242,13 +200,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const href = anchor.getAttribute('href');
 
     if (href === '#top') {
-      if (win.setManualNavigation) win.setManualNavigation(true);
+      if (window.setManualNavigation) window.setManualNavigation(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(() => { if (win.resetAutoScroll) win.resetAutoScroll(); }, 600);
+      setTimeout(() => { if (window.resetAutoScroll) window.resetAutoScroll(); }, 600);
       return;
     }
 
-    if (win.setManualNavigation) win.setManualNavigation(true);
+    if (window.setManualNavigation) window.setManualNavigation(true);
 
     if (href) {
       const target = document.querySelector(href) as HTMLElement;

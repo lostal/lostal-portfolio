@@ -9,6 +9,9 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
+<script src="../scripts/navigation.ts"></script>
+<script src="../scripts/theme.ts"></script>
+
 <nav id="navbar">
   <div class="container">
     <div class="nav-content">
@@ -24,7 +27,8 @@ const t = useTranslations(lang);
       <div class="nav-actions">
         <!-- Language menu: emoji/flag-only button that shows a mini popover on hover/click -->
         <div class="lang-menu">
-          <button
+          <a
+            href={lang === 'es' ? '/en/' : '/'}
             class="lang-btn"
             id="langBtn"
             data-lang={lang}
@@ -35,7 +39,7 @@ const t = useTranslations(lang);
             title={lang === 'es' ? 'Español' : 'English'}
           >
             <i class="fas fa-language" id="langIcon" aria-hidden="true"></i>
-          </button>
+          </a>
 
           <ul
             class="lang-popover"
@@ -44,16 +48,16 @@ const t = useTranslations(lang);
             aria-labelledby="langBtn"
           >
             <li class="lang-item" role="menuitem">
-              <button type="button" data-lang="es">
+              <a href="/" class="lang-action" data-lang="es">
                 <img src="/assets/flags/es.svg" alt="" />
                 <span class="lang-label">Español</span>
-              </button>
+              </a>
             </li>
             <li class="lang-item" role="menuitem">
-              <button type="button" data-lang="en">
+              <a href="/en/" class="lang-action" data-lang="en">
                 <img src="/assets/flags/us.svg" alt="" />
                 <span class="lang-label">English</span>
-              </button>
+              </a>
             </li>
           </ul>
         </div>

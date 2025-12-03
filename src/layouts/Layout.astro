@@ -146,8 +146,8 @@ const ogImage = propOgImage || defaultOgImage;
     </div>
     <slot />
 
-    <!-- Deferred loader moved to external file for reliability and easier debugging -->
-    <script is:inline defer src="/scripts/deferred-loader.js"></script>
+    <script src="../scripts/animations.ts"></script>
+    <script src="../scripts/auto-scroll.ts"></script>
 
     <style is:global>
       @import '../styles/variables.css';
