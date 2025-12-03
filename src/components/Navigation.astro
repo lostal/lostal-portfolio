@@ -1,13 +1,24 @@
+---
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
 <nav id="navbar">
   <div class="container">
     <div class="nav-content">
       <a href="#top" class="logo">AL</a>
 
       <ul class="nav-links">
-        <li><a href="#projects" data-i18n="nav.projects">Proyectos</a></li>
-        <li><a href="#journey" data-i18n="nav.journey">Recorrido</a></li>
-        <li><a href="#skills" data-i18n="nav.skills">Habilidades</a></li>
-        <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
+        <li><a href="#projects">{t('nav.projects')}</a></li>
+        <li><a href="#journey">{t('nav.journey')}</a></li>
+        <li><a href="#skills">{t('nav.skills')}</a></li>
+        <li><a href="#contact">{t('nav.contact')}</a></li>
       </ul>
 
       <div class="nav-actions">
@@ -16,12 +27,12 @@
           <button
             class="lang-btn"
             id="langBtn"
-            data-lang="es"
+            data-lang={lang}
             aria-haspopup="true"
             aria-expanded="false"
             aria-controls="langPopover"
-            aria-label="Idioma: Español"
-            title="Español"
+            aria-label={lang === 'es' ? 'Idioma: Español' : 'Language: English'}
+            title={lang === 'es' ? 'Español' : 'English'}
           >
             <i class="fas fa-language" id="langIcon" aria-hidden="true"></i>
           </button>
@@ -50,16 +61,14 @@
         <button
           class="theme-toggle"
           id="themeToggle"
-          aria-label="Cambiar tema"
-          data-i18n-aria="nav.theme"
+          aria-label={t('nav.theme')}
         >
           <i class="fas fa-lightbulb" id="themeIcon"></i>
         </button>
         <button
           class="mobile-menu-btn"
           id="mobileMenuBtn"
-          aria-label="Menú"
-          data-i18n-aria="nav.menu"
+          aria-label={t('nav.menu')}
         >
           <div class="hamburger-icon">
             <span class="hamburger-line"></span>
@@ -74,24 +83,16 @@
   <div class="mobile-menu" id="mobileMenu">
     <ul class="mobile-menu-links">
       <li>
-        <a href="#projects" class="mobile-link" data-i18n="nav.projects"
-          >Proyectos</a
-        >
+        <a href="#projects" class="mobile-link">{t('nav.projects')}</a>
       </li>
       <li>
-        <a href="#journey" class="mobile-link" data-i18n="nav.journey"
-          >Recorrido</a
-        >
+        <a href="#journey" class="mobile-link">{t('nav.journey')}</a>
       </li>
       <li>
-        <a href="#skills" class="mobile-link" data-i18n="nav.skills"
-          >Habilidades</a
-        >
+        <a href="#skills" class="mobile-link">{t('nav.skills')}</a>
       </li>
       <li>
-        <a href="#contact" class="mobile-link" data-i18n="nav.contact"
-          >Contacto</a
-        >
+        <a href="#contact" class="mobile-link">{t('nav.contact')}</a>
       </li>
     </ul>
   </div>

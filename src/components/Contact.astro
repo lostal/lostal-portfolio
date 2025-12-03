@@ -1,10 +1,21 @@
+---
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
 <section id="contact" class="section-alt">
   <div class="container">
     <div class="section-header fade-in">
-      <div class="section-label" data-i18n="contact.label">Contacto</div>
-      <h2 class="section-title" data-i18n="contact.title">Conectemos</h2>
-      <p class="section-description" data-i18n="contact.description">
-        ¿Tienes algo en mente? Ponte en contacto conmigo.
+      <div class="section-label">{t('contact.label')}</div>
+      <h2 class="section-title">{t('contact.title')}</h2>
+      <p class="section-description">
+        {t('contact.description')}
       </p>
     </div>
 

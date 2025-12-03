@@ -4,6 +4,13 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://lostal.dev',
   output: 'static',
+  i18n: {
+    defaultLocale: 'es',
+    locales: ['es', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [sitemap()],
   image: {
     service: {

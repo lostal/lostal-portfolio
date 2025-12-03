@@ -1,19 +1,30 @@
+---
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
 <section id="skills">
   <div class="container">
     <div class="section-header fade-in">
-      <div class="section-label" data-i18n="skills.label">Habilidades</div>
-      <h2 class="section-title" data-i18n="skills.title">
-        Competencias Técnicas
+      <div class="section-label">{t('skills.label')}</div>
+      <h2 class="section-title">
+        {t('skills.title')}
       </h2>
-      <p class="section-description" data-i18n="skills.description">
-        Tecnologías y herramientas con las que trabajo día a día
+      <p class="section-description">
+        {t('skills.description')}
       </p>
     </div>
 
     <div class="skills-grid">
       <div class="skill-card fade-in">
         <i class="fas fa-laptop-code skill-icon"></i>
-        <h3 class="skill-title" data-i18n="skills.frontend">Frontend</h3>
+        <h3 class="skill-title">{t('skills.frontend')}</h3>
         <div class="skill-tags">
           <span class="tag">
             <img
@@ -74,7 +85,7 @@
 
       <div class="skill-card fade-in">
         <i class="fas fa-server skill-icon"></i>
-        <h3 class="skill-title" data-i18n="skills.backend">Backend</h3>
+        <h3 class="skill-title">{t('skills.backend')}</h3>
         <div class="skill-tags">
           <span class="tag">
             <img
@@ -108,7 +119,7 @@
 
       <div class="skill-card fade-in">
         <i class="fas fa-tools skill-icon"></i>
-        <h3 class="skill-title" data-i18n="skills.tools">Herramientas</h3>
+        <h3 class="skill-title">{t('skills.tools')}</h3>
         <div class="skill-tags">
           <span class="tag">
             <img

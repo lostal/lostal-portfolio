@@ -1,6 +1,14 @@
 ---
 import { Picture } from 'astro:assets';
 import alvaroImg from '../assets/alvaro.jpg';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section id="hero" class="hero">
@@ -9,8 +17,7 @@ import alvaroImg from '../assets/alvaro.jpg';
       class="hero-image-wrapper"
       tabindex="0"
       role="button"
-      aria-label="Ver información personal de Álvaro Lostal"
-      data-i18n-aria="hero.image.alt"
+      aria-label={t('hero.image.alt')}
     >
       <Picture
         src={alvaroImg}
@@ -26,31 +33,23 @@ import alvaroImg from '../assets/alvaro.jpg';
         quality={80}
       />
       <div class="profile-indicator" aria-hidden="true">
-        <span class="profile-indicator__text" data-i18n="about.title"
-          >Sobre mí</span
-        >
+        <span class="profile-indicator__text">{t('about.title')}</span>
         <i class="profile-indicator__icon">ⓘ</i>
       </div>
     </div>
-    <div class="hero-subtitle" data-i18n="hero.greeting">Hola, soy</div>
-    <h1 class="hero-title" data-i18n="hero.name">Álvaro Lostal</h1>
+    <div class="hero-subtitle">{t('hero.greeting')}</div>
+    <h1 class="hero-title">{t('hero.name')}</h1>
     <p class="hero-description">
-      <span data-i18n="hero.description"
-        >Ingeniero Informático especializado en Desarrollo Web Frontend.</span
-      >
-      <br /><span data-i18n="hero.description2"
-        >Me inspiran el diseño y la simplicidad.</span
-      >
+      <span>{t('hero.description')}</span>
+      <br /><span>{t('hero.description2')}</span>
     </p>
     <div class="hero-cta">
       <a href="#contact" class="btn btn-primary">
         <i class="fas fa-arrow-right"></i>
-        <span data-i18n="hero.cta.contact">Contactar</span>
+        <span>{t('hero.cta.contact')}</span>
       </a>
-      <a
-        href="#projects"
-        class="btn btn-secondary"
-        data-i18n="hero.cta.portfolio">Ver portafolio</a
+      <a href="#projects" class="btn btn-secondary"
+        >{t('hero.cta.portfolio')}</a
       >
     </div>
   </div>
@@ -60,35 +59,27 @@ import alvaroImg from '../assets/alvaro.jpg';
     <button
       class="about-card__close"
       id="closeCard"
-      aria-label="Cerrar información"
-      data-i18n-aria="about.close.label"
+      aria-label={t('about.close.label')}
     >
       <i class="fas fa-times"></i>
     </button>
     <div class="about-card__content">
-      <h3 class="about-card__title" data-i18n="about.title">Sobre mí</h3>
-      <p class="about-card__text" data-i18n="about.text">
-        Soy Álvaro Lostal, ingeniero informático (21) de Santander, España. Me
-        dedico al desarrollo frontend y al diseño de interfaces elegantes,
-        minimalistas y funcionales; estudio el último año del grado en la
-        Universidad Europea del Atlántico.
+      <h3 class="about-card__title">{t('about.title')}</h3>
+      <p class="about-card__text">
+        {t('about.text')}
       </p>
       <div class="about-card__stats">
         <div class="stat">
           <span class="stat-number">2026</span>
-          <span class="stat-label" data-i18n="about.stat.graduation"
-            >Graduación</span
-          >
+          <span class="stat-label">{t('about.stat.graduation')}</span>
         </div>
         <div class="stat">
           <span class="stat-number">B2</span>
-          <span class="stat-label" data-i18n="about.stat.english">Inglés</span>
+          <span class="stat-label">{t('about.stat.english')}</span>
         </div>
         <div class="stat">
-          <span class="stat-number">4 años</span>
-          <span class="stat-label" data-i18n="about.stat.selftaught"
-            >Autodidacta</span
-          >
+          <span class="stat-number">4 {lang === 'es' ? 'años' : 'years'}</span>
+          <span class="stat-label">{t('about.stat.selftaught')}</span>
         </div>
       </div>
     </div>
@@ -101,8 +92,7 @@ import alvaroImg from '../assets/alvaro.jpg';
     href="#projects"
     class="scroll-down"
     id="scrollDown"
-    aria-label="Ir a proyectos"
-    data-i18n-aria="scroll.label"
+    aria-label={t('scroll.label')}
   >
     <i class="fas fa-angle-down"></i>
   </a>

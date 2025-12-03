@@ -1,0 +1,32 @@
+---
+// src/pages/en/index.astro
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Hero from '../../components/Hero.astro';
+import Journey from '../../components/Journey.astro';
+import Projects from '../../components/Projects.astro';
+import Skills from '../../components/Skills.astro';
+import Contact from '../../components/Contact.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingContact from '../../components/FloatingContact.astro';
+
+const lang = 'en';
+---
+
+<Layout
+  lang={lang}
+  title="Álvaro Lostal | Web Developer Portfolio"
+  description="I'm Álvaro Lostal, a computer engineer from Santander. I design and develop minimalist, functional and accessible websites, with attention to detail and passion for user experience, using modern web frameworks and technologies. Discover my projects, skills and journey."
+>
+  <div id="top"></div>
+  <Navigation lang={lang} />
+  <main id="main">
+    <Hero lang={lang} />
+    <Projects lang={lang} />
+    <Journey lang={lang} />
+    <Skills lang={lang} />
+    <Contact lang={lang} />
+  </main>
+  <Footer lang={lang} />
+  <FloatingContact lang={lang} />
+</Layout>

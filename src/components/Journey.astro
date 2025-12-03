@@ -1,18 +1,25 @@
+---
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
 <section id="journey" class="section-alt">
   <div class="container">
     <div class="section-header fade-in">
-      <div class="section-label" data-i18n="journey.label">Recorrido</div>
+      <div class="section-label">{t('journey.label')}</div>
     </div>
 
     <div class="experience-grid">
       <div class="experience-column" aria-labelledby="exp-title">
         <div class="column-header">
-          <h2
-            id="exp-title"
-            class="column-title"
-            data-i18n="journey.experience"
-          >
-            Experiencia
+          <h2 id="exp-title" class="column-title">
+            {t('journey.experience')}
           </h2>
           <div class="column-divider"></div>
         </div>
@@ -32,40 +39,22 @@
 
               <div class="timeline-body">
                 <div class="timeline-header">
-                  <h3
-                    class="timeline-title"
-                    data-i18n="journey.eurocastalia.title"
-                  >
-                    Prácticas en Desarrollo Web
+                  <h3 class="timeline-title">
+                    {t('journey.eurocastalia.title')}
                   </h3>
-                  <span
-                    class="timeline-date"
-                    data-i18n="journey.eurocastalia.date"
-                    >Sep 2025 - Actualidad</span
+                  <span class="timeline-date"
+                    >{t('journey.eurocastalia.date')}</span
                   >
                 </div>
-                <div
-                  class="timeline-subtitle"
-                  data-i18n="journey.eurocastalia.company"
-                >
-                  Eurocastalia
+                <div class="timeline-subtitle">
+                  {t('journey.eurocastalia.company')}
                 </div>
-                <p
-                  class="timeline-description"
-                  data-i18n="journey.eurocastalia.description"
-                >
-                  Prácticas centradas en WordPress, con algo de Liferay y
-                  desarrollo en PHP, usando HTML, CSS y JavaScript. Participé en
-                  todo el ciclo de diseño y despliegue, tratando con clientes y
-                  priorizando accesibilidad y rendimiento.
+                <p class="timeline-description">
+                  {t('journey.eurocastalia.description')}
                 </p>
                 <ul class="timeline-list">
-                  <li data-i18n="journey.eurocastalia.task1">
-                    Desarrollo y personalización en WordPress, PHP y Liferay
-                  </li>
-                  <li data-i18n="journey.eurocastalia.task2">
-                    Optimización del SEO y accesibilidad
-                  </li>
+                  <li>{t('journey.eurocastalia.task1')}</li>
+                  <li>{t('journey.eurocastalia.task2')}</li>
                 </ul>
               </div>
             </div>
@@ -75,8 +64,8 @@
 
       <div class="experience-column" aria-labelledby="edu-title">
         <div class="column-header">
-          <h2 id="edu-title" class="column-title" data-i18n="journey.education">
-            Educación
+          <h2 id="edu-title" class="column-title">
+            {t('journey.education')}
           </h2>
           <div class="column-divider"></div>
         </div>
@@ -96,34 +85,21 @@
 
               <div class="timeline-body">
                 <div class="timeline-header">
-                  <h3 class="timeline-title" data-i18n="journey.uea.title">
-                    Grado en Ingeniería Informática
+                  <h3 class="timeline-title">
+                    {t('journey.uea.title')}
                   </h3>
-                  <span class="timeline-date" data-i18n="journey.uea.date"
-                    >Sep 2022 - Jun 2026</span
-                  >
+                  <span class="timeline-date">{t('journey.uea.date')}</span>
                 </div>
-                <div
-                  class="timeline-subtitle"
-                  data-i18n="journey.uea.institution"
-                >
-                  Universidad Europea del Atlántico
+                <div class="timeline-subtitle">
+                  {t('journey.uea.institution')}
                 </div>
-                <p
-                  class="timeline-description"
-                  data-i18n="journey.uea.description"
-                >
-                  Programa integral de informática, con formación en distintas
-                  áreas del desarrollo y la tecnología.
+                <p class="timeline-description">
+                  {t('journey.uea.description')}
                 </p>
                 <ul class="timeline-list">
-                  <li data-i18n="journey.uea.subject1">Desarrollo Web</li>
-                  <li data-i18n="journey.uea.subject2">
-                    Ingeniería del Software
-                  </li>
-                  <li data-i18n="journey.uea.subject3">
-                    Seguridad Informática y Criptografía
-                  </li>
+                  <li>{t('journey.uea.subject1')}</li>
+                  <li>{t('journey.uea.subject2')}</li>
+                  <li>{t('journey.uea.subject3')}</li>
                 </ul>
               </div>
             </div>
@@ -143,27 +119,16 @@
 
               <div class="timeline-body">
                 <div class="timeline-header">
-                  <h3
-                    class="timeline-title"
-                    data-i18n="journey.cambridge.title"
-                  >
-                    B2 First (FCE)
+                  <h3 class="timeline-title">
+                    {t('journey.cambridge.title')}
                   </h3>
-                  <span class="timeline-date" data-i18n="journey.cambridge.date"
-                    >2021</span
-                  >
+                  <span class="timeline-date">{t('journey.cambridge.date')}</span>
                 </div>
-                <div
-                  class="timeline-subtitle"
-                  data-i18n="journey.cambridge.institution"
-                >
-                  Cambridge Assessment English
+                <div class="timeline-subtitle">
+                  {t('journey.cambridge.institution')}
                 </div>
-                <p
-                  class="timeline-description"
-                  data-i18n="journey.cambridge.description"
-                >
-                  Certificación oficial B2 (FCE).
+                <p class="timeline-description">
+                  {t('journey.cambridge.description')}
                 </p>
               </div>
             </div>

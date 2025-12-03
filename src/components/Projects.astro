@@ -3,16 +3,23 @@ import { Picture } from 'astro:assets';
 import vivenzaImg from '../assets/projects/vivenza-preview.png';
 import creativeHandsImg from '../assets/projects/creative-hands-preview.png';
 import parkingImg from '../assets/projects/gruposiete-parking.png';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section class="projects-section section-alt" id="projects">
   <div class="wrapper">
     <div class="section-header fade-in">
-      <div class="section-label" data-i18n="projects.label">Proyectos</div>
-      <h2 class="section-title" data-i18n="projects.title">Mi Trabajo</h2>
-      <p class="section-description" data-i18n="projects.description">
-        Estos proyectos web reflejan mi enfoque en el diseño minimalista, una UX
-        cuidada y buenas prácticas de desarrollo.
+      <div class="section-label">{t('projects.label')}</div>
+      <h2 class="section-title">{t('projects.title')}</h2>
+      <p class="section-description">
+        {t('projects.description')}
       </p>
     </div>
   </div>
@@ -22,16 +29,14 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
       <div class="projects-carousel__nav slider-nav">
         <button
           class="slider-nav__item slider-nav__item_prev"
-          aria-label="Proyecto anterior"
-          data-i18n-aria="projects.prev"
+          aria-label={t('projects.prev')}
           type="button"
         >
           <i class="fas fa-chevron-left" aria-hidden="true"></i>
         </button>
         <button
           class="slider-nav__item slider-nav__item_next"
-          aria-label="Siguiente proyecto"
-          data-i18n-aria="projects.next"
+          aria-label={t('projects.next')}
           type="button"
         >
           <i class="fas fa-chevron-right" aria-hidden="true"></i>
@@ -100,19 +105,11 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                 </div>
 
                 <div class="carousel-item__info">
-                  <h2
-                    class="carousel-item__title"
-                    data-i18n="projects.parking.title"
-                  >
-                    Vivenza Parking
+                  <h2 class="carousel-item__title">
+                    {t('projects.parking.title')}
                   </h2>
-                  <div
-                    class="carousel-item__text"
-                    data-i18n="projects.parking.description"
-                  >
-                    Sistema inteligente de gestión de reservas de parking
-                    corporativo con roles diferenciados, validaciones robustas y
-                    prevención de conflictos en tiempo real.
+                  <div class="carousel-item__text">
+                    {t('projects.parking.description')}
                   </div>
                 </div>
 
@@ -126,7 +123,7 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                     >
                       <i class="fas fa-external-link-alt" aria-hidden="true"
                       ></i>
-                      <span data-i18n="projects.view">Preview</span>
+                      <span>{t('projects.parking.preview')}</span>
                     </a>
                     <a
                       class="carousel-item__action"
@@ -203,18 +200,11 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                 </div>
 
                 <div class="carousel-item__info">
-                  <h2
-                    class="carousel-item__title"
-                    data-i18n="projects.creative.title"
-                  >
-                    Creative Hands
+                  <h2 class="carousel-item__title">
+                    {t('projects.creative.title')}
                   </h2>
-                  <div
-                    class="carousel-item__text"
-                    data-i18n="projects.creative.description"
-                  >
-                    Tienda PWA con autenticación JWT y chat en tiempo real
-                    (Socket.io).
+                  <div class="carousel-item__text">
+                    {t('projects.creative.description')}
                   </div>
                 </div>
 
@@ -228,7 +218,7 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                     >
                       <i class="fas fa-external-link-alt" aria-hidden="true"
                       ></i>
-                      <span data-i18n="projects.creative.preview">Preview</span>
+                      <span>{t('projects.creative.preview')}</span>
                     </a>
                     <a
                       class="carousel-item__action"
@@ -304,18 +294,11 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                 </div>
 
                 <div class="carousel-item__info">
-                  <h2
-                    class="carousel-item__title"
-                    data-i18n="projects.vivenza.title"
-                  >
-                    Rediseño Vivenza Expo
+                  <h2 class="carousel-item__title">
+                    {t('projects.vivenza.title')}
                   </h2>
-                  <div
-                    class="carousel-item__text"
-                    data-i18n="projects.vivenza.description"
-                  >
-                    Rediseño completo de la landing page de Vivenza Expo,
-                    aplicando principios de diseño moderno.
+                  <div class="carousel-item__text">
+                    {t('projects.vivenza.description')}
                   </div>
                 </div>
 
@@ -329,7 +312,7 @@ import parkingImg from '../assets/projects/gruposiete-parking.png';
                     >
                       <i class="fas fa-external-link-alt" aria-hidden="true"
                       ></i>
-                      <span data-i18n="projects.view">Preview</span>
+                      <span>{t('projects.vivenza.preview')}</span>
                     </a>
                     <a
                       class="carousel-item__action"

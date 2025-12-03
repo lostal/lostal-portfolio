@@ -67,43 +67,42 @@ if (langBtn && langPopover && langMenu) {
     langMenu.classList.add('open');
   };
 
-  const setLanguage = lang => {
-    langBtn.setAttribute('data-lang', lang);
-    if (lang === 'es') {
-      langBtn.setAttribute('aria-label', 'Idioma: Español');
-      langBtn.title = 'Español';
+  const getCurrentLang = () => {
+    const path = window.location.pathname;
+    return path.startsWith('/en') ? 'en' : 'es';
+  };
+
+  const navigateToLanguage = lang => {
+    const currentPath = window.location.pathname;
+    const currentHash = window.location.hash;
+    let newPath;
+
+    if (lang === 'en') {
+      // Cambiar a inglés
+      if (currentPath === '/' || currentPath === '') {
+        newPath = '/en/' + currentHash;
+      } else if (!currentPath.startsWith('/en')) {
+        newPath = '/en' + currentPath + currentHash;
+      } else {
+        return; // Ya está en inglés
+      }
     } else {
-      langBtn.setAttribute('aria-label', 'Language: English');
-      langBtn.title = 'English';
+      // Cambiar a español
+      if (currentPath.startsWith('/en')) {
+        newPath = currentPath.replace(/^\/en/, '') || '/';
+        newPath += currentHash;
+      } else {
+        return; // Ya está en español
+      }
     }
-    try {
-      localStorage.setItem('siteLang', lang);
-    } catch {
-      // localStorage may be unavailable
-    }
-    window.dispatchEvent(new CustomEvent('localeChange', { detail: { lang } }));
-    // Update visual selection inside the popover (if present)
-    try {
-      const items = langPopover.querySelectorAll('button[data-lang]');
-      items.forEach(b => {
-        if (b.getAttribute('data-lang') === lang) b.classList.add('selected');
-        else b.classList.remove('selected');
-      });
-    } catch {
-      // Element not found
-    }
+
+    window.location.href = newPath;
   };
 
   const selectNextLanguage = () => {
-    const current = langBtn.getAttribute('data-lang') || 'es';
+    const current = getCurrentLang();
     const next = current === 'es' ? 'en' : 'es';
-    setLanguage(next);
-    try {
-      if (typeof langBtn.focus === 'function') langBtn.focus();
-    } catch {
-      // Focus not available
-    }
-    closeMenu();
+    navigateToLanguage(next);
     if (navigator.vibrate) navigator.vibrate(20);
   };
 
@@ -200,19 +199,14 @@ if (langBtn && langPopover && langMenu) {
         void langBtn.offsetWidth;
         langBtn.classList.add('clicked');
       }
-      setLanguage(selected);
-      try {
-        if (typeof langBtn.focus === 'function') langBtn.focus();
-      } catch {
-        // Focus not available
-      }
+      navigateToLanguage(selected);
       closeMenu();
     });
     btn.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
         e.preventDefault();
         const selected = btn.getAttribute('data-lang');
-        setLanguage(selected);
+        navigateToLanguage(selected);
         closeMenu();
         return;
       }
@@ -243,17 +237,27 @@ if (langBtn && langPopover && langMenu) {
   });
 
   (function initLang() {
-    let initial = 'es';
-    try {
-      const stored = localStorage.getItem('siteLang');
-      if (stored) initial = stored;
-      else if (langBtn.getAttribute('data-lang'))
-        initial = langBtn.getAttribute('data-lang');
-    } catch {
-      if (langBtn.getAttribute('data-lang'))
-        initial = langBtn.getAttribute('data-lang');
+    const current = getCurrentLang();
+    langBtn.setAttribute('data-lang', current);
+    if (current === 'es') {
+      langBtn.setAttribute('aria-label', 'Idioma: Español');
+      langBtn.title = 'Español';
+    } else {
+      langBtn.setAttribute('aria-label', 'Language: English');
+      langBtn.title = 'English';
     }
-    setLanguage(initial);
+
+    // Update visual selection inside the popover
+    try {
+      const items = langPopover.querySelectorAll('button[data-lang]');
+      items.forEach(b => {
+        if (b.getAttribute('data-lang') === current) b.classList.add('selected');
+        else b.classList.remove('selected');
+      });
+    } catch {
+      // Element not found
+    }
+
     try {
       closeMenu();
     } catch {
