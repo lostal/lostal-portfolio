@@ -45,7 +45,7 @@ body,
 
 /* Fuentes secundarias para elementos específicos */
 .project-card h3,
-.skill-card h3 {
+.technology-card h3 {
   font-family: var(--font-secondary);
 }
 

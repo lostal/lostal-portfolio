@@ -90,7 +90,7 @@ body,
 .card,
 .nav-link,
 .theme-toggle,
-.skill-card,
+.technology-card,
 .project-card {
   transition:
     background-color var(--animation-duration) var(--theme-transition-easing),
@@ -107,6 +107,7 @@ body,
 
 /* Respeto por preferencias de accesibilidad y optimización móvil */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -119,6 +120,7 @@ body,
 
 /* Optimización adicional para móviles con conexión lenta */
 @media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+
   .section-title,
   .section-label {
     transition-duration: 0.2s;
@@ -135,9 +137,11 @@ body,
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(0.9);
   }
+
   100% {
     transform: scale(1);
   }
@@ -148,9 +152,11 @@ body,
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.1);
   }
+
   100% {
     transform: scale(1);
   }
@@ -182,6 +188,7 @@ body,
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -189,11 +196,13 @@ body,
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     transform: translateX(-50%) scale(1);
     opacity: 0.03;
   }
+
   50% {
     transform: translateX(-50%) scale(1.1);
     opacity: 0.05;
@@ -205,6 +214,7 @@ body,
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

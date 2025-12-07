@@ -31,7 +31,7 @@ _Mostrando mi experiencia como Ingeniero Informático especializado en Desarroll
 - **🖼️ Hero**: Presentación principal con imagen interactiva
 - **📁 Proyectos**: Showcase de trabajos destacados
 - **🎓 Journey**: Trayectoria profesional y educativa
-- **🛠️ Skills**: Tecnologías y herramientas dominadas
+- **🛠️ Tecnologías**: Tecnologías y herramientas dominadas
 - **✉️ Contacto**: Formulario y canales de comunicación
 
 ## Estructura

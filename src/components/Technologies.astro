@@ -9,23 +9,23 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="skills">
+<section id="technologies">
   <div class="container">
     <div class="section-header fade-in">
       <div class="section-divider divider-terminal"></div>
       <h2 class="section-title">
-        {t('skills.title')}
+        {t('technologies.title')}
       </h2>
       <p class="section-description">
-        {t('skills.description')}
+        {t('technologies.description')}
       </p>
     </div>
 
-    <div class="skills-grid">
-      <div class="skill-card fade-in">
-        <i class="fas fa-code skill-icon"></i>
-        <h3 class="skill-title">{t('skills.languages')}</h3>
-        <div class="skill-tags">
+    <div class="technologies-grid">
+      <div class="technology-card fade-in">
+        <i class="fas fa-code technology-icon"></i>
+        <h3 class="technology-title">{t('technologies.languages')}</h3>
+        <div class="technology-tags">
           <span class="tag">
             <img
               src="/assets/tech-icons/javascript.svg"
@@ -74,10 +74,10 @@ const t = useTranslations(lang);
         </div>
       </div>
 
-      <div class="skill-card fade-in">
-        <i class="fas fa-cubes skill-icon"></i>
-        <h3 class="skill-title">{t('skills.frameworks')}</h3>
-        <div class="skill-tags">
+      <div class="technology-card fade-in">
+        <i class="fas fa-cubes technology-icon"></i>
+        <h3 class="technology-title">{t('technologies.frameworks')}</h3>
+        <div class="technology-tags">
           <span class="tag">
             <img
               src="/assets/tech-icons/react.svg"
@@ -126,10 +126,10 @@ const t = useTranslations(lang);
         </div>
       </div>
 
-      <div class="skill-card fade-in">
-        <i class="fas fa-tools skill-icon"></i>
-        <h3 class="skill-title">{t('skills.tools')}</h3>
-        <div class="skill-tags">
+      <div class="technology-card fade-in">
+        <i class="fas fa-tools technology-icon"></i>
+        <h3 class="technology-title">{t('technologies.tools')}</h3>
+        <div class="technology-tags">
           <span class="tag">
             <img
               src="/assets/tech-icons/vscode.svg"

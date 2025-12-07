@@ -479,8 +479,8 @@ section {
   }
 }
 
-/* Skills Section */
-.skills-grid {
+/* Technologies Section */
+.technologies-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
@@ -488,7 +488,7 @@ section {
   margin: 0 auto;
 }
 
-.skill-card {
+.technology-card {
   background: var(--bg-secondary);
   padding: 28px;
   border-radius: 20px;
@@ -497,27 +497,27 @@ section {
   border: 1px solid var(--border);
 }
 
-.skill-card:hover {
+.technology-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 16px 48px var(--shadow-lg);
   border-color: var(--accent-primary);
 }
 
-.skill-icon {
+.technology-icon {
   font-size: 28px;
   margin-bottom: 14px;
   display: block;
   color: var(--accent-primary);
 }
 
-.skill-title {
+.technology-title {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 12px;
   color: var(--text-primary);
 }
 
-.skill-tags {
+.technology-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;

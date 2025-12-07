@@ -544,10 +544,10 @@ section.projects-section {
 }
 
 /* Reutilizar la clase global `.tag` definida en components.css para
-   asegurar consistencia con la sección Skills. No sobreescribimos valores
+   asegurar consistencia con la sección Technologies. No sobreescribimos valores
    de padding, tamaño o borde aquí. */
 
-/* Asegurarnos de que los iconos de tech coincidan con Skills */
+/* Asegurarnos de que los iconos de tech coincidan con Technologies */
 .carousel-item__tech .tech-mini-icon,
 .carousel-item__tech img.tech-mini-icon {
   width: 14px;
