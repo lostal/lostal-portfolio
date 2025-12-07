@@ -26,12 +26,12 @@ nav.scrolled {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
+  height: 72px;
   position: relative;
 }
 
 .logo {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 800;
   color: var(--accent-primary);
   text-decoration: none;
@@ -86,7 +86,7 @@ nav.scrolled {
 .nav-links a {
   color: var(--text-secondary);
   text-decoration: none;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   transition: color 0.3s ease;
   position: relative;
@@ -128,16 +128,16 @@ nav.scrolled {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
+  padding: 10px;
   color: var(--text-secondary);
-  font-size: 18px;
+  font-size: 22px;
   transition: all 0.3s ease;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   -webkit-tap-highlight-color: transparent;
   text-decoration: none;
 }
@@ -330,16 +330,16 @@ nav.scrolled {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
+  padding: 10px;
   color: var(--text-secondary);
-  font-size: 18px;
+  font-size: 22px;
   transition: all 0.3s ease;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -369,9 +369,9 @@ nav.scrolled {
   border: none;
   cursor: pointer;
   color: var(--text-secondary);
-  padding: 8px;
-  width: 40px;
-  height: 40px;
+  padding: 10px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -396,8 +396,8 @@ nav.scrolled {
 
 /* Hamburger Icon Animation */
 .hamburger-icon {
-  width: 20px;
-  height: 16px;
+  width: 24px;
+  height: 20px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -419,7 +419,7 @@ nav.scrolled {
 
 /* Animation when menu is active */
 .mobile-menu-btn.active .hamburger-line:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
+  transform: translateY(9px) rotate(45deg);
 }
 
 .mobile-menu-btn.active .hamburger-line:nth-child(2) {
@@ -428,7 +428,7 @@ nav.scrolled {
 }
 
 .mobile-menu-btn.active .hamburger-line:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+  transform: translateY(-9px) rotate(-45deg);
 }
 
 .mobile-menu-btn.active:hover .hamburger-line {
@@ -443,7 +443,7 @@ nav.scrolled {
 
 .mobile-menu {
   position: fixed;
-  top: 60px;
+  top: 72px;
   left: 0;
   right: 0;
   background: var(--bg-primary);
@@ -454,7 +454,7 @@ nav.scrolled {
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  max-height: calc(100vh - 60px);
+  max-height: calc(100vh - 72px);
   overflow: hidden;
   box-shadow: 0 4px 20px var(--shadow);
 }
