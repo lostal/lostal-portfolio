@@ -54,6 +54,24 @@ section {
   margin-bottom: 12px;
 }
 
+.section-divider {
+  width: auto;
+  height: auto;
+  background: none;
+  color: var(--accent-primary);
+  font-family: monospace;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -2px;
+  margin: 0 auto 16px;
+}
+
+.section-divider::before {
+  content: '//';
+}
+
+
+
 .section-title {
   font-size: 42px;
   font-weight: 700;
@@ -408,7 +426,8 @@ section {
   width: 48px;
   height: 48px;
   background: var(--bg-secondary);
-  border-radius: 24px; /* Border radius circular para consonancia con el widget */
+  border-radius: 24px;
+  /* Border radius circular para consonancia con el widget */
   color: var(--text-primary);
   text-decoration: none;
   font-weight: 500;
@@ -673,6 +692,7 @@ section {
 
 /* Responsive Design for Projects */
 @media (max-width: 1200px) {
+
   /* Reducir ancho de imagen en pantallas más pequeñas */
   .project-image-container {
     flex: 0 0 350px;
@@ -680,6 +700,7 @@ section {
 }
 
 @media (max-width: 1024px) {
+
   /* Reducir más el ancho de imagen en tablets */
   .project-image-container {
     flex: 0 0 300px;
@@ -695,6 +716,7 @@ section {
 }
 
 @media (max-width: 768px) {
+
   /* Cambiar a layout vertical en móvil */
   .project-card-wrapper {
     flex-direction: column;
