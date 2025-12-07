@@ -23,27 +23,9 @@ const t = useTranslations(lang);
 
     <div class="skills-grid">
       <div class="skill-card fade-in">
-        <i class="fas fa-laptop-code skill-icon"></i>
-        <h3 class="skill-title">{t('skills.frontend')}</h3>
+        <i class="fas fa-code skill-icon"></i>
+        <h3 class="skill-title">{t('skills.languages')}</h3>
         <div class="skill-tags">
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/html5.svg"
-              alt="HTML5"
-              class="tech-mini-icon"
-              loading="lazy"
-            />
-            HTML5
-          </span>
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/css3.svg"
-              alt="CSS3"
-              class="tech-mini-icon"
-              loading="lazy"
-            />
-            CSS3
-          </span>
           <span class="tag">
             <img
               src="/assets/tech-icons/javascript.svg"
@@ -64,12 +46,55 @@ const t = useTranslations(lang);
           </span>
           <span class="tag">
             <img
+              src="/assets/tech-icons/html5.svg"
+              alt="HTML5"
+              class="tech-mini-icon"
+              loading="lazy"
+            />
+            HTML5
+          </span>
+          <span class="tag">
+            <img
+              src="/assets/tech-icons/css3.svg"
+              alt="CSS3"
+              class="tech-mini-icon"
+              loading="lazy"
+            />
+            CSS3
+          </span>
+          <span class="tag">
+            <img
+              src="/assets/tech-icons/tailwind.svg"
+              alt="Tailwind CSS"
+              class="tech-mini-icon"
+              loading="lazy"
+            />
+            Tailwind CSS
+          </span>
+        </div>
+      </div>
+
+      <div class="skill-card fade-in">
+        <i class="fas fa-cubes skill-icon"></i>
+        <h3 class="skill-title">{t('skills.frameworks')}</h3>
+        <div class="skill-tags">
+          <span class="tag">
+            <img
               src="/assets/tech-icons/react.svg"
               alt="React"
               class="tech-mini-icon"
               loading="lazy"
             />
             React.js
+          </span>
+          <span class="tag">
+            <img
+              src="/assets/tech-icons/nextjs.svg"
+              alt="Next.js"
+              class="tech-mini-icon"
+              loading="lazy"
+            />
+            Next.js
           </span>
           <span class="tag">
             <img
@@ -80,13 +105,6 @@ const t = useTranslations(lang);
             />
             Astro
           </span>
-        </div>
-      </div>
-
-      <div class="skill-card fade-in">
-        <i class="fas fa-server skill-icon"></i>
-        <h3 class="skill-title">{t('skills.backend')}</h3>
-        <div class="skill-tags">
           <span class="tag">
             <img
               src="/assets/tech-icons/nodejs.svg"
@@ -95,15 +113,6 @@ const t = useTranslations(lang);
               loading="lazy"
             />
             Node.js
-          </span>
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/java.svg"
-              alt="Java"
-              class="tech-mini-icon"
-              loading="lazy"
-            />
-            Java
           </span>
           <span class="tag">
             <img

@@ -203,11 +203,11 @@ nav.scrolled {
      so slow mouse moves between button and popover don't close it */
   top: calc(100% + 8px);
   right: 0;
-  min-width: 140px;
+  min-width: 168px;
   background: var(--bg-primary);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 6px;
+  padding: 8px;
   box-shadow: 0 8px 30px rgba(12, 18, 30, 0.08);
   list-style: none;
   margin: 0;
@@ -221,27 +221,27 @@ nav.scrolled {
 }
 
 .lang-item {
-  padding: 6px 8px;
+  padding: 8px 10px;
 }
 
 .lang-item>a {
   width: 100%;
   display: flex;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
   background: transparent;
   border: none;
-  padding: 6px 8px;
+  padding: 8px 10px;
   border-radius: 8px;
   cursor: pointer;
   color: var(--text-primary);
-  font-size: 14px;
+  font-size: 16px;
   text-decoration: none;
 }
 
 .lang-item>a img {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   border-radius: 4px;
 }
 
