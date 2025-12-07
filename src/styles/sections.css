@@ -62,12 +62,7 @@ section {
   font-family: monospace;
   font-size: 20px;
   font-weight: 700;
-  letter-spacing: -2px;
   margin: 0 auto 16px;
-}
-
-.section-divider::before {
-  content: '//';
 }
 
 /* Divider Variants */
@@ -147,8 +142,12 @@ section {
   }
 }
 
-/* Technologies: Cursor terminal alternando _ y █ */
+/* Technologies: Prompt >_ con cursor parpadeando */
 .divider-terminal::before {
+  content: '>';
+}
+
+.divider-terminal::after {
   content: '_';
   animation: terminal-cursor 1s step-end infinite;
 }
@@ -157,16 +156,21 @@ section {
 
   0%,
   50% {
-    content: '_';
+    opacity: 1;
   }
 
   50%,
   100% {
-    content: '█';
+    opacity: 0;
   }
 }
 
 /* Contact: Puntos suspensivos secuenciales . → .. → ... */
+.divider-typing-dots {
+  font-family: system-ui, -apple-system, sans-serif;
+  letter-spacing: 2px;
+}
+
 .divider-typing-dots::before {
   content: '.';
   animation: typing-dots 1.5s step-end infinite;
