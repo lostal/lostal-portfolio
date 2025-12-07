@@ -1,5 +1,5 @@
 ---
-interface Props {
+export interface Props {
   lang?: 'es' | 'en';
   title?: string;
   description?: string;
@@ -33,31 +33,6 @@ const ogImage = propOgImage || defaultOgImage;
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-
-    <!-- DNS Prefetch para recursos externos -->
-    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
-    <link rel="dns-prefetch" href="//www.googletagmanager.com" />
-
-    <!-- Google Analytics 4 - Optimizado para rendimiento -->
-    <link rel="preconnect" href="https://www.googletagmanager.com" />
-    <script
-      is:inline
-      type="text/partytown"
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-0Q34SCCETB"></script>
-    <script is:inline type="text/partytown">
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'G-0Q34SCCETB', {
-        send_page_view: true,
-        anonymize_ip: true,
-      });
-    </script>
 
     <!-- Preload Geist fonts (WOFF2) -->
     <link
@@ -108,7 +83,7 @@ const ogImage = propOgImage || defaultOgImage;
           'data-theme',
           prefersDark ? 'dark' : 'light'
         );
-      } catch (e) {
+      } catch {
         // no-op
       }
     </script>

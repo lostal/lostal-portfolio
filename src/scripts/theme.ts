@@ -1,15 +1,29 @@
 // src/scripts/theme.ts
 
-class ThemeManager {
-  private themeToggle: HTMLElement | null;
-  private themeIcon: HTMLElement | null;
+class ThemeToggle extends HTMLElement {
+  private themeIcon: HTMLElement | null = null;
   private html: HTMLElement;
 
   constructor() {
-    this.themeToggle = document.getElementById('themeToggle');
-    this.themeIcon = document.getElementById('themeIcon');
+    super();
     this.html = document.documentElement;
+  }
 
+  connectedCallback() {
+    this.themeIcon = this.querySelector('#themeIcon');
+
+    // If not found inside, maybe it's globally available or passed slightly differently, 
+    // but based on Navigation.astro structure:
+    // <button id="themeToggle"><i id="themeIcon"></i></button>
+    // We will wrap this in <theme-toggle> so this should be available inside.
+    // Actually, if we keep the button inside, we should listen to click on the button or 'this'.
+    // The previous code verified presence of themeToggle element.
+    // If we wrap the button, 'this' acts as container.
+
+    const button = this.querySelector('button') || this;
+    button.addEventListener('click', (e) => this.handleToggle(e));
+
+    // Initialize state
     this.init();
   }
 
@@ -44,6 +58,9 @@ class ThemeManager {
     this.html.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
     this.updateThemeIcon(animate);
+
+    // Dispatch event for other components if needed
+    window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme } }));
   }
 
   private init(): void {
@@ -54,11 +71,7 @@ class ThemeManager {
       this.setTheme(this.getSystemTheme(), false);
     }
 
-    if (this.themeToggle) {
-      this.themeToggle.addEventListener('click', (e) => this.handleToggle(e));
-    }
-
-    this.exposeDebugHelpers();
+    // Expose debug helpers if needed, or keeping it clean
   }
 
   private handleToggle(e: Event): void {
@@ -68,41 +81,12 @@ class ThemeManager {
     this.setTheme(newTheme, true);
 
     // Optional: Add simple animation class if desired
-    if (this.themeToggle) {
-      this.themeToggle.classList.add('animate');
-      setTimeout(() => this.themeToggle?.classList.remove('animate'), 800);
-    }
-  }
-
-  private exposeDebugHelpers(): void {
-    // Debug helper
-    if (
-      window.location.hostname === 'localhost' ||
-      window.location.hostname === '127.0.0.1'
-    ) {
-      window.themeDebug = {
-        getState: () => ({
-          currentTheme: this.html.getAttribute('data-theme'),
-          userOverride: !!localStorage.getItem('theme'),
-          systemTheme: this.getSystemTheme(),
-          deviceInfo: {
-            deviceType: 'desktop',
-            operatingSystem: 'unknown',
-            touchScreen: false,
-            orientation: false,
-            isMobile: false
-          }
-        }),
-        forceTheme: (theme: string) => this.setTheme(theme, true),
-        resetToSystem: () => {
-          localStorage.removeItem('theme');
-          this.setTheme(this.getSystemTheme(), true);
-        },
-        showNotification: () => { }
-      };
+    const button = this.querySelector('button');
+    if (button) {
+      button.classList.add('animate');
+      setTimeout(() => button.classList.remove('animate'), 800);
     }
   }
 }
 
-// Initialize
-new ThemeManager();
+customElements.define('theme-toggle', ThemeToggle);
