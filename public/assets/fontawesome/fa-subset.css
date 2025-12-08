@@ -18,15 +18,7 @@
 
 .fas:before,
 .fab:before {
-    content: var(--fa) / ""
-}
-
-@supports not (content: "" / "") {
-
-    .fas:before,
-    .fab:before {
-        content: var(--fa)
-    }
+    content: var(--fa)
 }
 
 /* Solid icons */
