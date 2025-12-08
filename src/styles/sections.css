@@ -9,12 +9,6 @@ section {
   background: var(--bg-secondary);
 }
 
-/* Estilo especial para las cards en secciones alternativas */
-.section-alt .card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-}
-
 #journey {
   padding-top: 64px;
   padding-bottom: 64px;
@@ -319,11 +313,17 @@ section {
 }
 
 .card {
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
+  /* Modo oscuro: contenido gris siempre */
   padding: 20px 22px;
   border-radius: 12px;
   border: 1px solid var(--border);
   transition: all 0.2s ease;
+}
+
+/* Modo claro: en secciones con fondo --bg-secondary, las cards intercalan a --bg-primary */
+[data-theme='light'] .section-alt .card {
+  background: var(--bg-primary);
 }
 
 .card:hover {

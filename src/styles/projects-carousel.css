@@ -205,7 +205,8 @@ section.projects-section {
 
   width: 100%;
   max-width: 100%;
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
+  /* Modo oscuro: contenido gris siempre */
   border-radius: var(--border-radius);
   position: relative;
   overflow: hidden;
@@ -560,7 +561,8 @@ section.projects-section {
   align-items: center;
   gap: 8px;
   padding: 10px 18px;
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
+  /* Modo oscuro: contenido gris siempre */
   color: var(--text-primary);
   font-family: var(--font-mono);
   font-size: 11px;
