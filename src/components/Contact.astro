@@ -55,3 +55,76 @@ const t = useTranslations(lang);
     </div>
   </div>
 </section>
+
+<style>
+  /* Contact: Typing dots */
+  .divider-typing-dots {
+    font-family:
+      system-ui,
+      -apple-system,
+      sans-serif;
+    letter-spacing: 2px;
+  }
+
+  .divider-typing-dots::before {
+    content: '.';
+    animation: typing-dots 1.5s step-end infinite;
+  }
+
+  @keyframes typing-dots {
+    0%,
+    33% {
+      content: '.';
+    }
+
+    33%,
+    66% {
+      content: '..';
+    }
+
+    66%,
+    100% {
+      content: '...';
+    }
+  }
+
+  /* Contact Section */
+  .contact-content {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: var(--bg-secondary);
+    border-radius: 24px;
+    /* Border radius circular para consonancia con el widget */
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+    font-size: 20px;
+  }
+
+  .contact-link:hover {
+    background: var(--accent-primary);
+    color: #000;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(213, 189, 55, 0.3);
+    border-color: var(--accent-primary);
+  }
+</style>

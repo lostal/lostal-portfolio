@@ -13,10 +13,8 @@ const t = useTranslations(lang);
 
 <section id="hero" class="hero bg-dots">
   <div class="hero-content">
-    <div
-      class="hero-image-wrapper"
-      tabindex="0"
-      role="button"
+    <button
+      class="hero-image-wrapper clean-btn"
       aria-label={t('hero.image.alt')}
     >
       <Picture
@@ -36,7 +34,7 @@ const t = useTranslations(lang);
         <span class="profile-indicator__text">{t('about.title')}</span>
         <i class="profile-indicator__icon">ⓘ</i>
       </div>
-    </div>
+    </button>
     <div class="hero-subtitle">{t('hero.greeting')}</div>
     <h1 class="hero-title typing-effect" data-text={t('hero.name')}>
       {t('hero.name')}
@@ -101,274 +99,7 @@ const t = useTranslations(lang);
   <script>
     // Hero Card Manager - Funcionalidad interactiva del card flotante
 
-    class HeroCardManager {
-      heroImage: HTMLElement | null;
-      heroImageWrapper: HTMLElement | null;
-      aboutCard: HTMLElement | null;
-      closeButton: HTMLElement | null;
-      overlay: HTMLElement | null;
-      profileIndicator: HTMLElement | null;
-      isCardOpen: boolean;
-      isMobile: boolean;
-      cachedHeaderHeight: number | null;
-      toggleCardBound: ((e: Event) => void) | null;
-      hideCardBound: (() => void) | null;
-      showCardBound: (() => void) | null;
-
-      constructor() {
-        this.heroImage = document.getElementById('heroImage');
-        this.heroImageWrapper = document.querySelector('.hero-image-wrapper');
-        this.aboutCard = document.getElementById('aboutCard');
-        this.closeButton = document.getElementById('closeCard');
-        this.overlay = document.getElementById('cardOverlay');
-        this.profileIndicator = document.querySelector('.profile-indicator');
-        this.isCardOpen = false;
-        this.isMobile = window.innerWidth <= 768;
-        this.cachedHeaderHeight = null; // Cache para evitar reflows
-        this.toggleCardBound = null;
-        this.hideCardBound = null;
-        this.showCardBound = null;
-
-        this.init();
-      }
-
-      init() {
-        if (!this.heroImage || !this.aboutCard) return;
-
-        this.bindEvents();
-        this.handleResize();
-
-        // Configurar posicionamiento inicial
-        window.addEventListener('load', () => {
-          this.calculateCardPosition();
-        });
-      }
-
-      bindEvents() {
-        // Limpiar eventos existentes
-        this.removeAllEvents();
-
-        // Desktop: hover events solo en la imagen
-        if (!this.isMobile) {
-          this.showCardBound = () => this.showCard();
-          this.hideCardBound = () => this.hideCard();
-
-          // Solo el wrapper controla la apertura/cierre
-          this.heroImageWrapper?.addEventListener(
-            'mouseenter',
-            this.showCardBound
-          );
-          this.heroImageWrapper?.addEventListener(
-            'mouseleave',
-            this.hideCardBound
-          );
-        } else {
-          // Mobile: touch events en el wrapper para mayor área táctil
-          this.toggleCardBound = (e: Event) => {
-            e.preventDefault();
-            this.toggleCard();
-          };
-
-          this.heroImageWrapper?.addEventListener(
-            'click',
-            this.toggleCardBound
-          );
-        }
-
-        // Eventos que no cambian con el tipo de dispositivo
-        this.bindStaticEvents();
-
-        // Redimensionar ventana
-        window.addEventListener('resize', () => this.handleResize());
-      }
-
-      bindStaticEvents() {
-        // Cerrar card
-        this.closeButton?.addEventListener('click', () => this.hideCard());
-        this.overlay?.addEventListener('click', () => this.hideCard());
-
-        // Teclado - usar el wrapper para mayor área de interacción
-        this.heroImageWrapper?.addEventListener('keydown', e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.toggleCard();
-          }
-        });
-
-        document.addEventListener('keydown', e => {
-          if (e.key === 'Escape' && this.isCardOpen) {
-            this.hideCard();
-          }
-        });
-      }
-
-      removeAllEvents() {
-        if (this.showCardBound) {
-          this.heroImageWrapper?.removeEventListener(
-            'mouseenter',
-            this.showCardBound
-          );
-        }
-        if (this.hideCardBound) {
-          this.heroImageWrapper?.removeEventListener(
-            'mouseleave',
-            this.hideCardBound
-          );
-        }
-        if (this.toggleCardBound) {
-          this.heroImageWrapper?.removeEventListener(
-            'click',
-            this.toggleCardBound
-          );
-        }
-      }
-
-      handleResize() {
-        const wasMobile = this.isMobile;
-        this.isMobile = window.innerWidth <= 768;
-
-        if (wasMobile !== this.isMobile) {
-          this.hideCard(true); // Force hide without animation
-          this.bindEvents(); // Re-bind events for new device type
-        }
-
-        if (this.isCardOpen) {
-          // En móvil, recalcular con delay para asegurar dimensiones correctas
-          if (this.isMobile) {
-            setTimeout(() => {
-              this.calculateCardPosition();
-            }, 100);
-          } else {
-            this.calculateCardPosition();
-          }
-        }
-      }
-
-      calculateCardPosition() {
-        if (!this.heroImage || !this.aboutCard) return;
-
-        // Fase 1: SOLO lecturas del DOM (batch read)
-        const imageRect = this.heroImage.getBoundingClientRect();
-        const viewport = {
-          width: window.innerWidth,
-          height: window.innerHeight,
-        };
-
-        // Cache header height to avoid repeated DOM queries
-        if (!this.cachedHeaderHeight) {
-          const header =
-            document.querySelector('nav') || document.querySelector('header');
-          this.cachedHeaderHeight = header ? header.offsetHeight : 80;
-        }
-        const minTopMargin = this.cachedHeaderHeight + 20;
-
-        // Fase 2: Cálculos puros (sin DOM)
-        let cardX, cardY;
-
-        if (this.isMobile || viewport.width <= 768) {
-          // En móvil: centrado perfecto con dimensiones cacheadas
-          const cardWidth = 360; // Usar dimensión fija para evitar reflows
-          const cardHeight = 400;
-
-          // Centrar horizontalmente con márgenes seguros
-          const margins = 20;
-          const availableWidth = viewport.width - margins * 2;
-          const finalWidth = Math.min(cardWidth, availableWidth);
-
-          cardX = (viewport.width - finalWidth) / 2;
-
-          // Centrar verticalmente considerando el header
-          const availableHeight = viewport.height - minTopMargin - margins;
-          const finalHeight = Math.min(cardHeight, availableHeight);
-
-          cardY = minTopMargin + (availableHeight - finalHeight) / 2;
-        } else {
-          // En desktop, posicionar a la derecha de la imagen
-          const cardWidth = 400; // Usar dimensión fija
-          const desiredX = imageRect.right + 40;
-          const maxX = viewport.width - cardWidth - 30;
-
-          cardX = Math.min(desiredX, maxX);
-
-          // Calcular Y para que no toque el header
-          const desiredY = imageRect.top;
-          cardY = Math.max(minTopMargin, desiredY);
-
-          // Asegurar que no se salga por abajo
-          const maxY = viewport.height - 400 - 30; // Usar altura fija
-          cardY = Math.min(cardY, maxY);
-        }
-
-        // Fase 3: SOLO escrituras del DOM en siguiente frame (batch write)
-        requestAnimationFrame(() => {
-          if (this.aboutCard) {
-            this.aboutCard.style.left = `${Math.round(cardX)}px`;
-            this.aboutCard.style.top = `${Math.round(cardY)}px`;
-          }
-        });
-      }
-
-      showCard() {
-        if (this.isCardOpen || !this.aboutCard) return;
-
-        this.isCardOpen = true;
-
-        // Calcular posición inicial
-        this.calculateCardPosition();
-
-        // Note: Profile indicator stays visible during hover now
-
-        // Añadir clases para animación
-        this.aboutCard.classList.add('show');
-        this.aboutCard.setAttribute('aria-hidden', 'false');
-
-        if (this.isMobile && this.overlay) {
-          this.overlay.classList.add('show');
-          this.overlay.setAttribute('aria-hidden', 'false');
-          document.body.style.overflow = 'hidden';
-
-          // Recalcular posición después del render para móvil (más preciso)
-          requestAnimationFrame(() => {
-            setTimeout(() => {
-              this.calculateCardPosition();
-            }, 50);
-          });
-        }
-
-        // Focus management para accesibilidad
-        setTimeout(() => {
-          if (this.isMobile) {
-            this.closeButton?.focus();
-          }
-        }, 300);
-      }
-
-      hideCard(force = false) {
-        if ((!this.isCardOpen && !force) || !this.aboutCard) return;
-
-        this.isCardOpen = false;
-
-        // Note: Profile indicator visibility managed by CSS only now
-
-        // Remover clases para animación
-        this.aboutCard.classList.remove('show');
-        this.aboutCard.setAttribute('aria-hidden', 'true');
-
-        if (this.isMobile && this.overlay) {
-          this.overlay.classList.remove('show');
-          this.overlay.setAttribute('aria-hidden', 'true');
-          document.body.style.overflow = '';
-        }
-      }
-
-      toggleCard() {
-        if (this.isCardOpen) {
-          this.hideCard();
-        } else {
-          this.showCard();
-        }
-      }
-    }
+    import { HeroCardManager } from '../scripts/hero-card';
 
     // Inicializar cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', () => {
@@ -404,3 +135,753 @@ const t = useTranslations(lang);
     });
   </script>
 </section>
+<style>
+  /* src/styles/hero.css content moved here */
+
+  /* Hero Section */
+  .hero {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 24px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      height: calc(
+        100dvh - var(--nav-height, 80px) - env(safe-area-inset-bottom, 0px)
+      );
+      box-sizing: border-box;
+      padding: calc(var(--nav-height, 80px) + 20px) 24px 20px;
+    }
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(
+      circle,
+      var(--accent-primary) 0%,
+      transparent 70%
+    );
+    opacity: 0.03;
+    animation: pulse 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: var(--z-background);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: var(--z-content);
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .hero-image-wrapper {
+    margin-bottom: 32px;
+    animation: fadeInUp 0.8s ease-out 0.1s both;
+  }
+
+  .hero-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 12px;
+    object-fit: cover;
+    margin: 0 auto;
+    border: 2px solid var(--accent-primary);
+    box-shadow: 0 8px 24px rgba(213, 189, 55, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    z-index: var(--z-hero-image);
+  }
+
+  /* Interactividad con glow y rotación sutil */
+  .hero-image.interactive-image:hover {
+    transform: scale(1.03) rotate(1.5deg);
+    border-color: var(--accent-dark);
+    box-shadow:
+      0 12px 32px rgba(213, 189, 55, 0.25),
+      0 0 20px rgba(213, 189, 55, 0.15);
+  }
+
+  .hero-image.interactive-image:focus {
+    outline: none;
+    box-shadow:
+      0 20px 60px rgba(213, 189, 55, 0.2),
+      0 0 0 3px var(--accent-primary);
+  }
+
+  .hero-image.interactive-image:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  @media (hover: hover) {
+    .hero-image.interactive-image::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(213, 189, 55, 0.15),
+        transparent
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .hero-image.interactive-image:hover::after {
+      opacity: 1;
+      animation: shimmer 1.5s ease-in-out infinite;
+    }
+  }
+
+  /* Animación de brillo que se mueve por la imagen */
+  @keyframes shimmer {
+    0% {
+      background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(213, 189, 55, 0.15),
+        transparent
+      );
+      transform: translateX(-100%);
+    }
+
+    50% {
+      background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(213, 189, 55, 0.25),
+        transparent
+      );
+      transform: translateX(0%);
+    }
+
+    100% {
+      background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(213, 189, 55, 0.15),
+        transparent
+      );
+      transform: translateX(100%);
+    }
+  }
+
+  /* Indicador visual estático estilo Apple */
+  .hero-image-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    border-radius: 24px;
+    outline: none;
+  }
+
+  .hero-image-wrapper:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Mejor indicador de foco para accesibilidad */
+  .hero-image-wrapper:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 4px;
+  }
+
+  /* Profile indicator - Original top-right position with breathing animation */
+  .profile-indicator {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 4px 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--text-secondary);
+    z-index: var(--z-profile-indicator);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    white-space: nowrap;
+    animation: smooth-breathe 3s ease-in-out infinite;
+  }
+
+  /* Animación más fluida y visible de "respiración" */
+  @keyframes smooth-breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+
+    50% {
+      transform: scale(1.08);
+      opacity: 1;
+    }
+  }
+
+  .profile-indicator__text {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .profile-indicator__icon {
+    font-size: 12px;
+    opacity: 0.8;
+    font-style: normal;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Comportamiento en hover del contenedor */
+  .hero-image-wrapper:hover .profile-indicator {
+    background: var(--accent-primary);
+    color: #000;
+    border-color: var(--accent-primary);
+    /* No rotation, only subtle scale */
+    transform: scale(1.05) rotate(0deg);
+    animation: none;
+  }
+
+  /* Ocultar indicador cuando la tarjeta está visible */
+  .about-card.show ~ .hero-content .hero-image-wrapper .profile-indicator {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  /* Alternativa: ocultar cuando hay clase específica */
+  .profile-indicator.hidden {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .profile-indicator {
+      font-size: 10px;
+      padding: 6px 10px;
+      border-radius: 16px;
+      /* Usar los mismos colores que desktop sin hover */
+      background: rgba(var(--bg-primary-rgb), 0.95);
+      color: var(--text-secondary);
+      border: 1px solid rgba(213, 189, 55, 0.3);
+      box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.06),
+        0 0 0 1px rgba(213, 189, 55, 0.1);
+      animation: smooth-breathe 3s ease-in-out infinite;
+    }
+
+    .profile-indicator__text {
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    .profile-indicator__icon {
+      font-size: 11px;
+    }
+
+    /* Feedback táctil para móviles */
+    .hero-image-wrapper:active .hero-image {
+      transform: scale(0.95);
+      transition: transform 0.1s ease;
+    }
+
+    .hero-image-wrapper:active .profile-indicator {
+      transform: scale(0.9);
+      opacity: 0.8;
+    }
+  }
+
+  /* Animación para móvil (consistente con desktop) */
+
+  /* Móvil en modo oscuro - usar colores de modo oscuro sin hover */
+  @media (max-width: 480px) and (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .profile-indicator {
+      background: rgba(29, 29, 31, 0.9) !important;
+      color: var(--text-secondary) !important;
+      border-color: rgba(66, 66, 69, 0.3) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    [data-theme='dark'] .profile-indicator {
+      background: rgba(29, 29, 31, 0.9) !important;
+      color: var(--text-secondary) !important;
+      border-color: rgba(66, 66, 69, 0.3) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+    }
+  }
+
+  /* Tema oscuro */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .profile-indicator {
+      background: rgba(29, 29, 31, 0.9);
+      border-color: rgba(66, 66, 69, 0.3);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  [data-theme='dark'] .profile-indicator {
+    background: rgba(29, 29, 31, 0.9);
+    border-color: rgba(66, 66, 69, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Arreglar hover en modo oscuro - mantener fondo amarillo y texto negro */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light'])
+      .hero-image-wrapper:hover
+      .profile-indicator {
+      background: var(--accent-primary) !important;
+      color: #000 !important;
+      /* Texto negro igual que en modo claro */
+      border-color: transparent !important;
+    }
+  }
+
+  [data-theme='dark'] .hero-image-wrapper:hover .profile-indicator {
+    background: var(--accent-primary) !important;
+    color: #000 !important;
+    /* Texto negro igual que en modo claro */
+    border-color: transparent !important;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--accent-primary);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+
+  .hero-title {
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1;
+    min-height: 64px;
+    /* Prevent layout shift during typing animation */
+    margin-bottom: 16px;
+    letter-spacing: -2px;
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+    /* Usar la misma duración de transición que el resto del sitio */
+    transition: color var(--animation-duration, 0.3s) ease;
+  }
+
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: 80px;
+      min-height: 80px;
+    }
+  }
+
+  .hero-description {
+    font-size: 18px;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 32px;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    gap: 16px;
+    animation: fadeInUp 0.8s ease-out 0.5s both;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: 48px;
+    }
+
+    .hero-description {
+      font-size: 16px;
+    }
+  }
+
+  /* Flecha de scroll hacia abajo */
+  .scroll-down {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-size: 20px;
+    transition:
+      color var(--animation-duration, 0.3s) ease,
+      background var(--animation-duration, 0.3s) ease;
+    /* Combinamos fade-in inicial con bounce continuo con delay para que se vea el fade-in primero */
+    animation:
+      fadeInUp 0.8s ease-out 0.6s both,
+      bounce-dynamic 2.5s ease-in-out 1.4s infinite;
+    border-radius: 50%;
+    background: rgba(var(--background-rgb), 0.8);
+    backdrop-filter: blur(10px);
+    border: none;
+    opacity: 1;
+    visibility: visible;
+    text-decoration: none;
+  }
+
+  .scroll-down.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .scroll-down:hover {
+    color: var(--accent-primary);
+    background: rgba(var(--accent-primary-rgb), 0.1);
+    /* Pausar la animación de bounce en hover para mejor interacción */
+    animation-play-state: paused;
+  }
+
+  .scroll-down i {
+    line-height: 1;
+    text-decoration: none;
+    border: none;
+    outline: none;
+  }
+
+  /* Animación de bounce más dinámica y sutil */
+  @keyframes bounce-dynamic {
+    0%,
+    100% {
+      transform: translateY(0) scale(1);
+    }
+
+    15% {
+      transform: translateY(-8px) scale(1.05);
+    }
+
+    30% {
+      transform: translateY(0) scale(1);
+    }
+
+    45% {
+      transform: translateY(-4px) scale(1.02);
+    }
+
+    60% {
+      transform: translateY(0) scale(1);
+    }
+
+    75% {
+      transform: translateY(-2px) scale(1.01);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .scroll-down {
+      bottom: 35px;
+      width: 36px;
+      height: 36px;
+      font-size: 18px;
+    }
+  }
+
+  /* Ocultar la flecha en pantallas verticales de móviles */
+  @media (max-width: 768px) and (orientation: portrait) {
+    .scroll-down {
+      display: none;
+    }
+  }
+
+  /* También ocultar en pantallas muy pequeñas independientemente de la orientación */
+  @media (max-height: 600px) {
+    .scroll-down {
+      display: none;
+    }
+  }
+
+  /* ===== CARD FLOTANTE ===== */
+
+  /* About Card - Estilo Apple/macOS */
+  .about-card {
+    position: fixed;
+    width: 400px;
+    max-width: calc(100vw - 40px);
+    background: var(--bg-primary);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 32px;
+    z-index: var(--z-floating-contact);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95) translateY(-10px);
+    transform-origin: left center;
+    transition: all 0.2s ease;
+    will-change: transform, opacity;
+    pointer-events: none;
+    isolation: isolate;
+  }
+
+  /* Tema oscuro para el card */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .about-card {
+      background: rgba(0, 0, 0, 0.85);
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 8px 25px rgba(0, 0, 0, 0.3),
+        0 0 1px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  [data-theme='dark'] .about-card {
+    background: var(--bg-primary);
+    border-color: var(--border);
+  }
+
+  /* Estado visible con animación iPhone-style */
+  .about-card.show {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateX(0) translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Botón de cerrar */
+  .about-card__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(var(--text-tertiary-rgb), 0.1);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    opacity: 0.7;
+  }
+
+  .about-card__close:hover {
+    background: rgba(var(--text-tertiary-rgb), 0.2);
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  .about-card__close:focus {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+  }
+
+  /* Contenido del card */
+  .about-card__content {
+    animation: fadeInUp 0.5s ease-out 0.2s both;
+  }
+
+  .about-card__title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .about-card__text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+
+  /* Stats en el card */
+  .about-card__stats {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+  }
+
+  .about-card__stats .stat {
+    text-align: center;
+    flex: 1;
+  }
+
+  .about-card__stats .stat-number {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent-primary);
+    line-height: 1.2;
+  }
+
+  .about-card__stats .stat-label {
+    display: block;
+    font-size: 14px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* Overlay para móvil */
+  .about-card-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: var(--z-card-overlay);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .about-card-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .about-card {
+      width: 90vw;
+      max-width: 400px;
+      padding: 28px;
+      transform: scale(0.9) translateY(50px);
+      transform-origin: center center;
+      /* Eliminar posicionamiento conflictivo en móvil */
+      left: auto !important;
+      right: auto !important;
+      /* Centrado CSS como fallback */
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .about-card.show {
+      transform: scale(1) translateX(0) translateY(0);
+    }
+
+    .about-card__close {
+      display: flex;
+      /* Mostrar siempre en móvil */
+    }
+
+    .about-card__stats {
+      gap: 16px;
+    }
+
+    .about-card__stats .stat-number {
+      font-size: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-card {
+      width: 95vw;
+      padding: 24px;
+    }
+
+    .about-card__title {
+      font-size: 20px;
+    }
+
+    .about-card__text {
+      font-size: 15px;
+    }
+
+    .about-card__stats {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .about-card__stats .stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(var(--text-tertiary-rgb), 0.1);
+    }
+
+    .about-card__stats .stat:last-child {
+      border-bottom: none;
+    }
+
+    .about-card__stats .stat-number,
+    .about-card__stats .stat-label {
+      margin: 0;
+    }
+  }
+
+  /* Ocultar botón de cerrar en desktop (solo hover/mouseleave) */
+  @media (hover: hover) and (pointer: fine) {
+    .about-card__close {
+      display: none;
+    }
+  }
+
+  /* Animación de entrada más elaborada para desktop */
+  @media (min-width: 769px) {
+    .about-card {
+      transform: scale(0.8) translateX(-30px) translateY(-20px) rotate(-2deg);
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .about-card.show {
+      transform: scale(1) translateX(0) translateY(0) rotate(0deg);
+    }
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: translateX(-50%) scale(1);
+      opacity: 0.03;
+    }
+
+    50% {
+      transform: translateX(-50%) scale(1.1);
+      opacity: 0.05;
+    }
+  }
+
+  /* Helper for clean button reset */
+  .clean-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+</style>

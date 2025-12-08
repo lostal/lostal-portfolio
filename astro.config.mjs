@@ -27,16 +27,8 @@ export default defineConfig({
   vite: {
     build: {
       cssCodeSplit: true, // Split CSS por página
-      rollupOptions: {
-        output: {
-          assetFileNames: 'assets/[name]-[hash][extname]',
-          manualChunks(id) {
-            // Agrupar swiper en chunk separado para lazy load
-            if (id.includes('swiper')) {
-              return 'swiper';
-            }
-          },
-        },
+      output: {
+        assetFileNames: 'assets/[name]-[hash][extname]',
       },
     },
   },
