@@ -86,7 +86,6 @@ body {
 body,
 .section-header,
 .section-title,
-.section-label,
 .card,
 .nav-link,
 .theme-toggle,
@@ -100,8 +99,7 @@ body,
 }
 
 /* Optimización: usar will-change para elementos que cambiarán */
-.section-title,
-.section-label {
+.section-title {
   will-change: color;
 }
 
@@ -121,8 +119,7 @@ body,
 /* Optimización adicional para móviles con conexión lenta */
 @media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
 
-  .section-title,
-  .section-label {
+  .section-title {
     transition-duration: 0.2s;
   }
 }
@@ -147,20 +144,6 @@ body,
   }
 }
 
-/* Animación de pulso para reset */
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.1);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
 
 /* Notificación de tema */
 #theme-notification {

@@ -47,8 +47,7 @@ body,
 .hero-title,
 .hero-subtitle,
 .hero-description,
-.section-title,
-.section-label {
+.section-title {
   font-family: var(--font-primary);
 }
 

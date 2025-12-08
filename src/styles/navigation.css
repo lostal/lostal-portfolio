@@ -26,7 +26,7 @@ nav.scrolled {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 72px;
+  height: var(--nav-height);
   position: relative;
 }
 
@@ -443,7 +443,7 @@ nav.scrolled {
 
 .mobile-menu {
   position: fixed;
-  top: 72px;
+  top: var(--nav-height);
   left: 0;
   right: 0;
   background: var(--bg-primary);
@@ -454,7 +454,7 @@ nav.scrolled {
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  max-height: calc(100vh - 72px);
+  max-height: calc(100vh - var(--nav-height));
   overflow: hidden;
   box-shadow: 0 4px 20px var(--shadow);
 }
