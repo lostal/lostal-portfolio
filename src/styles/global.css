@@ -221,6 +221,14 @@ body,
   }
 }
 
+/* ===== INDUSTRIAL DESIGN ENHANCEMENTS ===== */
+
+/* Typing Animation Effect */
+.typing-effect {
+  position: relative;
+  display: inline-block;
+}
+
 /* Industrial dot pattern background - Technical grid aesthetic */
 .bg-dots {
   position: relative;

@@ -55,16 +55,20 @@
   object-fit: cover;
   margin: 0 auto;
   border: 2px solid var(--accent-primary);
-  transition: all 0.2s ease;
+  box-shadow: 0 8px 24px rgba(213, 189, 55, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   position: relative;
   z-index: var(--z-hero-image);
 }
 
-/* Interactividad sutil de la imagen */
+/* Interactividad con glow y rotación sutil */
 .hero-image.interactive-image:hover {
-  transform: scale(1.02);
+  transform: scale(1.03) rotate(1.5deg);
   border-color: var(--accent-dark);
+  box-shadow:
+    0 12px 32px rgba(213, 189, 55, 0.25),
+    0 0 20px rgba(213, 189, 55, 0.15);
 }
 
 .hero-image.interactive-image:focus {
@@ -149,32 +153,28 @@
   outline-offset: 4px;
 }
 
+/* Profile indicator - Original top-right position with breathing animation */
 .profile-indicator {
   position: absolute;
   top: -8px;
   right: -8px;
-  background: rgba(var(--bg-primary-rgb), 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(213, 189, 55, 0.3);
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 4px 8px;
-  font-size: 11px;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
   color: var(--text-secondary);
   z-index: var(--z-profile-indicator);
   display: flex;
   align-items: center;
-  gap: 4px;
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.06),
-    0 0 0 1px rgba(213, 189, 55, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display',
-    system-ui, sans-serif;
-  letter-spacing: 0.2px;
+  gap: 5px;
+  transition: all 0.2s ease;
   pointer-events: none;
+  white-space: nowrap;
   animation: smooth-breathe 3s ease-in-out infinite;
 }
 
@@ -209,26 +209,12 @@
 
 /* Comportamiento en hover del contenedor */
 .hero-image-wrapper:hover .profile-indicator {
-  opacity: 1;
-  transform: scale(1.05);
   background: var(--accent-primary);
   color: #000;
-  /* Texto negro para mejor legibilidad en fondo amarillo */
-  box-shadow: 0 6px 25px rgba(213, 189, 55, 0.4);
-  animation: bounce-gentle 0.6s ease-in-out;
-}
-
-/* Animación suave de rebote para el indicador */
-@keyframes bounce-gentle {
-
-  0%,
-  100% {
-    transform: scale(1.05) translateY(0);
-  }
-
-  50% {
-    transform: scale(1.1) translateY(-2px);
-  }
+  border-color: var(--accent-primary);
+  /* No rotation, only subtle scale */
+  transform: scale(1.05) rotate(0deg);
+  animation: none;
 }
 
 /* Ocultar indicador cuando la tarjeta está visible */
@@ -346,6 +332,8 @@
   font-size: 64px;
   font-weight: 700;
   line-height: 1;
+  min-height: 64px;
+  /* Prevent layout shift during typing animation */
   margin-bottom: 16px;
   letter-spacing: -2px;
   animation: fadeInUp 0.8s ease-out 0.3s both;
@@ -356,6 +344,7 @@
 @media (min-width: 768px) {
   .hero-title {
     font-size: 80px;
+    min-height: 80px;
   }
 }
 
