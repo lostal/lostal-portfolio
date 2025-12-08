@@ -40,15 +40,19 @@ class NavigationManager {
   private initNavbarScroll(): void {
     let ticking = false;
 
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          this.handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            this.handleScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
   }
 
   private handleScroll(): void {
@@ -58,7 +62,8 @@ class NavigationManager {
         const aboutSection = document.getElementById('about');
         if (aboutSection) {
           const aboutPosition = aboutSection.offsetTop - 100;
-          if (scrollPosition >= aboutPosition) this.navbar.classList.add('scrolled');
+          if (scrollPosition >= aboutPosition)
+            this.navbar.classList.add('scrolled');
           else this.navbar.classList.remove('scrolled');
         }
       } else {
@@ -107,7 +112,7 @@ class NavigationManager {
 
       // Animation end handlers
       if (this.langIcon) {
-        this.langIcon.addEventListener('animationend', (e) => {
+        this.langIcon.addEventListener('animationend', e => {
           if (e.animationName?.includes('lang-click-bounce-icon')) {
             this.langIcon?.classList.remove('clicked');
             if (this.langAnimTimeout) clearTimeout(this.langAnimTimeout);
@@ -115,14 +120,16 @@ class NavigationManager {
         });
       }
 
-      this.langBtn.addEventListener('animationend', (e) => {
+      this.langBtn.addEventListener('animationend', e => {
         if (e.animationName?.includes('lang-click-bounce-icon')) {
           this.langBtn?.classList.remove('clicked');
         }
       });
 
       // Keyboard navigation
-      this.langBtn.addEventListener('keydown', (e) => this.handleLangBtnKeydown(e as KeyboardEvent));
+      this.langBtn.addEventListener('keydown', e =>
+        this.handleLangBtnKeydown(e as KeyboardEvent)
+      );
 
       // Popover link handlers
       this.langPopover.querySelectorAll('a[data-lang]').forEach(link => {
@@ -130,7 +137,9 @@ class NavigationManager {
           this.animateIcon();
           this.closeMenu();
         });
-        link.addEventListener('keydown', (e) => this.handleLangLinkKeydown(e as KeyboardEvent, link as HTMLElement));
+        link.addEventListener('keydown', e =>
+          this.handleLangLinkKeydown(e as KeyboardEvent, link as HTMLElement)
+        );
       });
 
       this.initLangState();
@@ -153,14 +162,19 @@ class NavigationManager {
       void this.langIcon.offsetWidth; // Force reflow
       this.langIcon.classList.add('clicked');
       if (this.langAnimTimeout) clearTimeout(this.langAnimTimeout);
-      this.langAnimTimeout = window.setTimeout(() => this.langIcon?.classList.remove('clicked'), 580);
+      this.langAnimTimeout = window.setTimeout(
+        () => this.langIcon?.classList.remove('clicked'),
+        580
+      );
     }
   }
 
   private handleLangBtnKeydown(e: KeyboardEvent): void {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
-      const first = this.langPopover?.querySelector('a[data-lang]') as HTMLElement;
+      const first = this.langPopover?.querySelector(
+        'a[data-lang]'
+      ) as HTMLElement;
       first?.focus();
       this.openMenu();
     } else if (e.key === 'Escape') {
@@ -177,7 +191,9 @@ class NavigationManager {
       return;
     }
 
-    const items = Array.from(this.langPopover?.querySelectorAll('a[data-lang]') || []) as HTMLElement[];
+    const items = Array.from(
+      this.langPopover?.querySelectorAll('a[data-lang]') || []
+    ) as HTMLElement[];
     const idx = items.indexOf(link);
 
     if (e.key === 'ArrowDown') {
@@ -205,8 +221,12 @@ class NavigationManager {
 
     // Update button state
     this.langBtn?.setAttribute('data-lang', current);
-    this.langBtn?.setAttribute('aria-label', current === 'es' ? 'Idioma: Español' : 'Language: English');
-    if (this.langBtn) this.langBtn.title = current === 'es' ? 'Español' : 'English';
+    this.langBtn?.setAttribute(
+      'aria-label',
+      current === 'es' ? 'Idioma: Español' : 'Language: English'
+    );
+    if (this.langBtn)
+      this.langBtn.title = current === 'es' ? 'Español' : 'English';
 
     // Update popover selection
     this.langPopover?.querySelectorAll('a[data-lang]').forEach(a => {
@@ -219,12 +239,14 @@ class NavigationManager {
     this.langBtn?.classList.remove('clicked');
 
     // Mark as ready after short delay
-    setTimeout(() => { if (this.langMenu) this.langMenu.dataset.ready = '1'; }, 50);
+    setTimeout(() => {
+      if (this.langMenu) this.langMenu.dataset.ready = '1';
+    }, 50);
   }
 
   private initSmoothScroll(): void {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e) => {
+      anchor.addEventListener('click', e => {
         e.preventDefault();
 
         const href = anchor.getAttribute('href');
@@ -232,7 +254,9 @@ class NavigationManager {
         if (href === '#top') {
           if (window.setManualNavigation) window.setManualNavigation(true);
           window.scrollTo({ top: 0, behavior: 'smooth' });
-          setTimeout(() => { if (window.resetAutoScroll) window.resetAutoScroll(); }, 600);
+          setTimeout(() => {
+            if (window.resetAutoScroll) window.resetAutoScroll();
+          }, 600);
           return;
         }
 

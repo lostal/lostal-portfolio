@@ -57,20 +57,28 @@ class AutoScrollManager {
     });
 
     let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          this.handleScroll();
-          ticking = false;
-        });
-        ticking = true;
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            this.handleScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      },
+      {
+        passive: true,
       }
-    }, {
-      passive: true,
-    });
+    );
 
-    document.addEventListener('keydown', (e: KeyboardEvent) => this.handleKeyNavigation(e));
-    document.addEventListener('click', (e: MouseEvent) => this.handleLinkClick(e));
+    document.addEventListener('keydown', (e: KeyboardEvent) =>
+      this.handleKeyNavigation(e)
+    );
+    document.addEventListener('click', (e: MouseEvent) =>
+      this.handleLinkClick(e)
+    );
   }
 
   autoScrollToProjects() {

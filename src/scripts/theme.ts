@@ -12,7 +12,7 @@ class ThemeToggle extends HTMLElement {
   connectedCallback() {
     this.themeIcon = this.querySelector('#themeIcon');
 
-    // If not found inside, maybe it's globally available or passed slightly differently, 
+    // If not found inside, maybe it's globally available or passed slightly differently,
     // but based on Navigation.astro structure:
     // <button id="themeToggle"><i id="themeIcon"></i></button>
     // We will wrap this in <theme-toggle> so this should be available inside.
@@ -21,7 +21,7 @@ class ThemeToggle extends HTMLElement {
     // If we wrap the button, 'this' acts as container.
 
     const button = this.querySelector('button') || this;
-    button.addEventListener('click', (e) => this.handleToggle(e));
+    button.addEventListener('click', e => this.handleToggle(e));
 
     // Initialize state
     this.init();
@@ -60,7 +60,9 @@ class ThemeToggle extends HTMLElement {
     this.updateThemeIcon(animate);
 
     // Dispatch event for other components if needed
-    window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme } }));
+    window.dispatchEvent(
+      new CustomEvent('theme-changed', { detail: { theme } })
+    );
   }
 
   private init(): void {

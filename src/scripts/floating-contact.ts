@@ -6,7 +6,11 @@ class FloatingContactWidget {
   projectsSection: HTMLElement | null;
   isVisible: boolean;
   isAnimating: boolean;
-  cachedPositions: { projectsTop: number; contactTop: number; lastUpdate: number };
+  cachedPositions: {
+    projectsTop: number;
+    contactTop: number;
+    lastUpdate: number;
+  };
   ticking: boolean;
 
   constructor() {
@@ -86,8 +90,12 @@ class FloatingContactWidget {
     if (!this.projectsSection || !this.contactSection) return;
 
     // Usar getBoundingClientRect() y calcular una sola vez
-    const projectsRect = (this.projectsSection as HTMLElement).getBoundingClientRect();
-    const contactRect = (this.contactSection as HTMLElement).getBoundingClientRect();
+    const projectsRect = (
+      this.projectsSection as HTMLElement
+    ).getBoundingClientRect();
+    const contactRect = (
+      this.contactSection as HTMLElement
+    ).getBoundingClientRect();
     const scrollY = window.scrollY;
 
     this.cachedPositions = {

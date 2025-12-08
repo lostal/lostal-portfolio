@@ -3,12 +3,12 @@
  * Uses matchMedia for modern browsers and falls back to other properties for compatibility.
  */
 export function isTouchDevice(): boolean {
-    if (typeof window === 'undefined') return false;
+  if (typeof window === 'undefined') return false;
 
-    return (
-        window.matchMedia('(pointer: coarse)').matches ||
-        'ontouchstart' in window ||
-        navigator.maxTouchPoints > 0 ||
-        (navigator.msMaxTouchPoints || 0) > 0
-    );
+  return (
+    window.matchMedia('(pointer: coarse)').matches ||
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0 ||
+    (navigator.msMaxTouchPoints || 0) > 0
+  );
 }

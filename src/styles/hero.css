@@ -14,7 +14,9 @@
 
 @media (max-width: 768px) {
   .hero {
-    height: calc(100dvh - var(--nav-height, 80px) - env(safe-area-inset-bottom, 0px));
+    height: calc(
+      100dvh - var(--nav-height, 80px) - env(safe-area-inset-bottom, 0px)
+    );
     box-sizing: border-box;
     padding: calc(var(--nav-height, 80px) + 20px) 24px 20px;
   }
@@ -28,9 +30,11 @@
   transform: translateX(-50%);
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle,
-      var(--accent-primary) 0%,
-      transparent 70%);
+  background: radial-gradient(
+    circle,
+    var(--accent-primary) 0%,
+    transparent 70%
+  );
   opacity: 0.03;
   animation: pulse 8s ease-in-out infinite;
   pointer-events: none;
@@ -92,10 +96,12 @@
     right: 0;
     bottom: 0;
     border-radius: inherit;
-    background: linear-gradient(45deg,
-        transparent,
-        rgba(213, 189, 55, 0.15),
-        transparent);
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(213, 189, 55, 0.15),
+      transparent
+    );
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -109,26 +115,32 @@
 /* Animación de brillo que se mueve por la imagen */
 @keyframes shimmer {
   0% {
-    background: linear-gradient(45deg,
-        transparent,
-        rgba(213, 189, 55, 0.15),
-        transparent);
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(213, 189, 55, 0.15),
+      transparent
+    );
     transform: translateX(-100%);
   }
 
   50% {
-    background: linear-gradient(45deg,
-        transparent,
-        rgba(213, 189, 55, 0.25),
-        transparent);
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(213, 189, 55, 0.25),
+      transparent
+    );
     transform: translateX(0%);
   }
 
   100% {
-    background: linear-gradient(45deg,
-        transparent,
-        rgba(213, 189, 55, 0.15),
-        transparent);
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(213, 189, 55, 0.15),
+      transparent
+    );
     transform: translateX(100%);
   }
 }
@@ -180,7 +192,6 @@
 
 /* Animación más fluida y visible de "respiración" */
 @keyframes smooth-breathe {
-
   0%,
   100% {
     transform: scale(1);
@@ -218,7 +229,7 @@
 }
 
 /* Ocultar indicador cuando la tarjeta está visible */
-.about-card.show~.hero-content .hero-image-wrapper .profile-indicator {
+.about-card.show ~ .hero-content .hero-image-wrapper .profile-indicator {
   opacity: 0;
   transform: scale(0.9);
 }
@@ -425,7 +436,6 @@
 
 /* Animación de bounce más dinámica y sutil */
 @keyframes bounce-dynamic {
-
   0%,
   100% {
     transform: translateY(0) scale(1);
@@ -715,7 +725,6 @@
 }
 
 @keyframes pulse {
-
   0%,
   100% {
     transform: translateX(-50%) scale(1);

@@ -13,7 +13,9 @@ interface CarouselElement extends HTMLElement {
  * Inicializa el carrusel de proyectos usando Swiper
  */
 function initProjectsCarousel(): Swiper | null {
-  const carousel = document.querySelector('.projects-carousel') as CarouselElement | null;
+  const carousel = document.querySelector(
+    '.projects-carousel'
+  ) as CarouselElement | null;
   if (!carousel) return null;
 
   if (carousel.swiperInstance) {
@@ -133,15 +135,19 @@ function initProjectsCarousel(): Swiper | null {
 
     // Reset min-height to allow natural recalculation if needed (though we usually grow)
     // We modify the slides directly.
-    const slides = carousel.querySelectorAll<HTMLElement>('.projects-carousel__slide');
+    const slides = carousel.querySelectorAll<HTMLElement>(
+      '.projects-carousel__slide'
+    );
     if (!slides.length) return;
 
     let maxRequiredHeight = 0;
 
-    slides.forEach((slide) => {
+    slides.forEach(slide => {
       // Find the inner card content parts
       const image = slide.querySelector<HTMLElement>('.carousel-item__image');
-      const content = slide.querySelector<HTMLElement>('.carousel-item__content');
+      const content = slide.querySelector<HTMLElement>(
+        '.carousel-item__content'
+      );
 
       // We look for the "inner" parts that always have natural height
       // The structure is: .carousel-item__header > .carousel-item__header-inner
@@ -153,9 +159,13 @@ function initProjectsCarousel(): Swiper | null {
       // <div class="carousel-item__info">...</div>
       // <div class="carousel-item__footer"><div class="carousel-item__actions">...</div></div>
 
-      const headerInner = slide.querySelector<HTMLElement>('.carousel-item__header-inner');
+      const headerInner = slide.querySelector<HTMLElement>(
+        '.carousel-item__header-inner'
+      );
       const info = slide.querySelector<HTMLElement>('.carousel-item__info');
-      const footerActions = slide.querySelector<HTMLElement>('.carousel-item__actions');
+      const footerActions = slide.querySelector<HTMLElement>(
+        '.carousel-item__actions'
+      );
 
       if (image && content && headerInner && info && footerActions) {
         // Measure heights
@@ -166,10 +176,15 @@ function initProjectsCarousel(): Swiper | null {
         const paddingAndGap =
           parseFloat(contentStyle.paddingTop || '0') +
           parseFloat(contentStyle.paddingBottom || '0') +
-          (parseFloat(contentStyle.rowGap || '0') * 2); // 2 gaps for 3 items
+          parseFloat(contentStyle.rowGap || '0') * 2; // 2 gaps for 3 items
 
         // Sum execution
-        const totalH = imgH + paddingAndGap + headerInner.offsetHeight + info.offsetHeight + footerActions.offsetHeight;
+        const totalH =
+          imgH +
+          paddingAndGap +
+          headerInner.offsetHeight +
+          info.offsetHeight +
+          footerActions.offsetHeight;
 
         if (totalH > maxRequiredHeight) {
           maxRequiredHeight = totalH;
@@ -186,7 +201,7 @@ function initProjectsCarousel(): Swiper | null {
         slide.style.minHeight = `${finalHeight}px`;
       });
 
-      // Also update the wrapper/container if needed? 
+      // Also update the wrapper/container if needed?
       // Swiper usually handles wrapper height if slides are sized.
       // But the container .projects-carousel has a min-height too.
       // We should probably let that be handled by CSS or update it too.
@@ -198,7 +213,7 @@ function initProjectsCarousel(): Swiper | null {
   // We use requestAnimationFrame to ensure styles (computed values) are ready
   requestAnimationFrame(() => {
     updateCarouselHeight();
-    // Re-run after a short delay in case of font loading layout shifts, 
+    // Re-run after a short delay in case of font loading layout shifts,
     // although standard fonts usually don't shift height much.
     setTimeout(updateCarouselHeight, 500);
   });

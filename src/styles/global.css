@@ -105,7 +105,6 @@ body,
 
 /* Respeto por preferencias de accesibilidad y optimización móvil */
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {
@@ -118,7 +117,6 @@ body,
 
 /* Optimización adicional para móviles con conexión lenta */
 @media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
-
   .section-title {
     transition-duration: 0.2s;
   }
@@ -143,7 +141,6 @@ body,
     transform: scale(1);
   }
 }
-
 
 /* Notificación de tema */
 #theme-notification {
@@ -195,20 +192,26 @@ body,
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle at center,
-      var(--text-tertiary) 1px,
-      transparent 1px);
+  background-image: radial-gradient(
+    circle at center,
+    var(--text-tertiary) 1px,
+    transparent 1px
+  );
   background-size: 20px 20px;
   opacity: 0.25;
   pointer-events: none;
   z-index: -1;
   /* Fade mask for subtle edges */
-  mask-image: radial-gradient(ellipse 90% 70% at 50% 50%,
-      black 40%,
-      transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 50%,
-      black 40%,
-      transparent 100%);
+  mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 50%,
+    black 40%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 50%,
+    black 40%,
+    transparent 100%
+  );
 }
 
 .fade-in {

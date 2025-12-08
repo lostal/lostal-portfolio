@@ -15,7 +15,7 @@
   --border: #d8d8d6;
   --border-rgb: 216, 216, 214;
   --shadow: rgba(0, 0, 0, 0.06);
-  --shadow-lg: rgba(0, 0, 0, 0.10);
+  --shadow-lg: rgba(0, 0, 0, 0.1);
 
   /* Fuentes solo del sistema, sin fuentes externas */
   --font-primary:

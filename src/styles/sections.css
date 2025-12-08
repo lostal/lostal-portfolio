@@ -39,7 +39,6 @@ section {
   animation: fadeInUp 0.8s ease-out;
 }
 
-
 .section-divider {
   width: auto;
   height: auto;
@@ -60,7 +59,6 @@ section {
 }
 
 @keyframes loading-spin {
-
   0%,
   12.5% {
     content: '|';
@@ -115,7 +113,6 @@ section {
 }
 
 @keyframes line-expand {
-
   0%,
   100% {
     width: 0;
@@ -139,7 +136,6 @@ section {
 }
 
 @keyframes terminal-cursor {
-
   0%,
   50% {
     opacity: 1;
@@ -153,7 +149,10 @@ section {
 
 /* Contact: Puntos suspensivos secuenciales . → .. → ... */
 .divider-typing-dots {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
   letter-spacing: 2px;
 }
 
@@ -163,7 +162,6 @@ section {
 }
 
 @keyframes typing-dots {
-
   0%,
   33% {
     content: '.';
@@ -179,8 +177,6 @@ section {
     content: '...';
   }
 }
-
-
 
 .section-title {
   font-size: 42px;
@@ -571,8 +567,6 @@ section {
   font-size: 16px;
   line-height: 1.6;
 }
-
-
 
 /* Mobile Spacing Adjustments */
 @media (max-width: 768px) {

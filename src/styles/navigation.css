@@ -46,9 +46,11 @@ nav.scrolled {
     'Helvetica Neue',
     Arial,
     sans-serif;
-  background: linear-gradient(135deg,
-      var(--accent-primary),
-      var(--accent-dark));
+  background: linear-gradient(
+    135deg,
+    var(--accent-primary),
+    var(--accent-dark)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -224,7 +226,7 @@ nav.scrolled {
   padding: 8px 10px;
 }
 
-.lang-item>a {
+.lang-item > a {
   width: 100%;
   display: flex;
   gap: 10px;
@@ -239,14 +241,14 @@ nav.scrolled {
   text-decoration: none;
 }
 
-.lang-item>a img {
+.lang-item > a img {
   width: 26px;
   height: 26px;
   border-radius: 4px;
 }
 
-.lang-item>a:hover,
-.lang-item>a:focus {
+.lang-item > a:hover,
+.lang-item > a:focus {
   background: var(--bg-secondary);
   outline: none;
 }
@@ -317,7 +319,6 @@ nav.scrolled {
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   .lang-btn,
   .lang-popover,
   .logo,

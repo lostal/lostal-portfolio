@@ -301,7 +301,6 @@ section.projects-section {
 }
 
 @media screen and (max-width: 1023px) {
-
   .carousel-item__header,
   .carousel-item__footer {
     --header-footer-transition-duration: 0.4s;
@@ -606,7 +605,6 @@ section.projects-section {
 }
 
 @media screen and (max-width: 768px) {
-
   .swiper-slide-active .carousel-item__header,
   .swiper-slide-active .carousel-item__footer {
     max-height: 120px;
