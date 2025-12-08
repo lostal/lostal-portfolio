@@ -178,32 +178,6 @@ body,
   }
 }
 
-@keyframes pulse {
-
-  0%,
-  100% {
-    transform: translateX(-50%) scale(1);
-    opacity: 0.03;
-  }
-
-  50% {
-    transform: translateX(-50%) scale(1.1);
-    opacity: 0.05;
-  }
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* ===== INDUSTRIAL DESIGN ENHANCEMENTS ===== */
 
 /* Typing Animation Effect */

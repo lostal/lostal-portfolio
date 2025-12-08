@@ -21,7 +21,7 @@ export default defineConfig({
     },
   },
   build: {
-    inlineStylesheets: 'always', // Inline pequeños CSS para reducir render-blocking
+    inlineStylesheets: 'auto', // Permite que Astro decida la mejor estrategia
     assets: '_astro',
   },
   vite: {

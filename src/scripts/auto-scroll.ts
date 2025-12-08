@@ -56,7 +56,16 @@ class AutoScrollManager {
       capture: true,
     });
 
-    window.addEventListener('scroll', () => this.handleScroll(), {
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          this.handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, {
       passive: true,
     });
 

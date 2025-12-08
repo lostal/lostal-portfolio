@@ -1,4 +1,14 @@
 ---
+import '../styles/variables.css';
+import '../styles/global.css';
+import '../styles/font-optimization.css';
+import '../styles/navigation.css';
+import '../styles/hero.css';
+import '../styles/sections.css';
+import '../styles/components.css';
+import '../styles/floating-contact.css';
+import '../styles/projects-carousel.css';
+
 export interface Props {
   lang?: 'es' | 'en';
   title?: string;
@@ -133,17 +143,5 @@ const ogImage = propOgImage || defaultOgImage;
     <script src="../scripts/auto-scroll.ts"></script>
     <script src="../scripts/navigation.ts"></script>
     <script src="../scripts/theme.ts"></script>
-
-    <style is:global>
-      @import '../styles/variables.css';
-      @import '../styles/global.css';
-      @import '../styles/font-optimization.css';
-      @import '../styles/navigation.css';
-      @import '../styles/hero.css';
-      @import '../styles/sections.css';
-      @import '../styles/components.css';
-      @import '../styles/floating-contact.css';
-      @import '../styles/projects-carousel.css';
-    </style>
   </body>
 </html>

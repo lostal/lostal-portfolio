@@ -38,26 +38,38 @@ class NavigationManager {
   }
 
   private initNavbarScroll(): void {
+    let ticking = false;
+
     window.addEventListener('scroll', () => {
-      const scrollPosition = window.pageYOffset;
-      if (this.navbar) {
-        if (isTouchDevice()) {
-          const aboutSection = document.getElementById('about');
-          if (aboutSection) {
-            const aboutPosition = aboutSection.offsetTop - 100;
-            if (scrollPosition >= aboutPosition) this.navbar.classList.add('scrolled');
-            else this.navbar.classList.remove('scrolled');
-          }
-        } else {
-          if (scrollPosition > 50) this.navbar.classList.add('scrolled');
-          else this.navbar.classList.remove('scrolled');
-        }
-      }
-      if (this.scrollDown) {
-        if (scrollPosition > 100) this.scrollDown.classList.add('hidden');
-        else this.scrollDown.classList.remove('hidden');
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          this.handleScroll();
+          ticking = false;
+        });
+        ticking = true;
       }
     }, { passive: true });
+  }
+
+  private handleScroll(): void {
+    const scrollPosition = window.pageYOffset;
+    if (this.navbar) {
+      if (isTouchDevice()) {
+        const aboutSection = document.getElementById('about');
+        if (aboutSection) {
+          const aboutPosition = aboutSection.offsetTop - 100;
+          if (scrollPosition >= aboutPosition) this.navbar.classList.add('scrolled');
+          else this.navbar.classList.remove('scrolled');
+        }
+      } else {
+        if (scrollPosition > 50) this.navbar.classList.add('scrolled');
+        else this.navbar.classList.remove('scrolled');
+      }
+    }
+    if (this.scrollDown) {
+      if (scrollPosition > 100) this.scrollDown.classList.add('hidden');
+      else this.scrollDown.classList.remove('hidden');
+    }
   }
 
   private initMobileMenu(): void {
