@@ -117,7 +117,16 @@ const ogImage = propOgImage || defaultOgImage;
     />
     <!-- iOS touch icon -->
     <link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta
+      name="theme-color"
+      content="#ffffff"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#0a0a0a"
+      media="(prefers-color-scheme: dark)"
+    />
   </head>
   <body>
     <a href="#main" class="skip-link"

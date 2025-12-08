@@ -356,6 +356,31 @@ const t = useTranslations(lang);
     line-height: 1.6;
   }
 
+  /* Projects: Line expand */
+  .divider-line {
+    width: 0;
+    height: 2px;
+    background: var(--accent-primary);
+    animation: line-expand 2.5s ease-in-out infinite;
+  }
+
+  .divider-line::before {
+    content: none;
+  }
+
+  @keyframes line-expand {
+    0%,
+    100% {
+      width: 0;
+      opacity: 0.5;
+    }
+
+    50% {
+      width: 60px;
+      opacity: 1;
+    }
+  }
+
   /* Projects Carousel Styles */
   .projects-section .wrapper {
     max-width: 1560px;

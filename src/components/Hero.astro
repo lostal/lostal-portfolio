@@ -138,6 +138,43 @@ const t = useTranslations(lang);
 <style>
   /* src/styles/hero.css content moved here */
 
+  /* Typing Animation Effect - Específico de Hero */
+  .typing-effect {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Industrial dot pattern background - Technical grid aesthetic */
+  .bg-dots {
+    position: relative;
+  }
+
+  .bg-dots::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      circle at center,
+      var(--text-tertiary) 1px,
+      transparent 1px
+    );
+    background-size: 20px 20px;
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: -1;
+    /* Fade mask for subtle edges */
+    mask-image: radial-gradient(
+      ellipse 90% 70% at 50% 50%,
+      black 40%,
+      transparent 100%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 90% 70% at 50% 50%,
+      black 40%,
+      transparent 100%
+    );
+  }
+
   /* Hero Section */
   .hero {
     min-height: 100dvh;
