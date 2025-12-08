@@ -454,57 +454,37 @@ const t = useTranslations(lang);
 
   /* Animación para móvil (consistente con desktop) */
 
-  /* Móvil en modo oscuro - usar colores de modo oscuro sin hover */
-  @media (max-width: 480px) and (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) .profile-indicator {
-      background: rgba(29, 29, 31, 0.9) !important;
-      color: var(--text-secondary) !important;
-      border-color: rgba(66, 66, 69, 0.3) !important;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
-    }
+  /* ===== TEMA OSCURO - Profile Indicator ===== */
+  /* Consolidado: una sola regla para dark mode que cubre ambos casos */
+  :root[data-theme='dark'] .profile-indicator,
+  :root:not([data-theme='light']):is(@media (prefers-color-scheme: dark) *)
+    .profile-indicator {
+    background: rgba(29, 29, 31, 0.9);
+    border-color: rgba(66, 66, 69, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   }
 
-  @media (max-width: 480px) {
-    [data-theme='dark'] .profile-indicator {
-      background: rgba(29, 29, 31, 0.9) !important;
-      color: var(--text-secondary) !important;
-      border-color: rgba(66, 66, 69, 0.3) !important;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
-    }
+  /* Dark mode: hover mantiene fondo amarillo y texto negro */
+  :root[data-theme='dark'] .hero-image-wrapper:hover .profile-indicator {
+    background: var(--accent-primary);
+    color: #000;
+    border-color: transparent;
   }
 
-  /* Tema oscuro */
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme='light']) .profile-indicator {
       background: rgba(29, 29, 31, 0.9);
       border-color: rgba(66, 66, 69, 0.3);
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     }
-  }
 
-  [data-theme='dark'] .profile-indicator {
-    background: rgba(29, 29, 31, 0.9);
-    border-color: rgba(66, 66, 69, 0.3);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  }
-
-  /* Arreglar hover en modo oscuro - mantener fondo amarillo y texto negro */
-  @media (prefers-color-scheme: dark) {
     :root:not([data-theme='light'])
       .hero-image-wrapper:hover
       .profile-indicator {
-      background: var(--accent-primary) !important;
-      color: #000 !important;
-      /* Texto negro igual que en modo claro */
-      border-color: transparent !important;
+      background: var(--accent-primary);
+      color: #000;
+      border-color: transparent;
     }
-  }
-
-  [data-theme='dark'] .hero-image-wrapper:hover .profile-indicator {
-    background: var(--accent-primary) !important;
-    color: #000 !important;
-    /* Texto negro igual que en modo claro */
-    border-color: transparent !important;
   }
 
   .hero-subtitle {

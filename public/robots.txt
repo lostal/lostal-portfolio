@@ -1,8 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /.well-known/
-Disallow: /test/
-Disallow: /dev/
 
 Sitemap: https://lostal.dev/sitemap-index.xml
