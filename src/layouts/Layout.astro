@@ -49,6 +49,13 @@ const ogImage = propOgImage || defaultOgImage;
       type="font/woff2"
       crossorigin
     />
+    <link
+      rel="preload"
+      href="/assets/geist/GeistMono-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -119,6 +126,7 @@ const ogImage = propOgImage || defaultOgImage;
     <!-- Elemento para notificaciones relacionadas con el tema (controlado por theme.js) -->
     <div id="theme-notification" class="theme-notification" aria-hidden="true">
     </div>
+
     <slot />
 
     <script src="../scripts/animations.ts"></script>

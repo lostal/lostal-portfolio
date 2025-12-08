@@ -113,23 +113,20 @@ section.projects-section {
   display: flex;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 1;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   pointer-events: auto;
   cursor: pointer;
-  transition: all 0.28s ease;
-  background: var(--bg-secondary);
+  transition: all 0.2s ease;
+  background: transparent;
   border: 1px solid var(--border);
-  border-radius: 50%;
-  backdrop-filter: blur(10px);
+  border-radius: 8px;
   position: relative;
   padding: 0;
   font: inherit;
   color: inherit;
   outline: none;
-  box-shadow: 0 2px 8px var(--shadow);
-  opacity: 0.85;
+  opacity: 0.7;
 }
 
 .slider-nav__item_prev {
@@ -172,8 +169,6 @@ section.projects-section {
 @media (hover: hover) and (pointer: fine) {
   .slider-nav__item:not(.disabled):hover {
     border-color: var(--accent-primary);
-    transform: scale(1.1);
-    box-shadow: 0 4px 16px var(--shadow-lg);
     opacity: 1;
   }
 
@@ -205,23 +200,22 @@ section.projects-section {
 }
 
 .carousel-item {
-  --border-radius: 16px;
-  --carousel-transition-duration: 0.28s;
+  --border-radius: 12px;
+  --carousel-transition-duration: 0.2s;
 
   width: 100%;
   max-width: 100%;
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
   border-radius: var(--border-radius);
   position: relative;
   overflow: hidden;
   transition:
     transform var(--carousel-transition-duration) ease,
     opacity var(--carousel-transition-duration) ease,
-    box-shadow var(--carousel-transition-duration) ease,
     border-color var(--carousel-transition-duration) ease;
   opacity: 0.6;
   transform: scale(0.88);
-  border: 2px solid transparent;
+  border: 1px solid var(--border);
 }
 
 @media screen and (max-width: 1023px) {
@@ -464,14 +458,16 @@ section.projects-section {
   padding: 10px 20px;
   background: transparent;
   color: var(--text-primary);
-  font-family: var(--font-primary);
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   text-decoration: none;
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   outline: none;
 }
 
@@ -501,8 +497,6 @@ section.projects-section {
     background: var(--accent-primary);
     color: #000;
     border-color: var(--accent-primary);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(213, 189, 55, 0.3);
   }
 
   .carousel-item__btn:hover i {
@@ -568,12 +562,15 @@ section.projects-section {
   padding: 10px 18px;
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-size: 14px;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   text-decoration: none;
   border: 1px solid var(--border);
-  border-radius: 18px;
-  transition: all 0.22s ease;
+  border-radius: 12px;
+  transition: all 0.2s ease;
 }
 
 .carousel-item__action i {
@@ -585,7 +582,6 @@ section.projects-section {
     background: var(--accent-primary);
     color: #000;
     border-color: var(--accent-primary);
-    transform: translateY(-2px);
   }
 }
 

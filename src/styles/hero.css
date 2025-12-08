@@ -14,9 +14,7 @@
 
 @media (max-width: 768px) {
   .hero {
-    height: calc(
-      100dvh - var(--nav-height, 80px) - env(safe-area-inset-bottom, 0px)
-    );
+    height: calc(100dvh - var(--nav-height, 80px) - env(safe-area-inset-bottom, 0px));
     box-sizing: border-box;
     padding: calc(var(--nav-height, 80px) + 20px) 24px 20px;
   }
@@ -30,11 +28,9 @@
   transform: translateX(-50%);
   width: 600px;
   height: 600px;
-  background: radial-gradient(
-    circle,
-    var(--accent-primary) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle,
+      var(--accent-primary) 0%,
+      transparent 70%);
   opacity: 0.03;
   animation: pulse 8s ease-in-out infinite;
   pointer-events: none;
@@ -55,25 +51,24 @@
 .hero-image {
   width: 180px;
   height: 180px;
-  border-radius: 24px;
+  border-radius: 12px;
   object-fit: cover;
   margin: 0 auto;
-  border: 3px solid var(--accent-primary);
-  box-shadow: 0 20px 60px rgba(213, 189, 55, 0.2);
+  border: 2px solid var(--accent-primary);
+  box-shadow: 0 8px 24px rgba(213, 189, 55, 0.15);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   position: relative;
   z-index: var(--z-hero-image);
 }
 
-/* Interactividad sutil de la imagen */
+/* Interactividad con glow y rotación sutil */
 .hero-image.interactive-image:hover {
-  transform: scale(1.02) rotate(1deg);
+  transform: scale(1.03) rotate(1.5deg);
+  border-color: var(--accent-dark);
   box-shadow:
-    0 25px 70px rgba(213, 189, 55, 0.25),
-    0 0 0 1px rgba(213, 189, 55, 0.1),
-    0 0 40px rgba(213, 189, 55, 0.3);
-  filter: brightness(1.05) contrast(1.02);
+    0 12px 32px rgba(213, 189, 55, 0.25),
+    0 0 20px rgba(213, 189, 55, 0.15);
 }
 
 .hero-image.interactive-image:focus {
@@ -97,12 +92,10 @@
     right: 0;
     bottom: 0;
     border-radius: inherit;
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(213, 189, 55, 0.15),
-      transparent
-    );
+    background: linear-gradient(45deg,
+        transparent,
+        rgba(213, 189, 55, 0.15),
+        transparent);
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -116,30 +109,26 @@
 /* Animación de brillo que se mueve por la imagen */
 @keyframes shimmer {
   0% {
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(213, 189, 55, 0.15),
-      transparent
-    );
+    background: linear-gradient(45deg,
+        transparent,
+        rgba(213, 189, 55, 0.15),
+        transparent);
     transform: translateX(-100%);
   }
+
   50% {
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(213, 189, 55, 0.25),
-      transparent
-    );
+    background: linear-gradient(45deg,
+        transparent,
+        rgba(213, 189, 55, 0.25),
+        transparent);
     transform: translateX(0%);
   }
+
   100% {
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(213, 189, 55, 0.15),
-      transparent
-    );
+    background: linear-gradient(45deg,
+        transparent,
+        rgba(213, 189, 55, 0.15),
+        transparent);
     transform: translateX(100%);
   }
 }
@@ -164,42 +153,40 @@
   outline-offset: 4px;
 }
 
+/* Profile indicator - Original top-right position with breathing animation */
 .profile-indicator {
   position: absolute;
   top: -8px;
   right: -8px;
-  background: rgba(var(--bg-primary-rgb), 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(213, 189, 55, 0.3);
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 4px 8px;
-  font-size: 11px;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
   color: var(--text-secondary);
   z-index: var(--z-profile-indicator);
   display: flex;
   align-items: center;
-  gap: 4px;
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.06),
-    0 0 0 1px rgba(213, 189, 55, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display',
-    system-ui, sans-serif;
-  letter-spacing: 0.2px;
+  gap: 5px;
+  transition: all 0.2s ease;
   pointer-events: none;
+  white-space: nowrap;
   animation: smooth-breathe 3s ease-in-out infinite;
 }
 
 /* Animación más fluida y visible de "respiración" */
 @keyframes smooth-breathe {
+
   0%,
   100% {
     transform: scale(1);
     opacity: 0.8;
   }
+
   50% {
     transform: scale(1.08);
     opacity: 1;
@@ -222,27 +209,16 @@
 
 /* Comportamiento en hover del contenedor */
 .hero-image-wrapper:hover .profile-indicator {
-  opacity: 1;
-  transform: scale(1.05);
   background: var(--accent-primary);
-  color: #000; /* Texto negro para mejor legibilidad en fondo amarillo */
-  box-shadow: 0 6px 25px rgba(213, 189, 55, 0.4);
-  animation: bounce-gentle 0.6s ease-in-out;
-}
-
-/* Animación suave de rebote para el indicador */
-@keyframes bounce-gentle {
-  0%,
-  100% {
-    transform: scale(1.05) translateY(0);
-  }
-  50% {
-    transform: scale(1.1) translateY(-2px);
-  }
+  color: #000;
+  border-color: var(--accent-primary);
+  /* No rotation, only subtle scale */
+  transform: scale(1.05) rotate(0deg);
+  animation: none;
 }
 
 /* Ocultar indicador cuando la tarjeta está visible */
-.about-card.show ~ .hero-content .hero-image-wrapper .profile-indicator {
+.about-card.show~.hero-content .hero-image-wrapper .profile-indicator {
   opacity: 0;
   transform: scale(0.9);
 }
@@ -330,14 +306,16 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .hero-image-wrapper:hover .profile-indicator {
     background: var(--accent-primary) !important;
-    color: #000 !important; /* Texto negro igual que en modo claro */
+    color: #000 !important;
+    /* Texto negro igual que en modo claro */
     border-color: transparent !important;
   }
 }
 
 [data-theme='dark'] .hero-image-wrapper:hover .profile-indicator {
   background: var(--accent-primary) !important;
-  color: #000 !important; /* Texto negro igual que en modo claro */
+  color: #000 !important;
+  /* Texto negro igual que en modo claro */
   border-color: transparent !important;
 }
 
@@ -354,6 +332,8 @@
   font-size: 64px;
   font-weight: 700;
   line-height: 1;
+  min-height: 64px;
+  /* Prevent layout shift during typing animation */
   margin-bottom: 16px;
   letter-spacing: -2px;
   animation: fadeInUp 0.8s ease-out 0.3s both;
@@ -364,6 +344,7 @@
 @media (min-width: 768px) {
   .hero-title {
     font-size: 80px;
+    min-height: 80px;
   }
 }
 
@@ -444,22 +425,28 @@
 
 /* Animación de bounce más dinámica y sutil */
 @keyframes bounce-dynamic {
+
   0%,
   100% {
     transform: translateY(0) scale(1);
   }
+
   15% {
     transform: translateY(-8px) scale(1.05);
   }
+
   30% {
     transform: translateY(0) scale(1);
   }
+
   45% {
     transform: translateY(-4px) scale(1.02);
   }
+
   60% {
     transform: translateY(0) scale(1);
   }
+
   75% {
     transform: translateY(-2px) scale(1.01);
   }
@@ -495,25 +482,20 @@
   position: fixed;
   width: 400px;
   max-width: calc(100vw - 40px);
-  background: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.95);
+  background: var(--bg-primary);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-radius: 20px;
-  border: 1px solid rgba(var(--text-primary-rgb, 29, 29, 31), 0.08);
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.15),
-    0 8px 25px rgba(0, 0, 0, 0.08),
-    0 0 1px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  border: 1px solid var(--border);
   padding: 32px;
   z-index: var(--z-floating-contact);
   opacity: 0;
   visibility: hidden;
-  transform: scale(0.85) translateX(20px) translateY(-10px);
+  transform: scale(0.95) translateY(-10px);
   transform-origin: left center;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.2s ease;
   will-change: transform, opacity;
   pointer-events: none;
-  /* Crear nuevo stacking context para evitar conflictos */
   isolation: isolate;
 }
 
@@ -530,12 +512,8 @@
 }
 
 [data-theme='dark'] .about-card {
-  background: rgba(0, 0, 0, 0.85);
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    0 0 1px rgba(255, 255, 255, 0.1);
+  background: var(--bg-primary);
+  border-color: var(--border);
 }
 
 /* Estado visible con animación iPhone-style */
@@ -667,7 +645,8 @@
   }
 
   .about-card__close {
-    display: flex; /* Mostrar siempre en móvil */
+    display: flex;
+    /* Mostrar siempre en móvil */
   }
 
   .about-card__stats {

@@ -33,6 +33,15 @@
   font-display: swap;
 }
 
+/* Geist Mono for technical typography */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/assets/geist/GeistMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Base font stack para evitar FOUT/FOIT */
 body,
 .hero-title,
