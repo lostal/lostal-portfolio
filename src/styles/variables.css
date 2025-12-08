@@ -1,6 +1,7 @@
 /* src/styles/variables.css */
 :root {
   --accent-primary: #d5bd37;
+  --accent-primary-rgb: 213, 189, 55;
   --accent-dark: #c4ab2f;
   /* Light mode: warm off-white tones for comfortable reading */
   --bg-primary: #fafaf9;
@@ -64,6 +65,7 @@
 /* Tema oscuro (Delta inheritance) - Solo lo que cambia */
 [data-theme='dark'] {
   --accent-primary: #e8d159;
+  --accent-primary-rgb: 232, 209, 89;
   --accent-dark: #d5bd37;
   --bg-primary: #000000;
   --bg-primary-rgb: 0, 0, 0;
@@ -84,6 +86,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     --accent-primary: #e8d159;
+    --accent-primary-rgb: 232, 209, 89;
     --accent-dark: #d5bd37;
     --bg-primary: #000000;
     --bg-primary-rgb: 0, 0, 0;

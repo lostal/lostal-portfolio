@@ -5,6 +5,48 @@
   box-sizing: border-box;
 }
 
+/* Geist local fonts (WOFF2) */
+@font-face {
+  font-family: 'Geist';
+  src: url('/assets/geist/Geist-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/assets/geist/Geist-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/assets/geist/Geist-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/assets/geist/Geist-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Geist Mono for technical typography */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/assets/geist/GeistMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Screen reader only - visually hidden but accessible */
 .sr-only {
   position: absolute;
@@ -105,6 +147,7 @@ body,
 
 /* Respeto por preferencias de accesibilidad y optimización móvil */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -192,26 +235,20 @@ body,
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(
-    circle at center,
-    var(--text-tertiary) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(circle at center,
+      var(--text-tertiary) 1px,
+      transparent 1px);
   background-size: 20px 20px;
   opacity: 0.25;
   pointer-events: none;
   z-index: -1;
   /* Fade mask for subtle edges */
-  mask-image: radial-gradient(
-    ellipse 90% 70% at 50% 50%,
-    black 40%,
-    transparent 100%
-  );
-  -webkit-mask-image: radial-gradient(
-    ellipse 90% 70% at 50% 50%,
-    black 40%,
-    transparent 100%
-  );
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 50%,
+      black 40%,
+      transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 50%,
+      black 40%,
+      transparent 100%);
 }
 
 .fade-in {
@@ -293,6 +330,7 @@ section {
 }
 
 @keyframes loading-spin {
+
   0%,
   12.5% {
     content: '|';
@@ -347,6 +385,7 @@ section {
 }
 
 @keyframes line-expand {
+
   0%,
   100% {
     width: 0;
@@ -370,6 +409,7 @@ section {
 }
 
 @keyframes terminal-cursor {
+
   0%,
   50% {
     opacity: 1;
@@ -396,6 +436,7 @@ section {
 }
 
 @keyframes typing-dots {
+
   0%,
   33% {
     content: '.';
@@ -481,7 +522,7 @@ section {
 .tag:hover {
   border-color: var(--accent-primary);
   color: var(--accent-primary);
-  background: rgba(213, 189, 55, 0.05);
+  background: rgba(var(--accent-primary-rgb), 0.05);
 }
 
 .tech-mini-icon {
@@ -490,8 +531,7 @@ section {
   transition: filter 0.3s ease;
   flex-shrink: 0;
   /* Filters for icon colors */
-  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%)
-    hue-rotate(202deg) brightness(92%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%) hue-rotate(202deg) brightness(92%) contrast(92%);
 }
 
 @media (max-width: 480px) {
@@ -509,19 +549,16 @@ section {
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .tech-mini-icon {
-    filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%)
-      hue-rotate(0deg) brightness(110%) contrast(90%);
+    filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(110%) contrast(90%);
   }
 }
 
 [data-theme='dark'] .tech-mini-icon {
-  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%)
-    hue-rotate(0deg) brightness(110%) contrast(90%);
+  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(110%) contrast(90%);
 }
 
 [data-theme='light'] .tech-mini-icon {
-  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%)
-    hue-rotate(202deg) brightness(92%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%) hue-rotate(202deg) brightness(92%) contrast(92%);
 }
 
 /* Theme Notification */

@@ -197,7 +197,7 @@ const t = useTranslations(lang);
     object-fit: cover;
     margin: 0 auto;
     border: 2px solid var(--accent-primary);
-    box-shadow: 0 8px 24px rgba(213, 189, 55, 0.15);
+    box-shadow: 0 8px 24px rgba(var(--accent-primary-rgb), 0.15);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     position: relative;
@@ -209,14 +209,14 @@ const t = useTranslations(lang);
     transform: scale(1.03) rotate(1.5deg);
     border-color: var(--accent-dark);
     box-shadow:
-      0 12px 32px rgba(213, 189, 55, 0.25),
-      0 0 20px rgba(213, 189, 55, 0.15);
+      0 12px 32px rgba(var(--accent-primary-rgb), 0.25),
+      0 0 20px rgba(var(--accent-primary-rgb), 0.15);
   }
 
   .hero-image.interactive-image:focus {
     outline: none;
     box-shadow:
-      0 20px 60px rgba(213, 189, 55, 0.2),
+      0 20px 60px rgba(var(--accent-primary-rgb), 0.2),
       0 0 0 3px var(--accent-primary);
   }
 
@@ -237,7 +237,7 @@ const t = useTranslations(lang);
       background: linear-gradient(
         45deg,
         transparent,
-        rgba(213, 189, 55, 0.15),
+        rgba(var(--accent-primary-rgb), 0.15),
         transparent
       );
       opacity: 0;
@@ -256,7 +256,7 @@ const t = useTranslations(lang);
       background: linear-gradient(
         45deg,
         transparent,
-        rgba(213, 189, 55, 0.15),
+        rgba(var(--accent-primary-rgb), 0.15),
         transparent
       );
       transform: translateX(-100%);
@@ -266,7 +266,7 @@ const t = useTranslations(lang);
       background: linear-gradient(
         45deg,
         transparent,
-        rgba(213, 189, 55, 0.25),
+        rgba(var(--accent-primary-rgb), 0.25),
         transparent
       );
       transform: translateX(0%);
@@ -276,7 +276,7 @@ const t = useTranslations(lang);
       background: linear-gradient(
         45deg,
         transparent,
-        rgba(213, 189, 55, 0.15),
+        rgba(var(--accent-primary-rgb), 0.15),
         transparent
       );
       transform: translateX(100%);
@@ -387,10 +387,10 @@ const t = useTranslations(lang);
       /* Usar los mismos colores que desktop sin hover */
       background: rgba(var(--bg-primary-rgb), 0.95);
       color: var(--text-secondary);
-      border: 1px solid rgba(213, 189, 55, 0.3);
+      border: 1px solid rgba(var(--accent-primary-rgb), 0.3);
       box-shadow:
         0 4px 16px rgba(0, 0, 0, 0.06),
-        0 0 0 1px rgba(213, 189, 55, 0.1);
+        0 0 0 1px rgba(var(--accent-primary-rgb), 0.1);
       animation: smooth-breathe 3s ease-in-out infinite;
     }
 
