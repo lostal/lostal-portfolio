@@ -75,14 +75,6 @@ export class HeroCardManager {
     this.closeButton?.addEventListener('click', () => this.hideCard());
     this.overlay?.addEventListener('click', () => this.hideCard());
 
-    // Teclado - usar el wrapper para mayor área de interacción
-    this.heroImageWrapper?.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        this.toggleCard();
-      }
-    });
-
     document.addEventListener('keydown', (e: KeyboardEvent) => {
       if (e.key === 'Escape' && this.isCardOpen) {
         this.hideCard();
