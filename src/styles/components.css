@@ -48,7 +48,7 @@
   background: var(--bg-secondary);
   /* Modo oscuro: gris, no negro */
   border-radius: 8px;
-  font-size: 11px;
+  font-size: 12px;
   font-family: var(--font-mono);
   text-transform: uppercase;
   letter-spacing: 0.5px;
