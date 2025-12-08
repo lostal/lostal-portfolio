@@ -321,15 +321,12 @@ section {
 .card {
   background: var(--bg-primary);
   padding: 20px 22px;
-  border-radius: 14px;
+  border-radius: 12px;
   border: 1px solid var(--border);
-  box-shadow: 0 8px 24px var(--shadow);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 48px var(--shadow-lg);
   border-color: var(--accent-primary);
 }
 
@@ -395,9 +392,12 @@ section {
 }
 
 .timeline-date {
-  font-size: 13px;
+  font-size: 12px;
+  font-family: var(--font-mono);
   color: var(--text-tertiary);
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .timeline-subtitle {
@@ -495,15 +495,13 @@ section {
 .technology-card {
   background: var(--bg-secondary);
   padding: 28px;
-  border-radius: 20px;
-  transition: all 0.3s ease;
+  border-radius: 12px;
+  transition: all 0.2s ease;
   animation: fadeInUp 0.8s ease-out;
   border: 1px solid var(--border);
 }
 
 .technology-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 48px var(--shadow-lg);
   border-color: var(--accent-primary);
 }
 

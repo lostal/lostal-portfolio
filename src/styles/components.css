@@ -3,13 +3,13 @@
 /* Button Styles */
 .btn {
   padding: 12px 28px;
-  border-radius: 24px;
+  border-radius: 12px;
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   cursor: pointer;
-  border: none;
+  border: 1px solid var(--border);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -18,12 +18,17 @@
 .btn-primary {
   background: var(--accent-primary);
   color: #000;
+  border-color: var(--accent-primary);
 }
 
 .btn-primary:hover {
   background: var(--accent-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(213, 189, 55, 0.3);
+  border-color: var(--accent-dark);
+}
+
+.btn:active {
+  transform: translateY(2px);
+  transition: transform 0.1s ease;
 }
 
 .btn-secondary {
@@ -34,19 +39,21 @@
 
 .btn-secondary:hover {
   background: var(--bg-tertiary);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px var(--shadow);
+  border-color: var(--accent-primary);
 }
 
 /* Tags */
 .tag {
   padding: 6px 12px;
   background: var(--bg-primary);
-  border-radius: 12px;
-  font-size: 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   color: var(--text-secondary);
   border: 1px solid var(--border);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -62,10 +69,10 @@
   width: 14px;
   height: 14px;
   transition: filter 0.3s ease;
-  flex-shrink: 0; /* Evita que el icono se encoja en espacios reducidos */
+  flex-shrink: 0;
+  /* Evita que el icono se encoja en espacios reducidos */
   /* Filtro para modo claro - iconos oscuros para contraste */
-  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%)
-    hue-rotate(202deg) brightness(92%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%) hue-rotate(202deg) brightness(92%) contrast(92%);
 }
 
 /* Responsive para iconos en móviles */
@@ -85,27 +92,25 @@
 /* Modo oscuro automático */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .tech-mini-icon {
-    filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%)
-      hue-rotate(0deg) brightness(110%) contrast(90%);
+    filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(110%) contrast(90%);
   }
 }
 
 [data-theme='dark'] .tech-mini-icon {
-  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%)
-    hue-rotate(0deg) brightness(110%) contrast(90%);
+  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(110%) contrast(90%);
 }
 
 [data-theme='light'] .tech-mini-icon {
-  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%)
-    hue-rotate(202deg) brightness(92%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%) hue-rotate(202deg) brightness(92%) contrast(92%);
 }
 
 /* Footer */
 footer {
   background: var(--bg-primary);
-  padding: 40px 24px;
+  padding: 32px 24px;
   text-align: center;
   border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
 }
 
 .footer-content {
@@ -124,8 +129,10 @@ footer {
 .footer-link {
   color: var(--text-secondary);
   text-decoration: none;
-  font-size: 13px;
-  transition: color 0.3s ease;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.2s ease;
 }
 
 .footer-link:hover {
@@ -133,8 +140,10 @@ footer {
 }
 
 .footer-text {
-  color: var(--text-secondary);
-  font-size: 13px;
+  color: var(--text-tertiary);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
   margin: 8px 0;
 }
 

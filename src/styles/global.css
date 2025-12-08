@@ -221,6 +221,31 @@ body,
   }
 }
 
+/* Industrial dot pattern background - Technical grid aesthetic */
+.bg-dots {
+  position: relative;
+}
+
+.bg-dots::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at center,
+      var(--text-tertiary) 1px,
+      transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 0;
+  /* Fade mask for subtle edges */
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 50%,
+      black 40%,
+      transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 50%,
+      black 40%,
+      transparent 100%);
+}
+
 .fade-in {
   opacity: 0;
   transform: translateY(30px);
