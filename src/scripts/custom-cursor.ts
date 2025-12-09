@@ -3,15 +3,7 @@
  * A simple accent-colored dot cursor with hover expansion.
  * Features instant tracking and accessibility support.
  */
-
-// Accessibility checks - don't run on touch devices or with reduced motion
-const isTouchDevice = (): boolean => {
-  return (
-    'ontouchstart' in window ||
-    navigator.maxTouchPoints > 0 ||
-    window.matchMedia('(hover: none)').matches
-  );
-};
+import { isTouchDevice } from '../utils/dom';
 
 const prefersReducedMotion = (): boolean => {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;

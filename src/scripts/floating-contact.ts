@@ -1,4 +1,5 @@
-// src/scripts/floating-contact.js - OPTIMIZADO PARA PERFORMANCE
+// src/scripts/floating-contact.ts
+import { isTouchDevice } from '../utils/dom';
 
 class FloatingContactWidget {
   widget: HTMLElement | null;
@@ -31,20 +32,9 @@ class FloatingContactWidget {
     this.ticking = false;
 
     // Solo inicializar en desktop
-    if (!this.isMobile()) {
-      this.cachedPositions = { projectsTop: 0, contactTop: 0, lastUpdate: 0 };
-      this.ticking = false;
-
+    if (!isTouchDevice() && !window.matchMedia('(max-width: 768px)').matches) {
       this.init();
     }
-  }
-
-  isMobile() {
-    return (
-      window.matchMedia('(max-width: 768px)').matches ||
-      'ontouchstart' in window ||
-      navigator.maxTouchPoints > 0
-    );
   }
 
   init() {

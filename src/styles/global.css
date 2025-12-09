@@ -103,15 +103,7 @@ html {
   text-size-adjust: 100%;
 }
 
-/* Prevenir transiciones durante la carga inicial del tema */
-html.theme-loading,
-html.theme-loading *,
-html.theme-loading *:before,
-html.theme-loading *:after {
-  transition: none !important;
-  animation-duration: 0s !important;
-  animation-delay: 0s !important;
-}
+
 
 body {
   font-family: var(--font-primary);
@@ -140,10 +132,7 @@ body,
     box-shadow var(--animation-duration) var(--theme-transition-easing);
 }
 
-/* Optimización: usar will-change para elementos que cambiarán */
-.section-title {
-  will-change: color;
-}
+
 
 /* Respeto por preferencias de accesibilidad y optimización móvil */
 @media (prefers-reduced-motion: reduce) {
@@ -397,11 +386,7 @@ section {
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .tech-mini-icon {
-    filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(110%) contrast(90%);
-  }
-}
+
 
 [data-theme='dark'] .tech-mini-icon {
   filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(110%) contrast(90%);

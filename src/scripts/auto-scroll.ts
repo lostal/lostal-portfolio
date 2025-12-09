@@ -51,10 +51,6 @@ class AutoScrollManager {
       passive: false,
       capture: true,
     });
-    document.addEventListener('wheel', wheelHandler, {
-      passive: false,
-      capture: true,
-    });
 
     let ticking = false;
     window.addEventListener(
