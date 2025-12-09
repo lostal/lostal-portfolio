@@ -18,11 +18,10 @@
   --shadow: rgba(0, 0, 0, 0.04);
   --shadow-lg: rgba(0, 0, 0, 0.08);
 
-  /* Fuentes solo del sistema, sin fuentes externas */
+  /* Fuentes */
   --font-primary:
     'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     'Helvetica Neue', Arial, sans-serif;
-  --font-secondary: var(--font-primary);
   --font-mono:
     'Geist Mono', 'SF Mono', 'Consolas', 'Liberation Mono', 'Menlo', monospace;
 

@@ -57,20 +57,14 @@ class NavigationManager {
 
   private handleScroll(): void {
     const scrollPosition = window.pageYOffset;
+
+    // Estado de navbar al hacer scroll
     if (this.navbar) {
-      if (isTouchDevice()) {
-        const aboutSection = document.getElementById('about');
-        if (aboutSection) {
-          const aboutPosition = aboutSection.offsetTop - 100;
-          if (scrollPosition >= aboutPosition)
-            this.navbar.classList.add('scrolled');
-          else this.navbar.classList.remove('scrolled');
-        }
-      } else {
-        if (scrollPosition > 50) this.navbar.classList.add('scrolled');
-        else this.navbar.classList.remove('scrolled');
-      }
+      if (scrollPosition > 50) this.navbar.classList.add('scrolled');
+      else this.navbar.classList.remove('scrolled');
     }
+
+    // Ocultar flecha de scroll
     if (this.scrollDown) {
       if (scrollPosition > 100) this.scrollDown.classList.add('hidden');
       else this.scrollDown.classList.remove('hidden');

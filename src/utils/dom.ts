@@ -1,6 +1,5 @@
 /**
- * Detects if the current device is a touch device.
- * Uses matchMedia for modern browsers and falls back to other properties for compatibility.
+ * Detecta si el dispositivo actual es táctil.
  */
 export function isTouchDevice(): boolean {
   if (typeof window === 'undefined') return false;
@@ -8,7 +7,6 @@ export function isTouchDevice(): boolean {
   return (
     window.matchMedia('(pointer: coarse)').matches ||
     'ontouchstart' in window ||
-    navigator.maxTouchPoints > 0 ||
-    (navigator.msMaxTouchPoints || 0) > 0
+    navigator.maxTouchPoints > 0
   );
 }

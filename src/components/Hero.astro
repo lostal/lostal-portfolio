@@ -448,13 +448,8 @@ const t = useTranslations(lang);
     }
   }
 
-  /* Animación para móvil (consistente con desktop) */
-
-  /* ===== TEMA OSCURO - Profile Indicator ===== */
-  /* Consolidado: una sola regla para dark mode que cubre ambos casos */
-  :root[data-theme='dark'] .profile-indicator,
-  :root:not([data-theme='light']):is(@media (prefers-color-scheme: dark) *)
-    .profile-indicator {
+  /* Tema oscuro - Profile Indicator */
+  [data-theme='dark'] .profile-indicator {
     background: rgba(29, 29, 31, 0.9);
     border-color: rgba(66, 66, 69, 0.3);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);

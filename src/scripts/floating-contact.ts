@@ -1,36 +1,16 @@
-// src/scripts/floating-contact.ts
+// Widget flotante de contacto
 import { isTouchDevice } from '../utils/dom';
 
 class FloatingContactWidget {
-  widget: HTMLElement | null;
-  contactSection: HTMLElement | null;
-  projectsSection: HTMLElement | null;
-  isVisible: boolean;
-  isAnimating: boolean;
-  cachedPositions: {
-    projectsTop: number;
-    contactTop: number;
-    lastUpdate: number;
-  };
-  ticking: boolean;
+  widget: HTMLElement | null = null;
+  contactSection: HTMLElement | null = null;
+  projectsSection: HTMLElement | null = null;
+  isVisible = false;
+  isAnimating = false;
+  cachedPositions = { projectsTop: 0, contactTop: 0, lastUpdate: 0 };
+  ticking = false;
 
   constructor() {
-    this.widget = null as HTMLElement | null;
-    this.contactSection = null as HTMLElement | null;
-    this.projectsSection = null as HTMLElement | null;
-    this.isVisible = false;
-    this.isAnimating = false;
-
-    // Cache de posiciones para evitar reflows
-    this.cachedPositions = {
-      projectsTop: 0,
-      contactTop: 0,
-      lastUpdate: 0,
-    };
-
-    // Throttling para scroll
-    this.ticking = false;
-
     // Solo inicializar en desktop
     if (!isTouchDevice() && !window.matchMedia('(max-width: 768px)').matches) {
       this.init();

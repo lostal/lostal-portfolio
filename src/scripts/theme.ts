@@ -63,10 +63,14 @@ class ThemeToggle extends HTMLElement {
 
   private updateBrowserChrome(theme: string): void {
     // Update theme-color meta for mobile browser navbar
-    const themeColorMeta = document.querySelector('meta[name="theme-color"]:not([media])')
-      || document.querySelector('meta[name="theme-color"]');
+    const themeColorMeta =
+      document.querySelector('meta[name="theme-color"]:not([media])') ||
+      document.querySelector('meta[name="theme-color"]');
     if (themeColorMeta) {
-      themeColorMeta.setAttribute('content', theme === 'dark' ? '#000000' : '#ffffff');
+      themeColorMeta.setAttribute(
+        'content',
+        theme === 'dark' ? '#000000' : '#ffffff'
+      );
     }
 
     // Update color-scheme for native elements (scrollbars, inputs, etc.)

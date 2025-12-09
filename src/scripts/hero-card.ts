@@ -1,31 +1,20 @@
+// Gestor del card flotante "About" en el Hero
 export class HeroCardManager {
-  heroImage: HTMLElement | null;
-  heroImageWrapper: HTMLElement | null;
-  aboutCard: HTMLElement | null;
-  closeButton: HTMLElement | null;
-  overlay: HTMLElement | null;
-  profileIndicator: HTMLElement | null;
-  isCardOpen: boolean;
-  isMobile: boolean;
-  cachedHeaderHeight: number | null;
-  toggleCardBound: ((e: Event) => void) | null;
-  hideCardBound: (() => void) | null;
-  showCardBound: (() => void) | null;
+  private heroImage = document.getElementById('heroImage');
+  private heroImageWrapper = document.querySelector('.hero-image-wrapper');
+  private aboutCard = document.getElementById('aboutCard');
+  private closeButton = document.getElementById('closeCard');
+  private overlay = document.getElementById('cardOverlay');
+  private profileIndicator = document.querySelector('.profile-indicator');
+  private isCardOpen = false;
+  private isMobile = window.innerWidth <= 768;
+  private cachedHeaderHeight: number | null = null;
+  private toggleCardBound: ((e: Event) => void) | null = null;
+  private hideCardBound: (() => void) | null = null;
+  private showCardBound: (() => void) | null = null;
+  private resizeTimeout: number | null = null;
 
   constructor() {
-    this.heroImage = document.getElementById('heroImage');
-    this.heroImageWrapper = document.querySelector('.hero-image-wrapper');
-    this.aboutCard = document.getElementById('aboutCard');
-    this.closeButton = document.getElementById('closeCard');
-    this.overlay = document.getElementById('cardOverlay');
-    this.profileIndicator = document.querySelector('.profile-indicator');
-    this.isCardOpen = false;
-    this.isMobile = window.innerWidth <= 768;
-    this.cachedHeaderHeight = null; // Cache para evitar reflows
-    this.toggleCardBound = null;
-    this.hideCardBound = null;
-    this.showCardBound = null;
-
     this.init();
   }
 
@@ -63,11 +52,13 @@ export class HeroCardManager {
       this.heroImageWrapper?.addEventListener('click', this.toggleCardBound);
     }
 
-    // Eventos que no cambian con el tipo de dispositivo
     this.bindStaticEvents();
 
-    // Redimensionar ventana
-    window.addEventListener('resize', () => this.handleResize());
+    // Resize con debounce para evitar recálculos excesivos
+    window.addEventListener('resize', () => {
+      if (this.resizeTimeout) clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = window.setTimeout(() => this.handleResize(), 150);
+    });
   }
 
   bindStaticEvents() {

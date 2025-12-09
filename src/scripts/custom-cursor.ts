@@ -61,13 +61,21 @@ function initCustomCursor(): void {
   // Navigator cursor for projects carousel
   const carouselZone = document.querySelector('.projects-carousel');
   if (carouselZone) {
-    carouselZone.addEventListener('mouseenter', () => {
-      cursor.classList.add('is-navigating');
-    }, { passive: true });
+    carouselZone.addEventListener(
+      'mouseenter',
+      () => {
+        cursor.classList.add('is-navigating');
+      },
+      { passive: true }
+    );
 
-    carouselZone.addEventListener('mouseleave', () => {
-      cursor.classList.remove('is-navigating');
-    }, { passive: true });
+    carouselZone.addEventListener(
+      'mouseleave',
+      () => {
+        cursor.classList.remove('is-navigating');
+      },
+      { passive: true }
+    );
   }
 
   // Use event delegation for performance

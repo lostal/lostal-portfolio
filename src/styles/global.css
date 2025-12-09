@@ -1,11 +1,11 @@
-/* src/styles/global.css */
+/* Estilos globales */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Geist local fonts (WOFF2) */
+/* Fuentes Geist (WOFF2) */
 @font-face {
   font-family: 'Geist';
   src: url('/assets/geist/Geist-Regular.woff2') format('woff2');
@@ -38,7 +38,7 @@
   font-display: swap;
 }
 
-/* Geist Mono for technical typography */
+/* Geist Mono para tipografía técnica */
 @font-face {
   font-family: 'Geist Mono';
   src: url('/assets/geist/GeistMono-Regular.woff2') format('woff2');
@@ -47,7 +47,7 @@
   font-display: swap;
 }
 
-/* Screen reader only - visually hidden but accessible */
+/* Solo para lectores de pantalla */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -60,7 +60,7 @@
   border: 0;
 }
 
-/* Skip to content link for accessibility */
+/* Enlace "saltar al contenido" para accesibilidad */
 .skip-link {
   position: absolute;
   top: -40px;
@@ -76,7 +76,7 @@
   transition: top 0.3s ease;
   border: 2px solid var(--accent-dark);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  /* Asegurar que esté completamente oculto */
+  /* Oculto por defecto */
   opacity: 0;
   visibility: hidden;
   transform: translateY(-20px);
@@ -86,7 +86,7 @@
   top: 6px;
   outline: 2px solid var(--text-primary);
   outline-offset: 2px;
-  /* Mostrar completamente al hacer focus */
+  /* Visible al hacer focus */
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -103,20 +103,15 @@ html {
   text-size-adjust: 100%;
 }
 
-
-
 body {
   font-family: var(--font-primary);
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
-  transition:
-    background-color var(--animation-duration) var(--theme-transition-easing),
-    color var(--animation-duration) var(--theme-transition-easing);
   overflow-x: hidden;
 }
 
-/* Transiciones específicas para elementos que las necesitan */
+/* Transiciones de tema para elementos principales */
 body,
 .section-header,
 .section-title,
@@ -132,11 +127,8 @@ body,
     box-shadow var(--animation-duration) var(--theme-transition-easing);
 }
 
-
-
 /* Respeto por preferencias de accesibilidad y optimización móvil */
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {
@@ -194,7 +186,7 @@ body,
   }
 }
 
-/* Animations */
+/* Animaciones */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -215,7 +207,6 @@ body,
   transition:
     opacity 0.8s ease-out,
     transform 0.8s ease-out;
-  /* Asegurar que elementos con fade-in no interfieran con el card flotante */
   position: relative;
   z-index: auto;
 }
@@ -225,11 +216,7 @@ body,
   transform: translateY(0);
 }
 
-/* =========================================
-   MERGED STYLES (formerly sections.css & components.css)
-   ========================================= */
-
-/* --- Section Styling --- */
+/* Estilos de secciones y componentes */
 section {
   padding: 80px 24px;
   position: relative;
@@ -276,7 +263,6 @@ section {
   padding-bottom: 0;
   display: flex;
   justify-content: center;
-  /* Ensure centered */
 }
 
 .section-title {
@@ -286,7 +272,15 @@ section {
   letter-spacing: -1px;
 }
 
-/* --- Components: Buttons & Tags --- */
+.section-description {
+  max-width: 640px;
+  margin: 0 auto;
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Botones y etiquetas */
 .clean-btn {
   background: none;
   border: none;
@@ -370,7 +364,8 @@ section {
   transition: filter 0.3s ease;
   flex-shrink: 0;
   /* Filters for icon colors */
-  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%) hue-rotate(202deg) brightness(92%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%)
+    hue-rotate(202deg) brightness(92%) contrast(92%);
 }
 
 @media (max-width: 480px) {
@@ -386,17 +381,17 @@ section {
   }
 }
 
-
-
 [data-theme='dark'] .tech-mini-icon {
-  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(110%) contrast(90%);
+  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%)
+    hue-rotate(0deg) brightness(110%) contrast(90%);
 }
 
 [data-theme='light'] .tech-mini-icon {
-  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%) hue-rotate(202deg) brightness(92%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%)
+    hue-rotate(202deg) brightness(92%) contrast(92%);
 }
 
-/* Theme Notification */
+/* Notificación de cambio de tema */
 .theme-notification {
   position: fixed;
   top: 80px;
@@ -423,7 +418,7 @@ section {
   pointer-events: auto;
 }
 
-/* ===== CUSTOM CURSOR - Brand Dot ===== */
+/* Cursor personalizado */
 .cursor-dot {
   position: fixed;
   top: 0;
@@ -442,7 +437,7 @@ section {
   will-change: transform;
 }
 
-/* Pseudo-elements always present but hidden by default for smooth transitions */
+/* Pseudo-elementos para flechas de navegación */
 .cursor-dot::before,
 .cursor-dot::after {
   content: '';
@@ -469,25 +464,25 @@ section {
   transform: translateY(-50%) rotate(-135deg);
 }
 
-/* Hover state - expands as highlighter */
+/* Estado hover - se expande */
 .cursor-dot.is-hovering {
   width: 36px;
   height: 36px;
   opacity: 0.4;
 }
 
-/* Hidden state */
+/* Estado oculto */
 .cursor-dot.is-hidden {
   opacity: 0;
 }
 
-/* Navigator state for projects carousel - < • > */
+/* Modo navegador para carrusel */
 .cursor-dot.is-navigating {
   width: 12px;
   height: 12px;
 }
 
-/* Chevrons slide out when navigating */
+/* Flechas visibles al navegar */
 .cursor-dot.is-navigating::before {
   left: -18px;
   opacity: 0.9;
@@ -498,7 +493,7 @@ section {
   opacity: 0.9;
 }
 
-/* Hover within carousel (on interactive elements) - chevrons fade out */
+/* Hover dentro del carrusel - oculta flechas */
 .cursor-dot.is-navigating.is-hovering {
   width: 36px;
   height: 36px;
@@ -510,15 +505,14 @@ section {
   opacity: 0;
 }
 
-/* Hide native cursor when custom cursor is active */
+/* Ocultar cursor nativo cuando el personalizado está activo */
 .has-custom-cursor,
 .has-custom-cursor * {
   cursor: none !important;
 }
 
-/* Hide custom cursor on touch devices and reduced motion */
-@media (hover: none),
-(prefers-reduced-motion: reduce) {
+/* Ocultar cursor en dispositivos táctiles o movimiento reducido */
+@media (hover: none), (prefers-reduced-motion: reduce) {
   .cursor-dot {
     display: none !important;
   }

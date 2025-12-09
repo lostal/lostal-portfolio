@@ -1,4 +1,4 @@
-// src/scripts/animations.js
+// Animaciones de fade-in con Intersection Observer
 const observerOptions = {
   threshold: 0.1,
   rootMargin: '0px 0px -50px 0px',
