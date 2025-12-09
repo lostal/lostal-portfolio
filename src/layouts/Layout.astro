@@ -164,7 +164,21 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
       })}
     />
 
-    <!-- Font Awesome Subset -->
+    <!-- Font Awesome Subset - Preload fonts first -->
+    <link
+      rel="preload"
+      href="/assets/fontawesome/fa-solid-900.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/fontawesome/fa-brands-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link
       rel="preload"
       href="/assets/fontawesome/fa-subset.css"
