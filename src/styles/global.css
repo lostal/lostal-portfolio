@@ -101,6 +101,8 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  min-height: 100%;
+  background-color: var(--bg-primary);
 }
 
 body {
@@ -109,6 +111,9 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  min-height: 100dvh;
+  /* Safe-area padding para dispositivos con notch/cutouts */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 /* Transiciones de tema para elementos principales */
@@ -129,6 +134,7 @@ body,
 
 /* Respeto por preferencias de accesibilidad y optimización móvil */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -364,8 +370,7 @@ section {
   transition: filter 0.3s ease;
   flex-shrink: 0;
   /* Filters for icon colors */
-  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%)
-    hue-rotate(202deg) brightness(92%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%) hue-rotate(202deg) brightness(92%) contrast(92%);
 }
 
 @media (max-width: 480px) {
@@ -382,8 +387,7 @@ section {
 }
 
 [data-theme='dark'] .tech-mini-icon {
-  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%)
-    hue-rotate(0deg) brightness(110%) contrast(90%);
+  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(110%) contrast(90%);
 }
 
 /* Notificación de cambio de tema */
@@ -413,22 +417,28 @@ section {
   pointer-events: auto;
 }
 
-/* ===== FILM GRAIN OVERLAY (Premium Quality) ===== */
+/* ===== FILM GRAIN OVERLAY ===== */
 .noise-overlay {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 99998;
-  opacity: 0.1;
-  /* Grano visible pero elegante */
+  opacity: 0.08;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
-  /* Animación lenta para efecto orgánico */
   animation: grain 8s steps(10) infinite;
+  /* Invertir en modo claro para grano oscuro sobre fondo claro */
+  filter: invert(1);
+}
+
+/* Modo oscuro: grano claro (sin invertir) */
+[data-theme='dark'] .noise-overlay {
+  filter: none;
 }
 
 @keyframes grain {
+
   0%,
   100% {
     background-position: 0 0;
