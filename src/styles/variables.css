@@ -3,20 +3,20 @@
   --accent-primary: #d5bd37;
   --accent-primary-rgb: 213, 189, 55;
   --accent-dark: #c4ab2f;
-  /* Light mode: warm off-white tones for comfortable reading */
+  /* Light mode: warm off-white with improved visual depth */
   --bg-primary: #fafaf9;
   --bg-primary-rgb: 250, 250, 249;
-  --bg-secondary: #f4f4f3;
-  --bg-secondary-rgb: 244, 244, 243;
-  --bg-tertiary: #eeeeed;
+  --bg-secondary: #f0efee;
+  --bg-secondary-rgb: 240, 239, 238;
+  --bg-tertiary: #e8e7e6;
   --text-primary: #1a1a1a;
   --text-secondary: #5c5c5c;
   --text-tertiary: #8a8a8a;
   --text-tertiary-rgb: 138, 138, 138;
-  --border: #d8d8d6;
-  --border-rgb: 216, 216, 214;
-  --shadow: rgba(0, 0, 0, 0.06);
-  --shadow-lg: rgba(0, 0, 0, 0.1);
+  --border: #e0dfdd;
+  --border-rgb: 224, 223, 221;
+  --shadow: rgba(0, 0, 0, 0.04);
+  --shadow-lg: rgba(0, 0, 0, 0.08);
 
   /* Fuentes solo del sistema, sin fuentes externas */
   --font-primary:
