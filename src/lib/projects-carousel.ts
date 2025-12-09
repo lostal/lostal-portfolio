@@ -10,6 +10,19 @@ interface CarouselElement extends HTMLElement {
 }
 
 /**
+ * Actualiza las líneas táctiles del carrusel
+ */
+function updateLines(carousel: HTMLElement, activeIndex: number): void {
+  const lines = carousel.querySelectorAll('.carousel-line');
+
+  lines.forEach((line, index) => {
+    const isActive = index === activeIndex;
+    line.classList.toggle('is-active', isActive);
+    line.setAttribute('aria-current', isActive ? 'true' : 'false');
+  });
+}
+
+/**
  * Inicializa el carrusel de proyectos usando Swiper
  */
 function initProjectsCarousel(): Swiper | null {
@@ -23,8 +36,7 @@ function initProjectsCarousel(): Swiper | null {
   }
 
   const slider = carousel.querySelector('.swiper');
-  const prevEl = carousel.querySelector('.slider-nav__item_prev');
-  const nextEl = carousel.querySelector('.slider-nav__item_next');
+  const lines = carousel.querySelectorAll('.carousel-line');
 
   const swiper = new Swiper(slider as HTMLElement, {
     modules: [Navigation],
@@ -35,11 +47,6 @@ function initProjectsCarousel(): Swiper | null {
     initialSlide: 0,
     loop: false,
     grabCursor: true,
-    navigation: {
-      nextEl: nextEl as HTMLElement,
-      prevEl: prevEl as HTMLElement,
-      disabledClass: 'disabled',
-    },
     breakpoints: {
       375: {
         slidesPerView: 1.4,
@@ -81,6 +88,21 @@ function initProjectsCarousel(): Swiper | null {
   });
 
   carousel.swiperInstance = swiper;
+
+  // Inicializar líneas
+  updateLines(carousel, swiper.activeIndex);
+
+  // Sincronizar al cambiar de slide
+  swiper.on('slideChange', () => {
+    updateLines(carousel, swiper.activeIndex);
+  });
+
+  // Hacer las líneas clickeables
+  lines.forEach((line, index) => {
+    line.addEventListener('click', () => {
+      swiper.slideTo(index);
+    });
+  });
 
   const handleKeyNavigation = (e: KeyboardEvent) => {
     const carouselHasFocus =

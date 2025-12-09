@@ -26,23 +26,6 @@ const t = useTranslations(lang);
 
   <div class="projects-section__content">
     <div class="projects-carousel">
-      <div class="projects-carousel__nav slider-nav">
-        <button
-          class="slider-nav__item slider-nav__item_prev"
-          aria-label={t('projects.prev')}
-          type="button"
-        >
-          <i class="fas fa-chevron-left" aria-hidden="true"></i>
-        </button>
-        <button
-          class="slider-nav__item slider-nav__item_next"
-          aria-label={t('projects.next')}
-          type="button"
-        >
-          <i class="fas fa-chevron-right" aria-hidden="true"></i>
-        </button>
-      </div>
-
       <div class="projects-carousel__slider swiper">
         <div class="projects-carousel__wrapper swiper-wrapper">
           <div class="projects-carousel__slide swiper-slide">
@@ -333,6 +316,26 @@ const t = useTranslations(lang);
           </div>
         </div>
       </div>
+
+      <!-- Líneas táctiles de navegación -->
+      <nav class="carousel-lines" aria-label="Navegación de proyectos">
+        <button
+          class="carousel-line is-active"
+          data-slide="0"
+          aria-label="Ir al proyecto 1"
+          aria-current="true"
+          type="button"></button>
+        <button
+          class="carousel-line"
+          data-slide="1"
+          aria-label="Ir al proyecto 2"
+          type="button"></button>
+        <button
+          class="carousel-line"
+          data-slide="2"
+          aria-label="Ir al proyecto 3"
+          type="button"></button>
+      </nav>
     </div>
   </div>
 </section>
@@ -479,102 +482,81 @@ const t = useTranslations(lang);
     height: auto;
   }
 
-  .slider-nav {
+  /* === Líneas táctiles de navegación === */
+  .carousel-lines {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    translate: 0 -50%;
-    z-index: var(--z-carousel-navigation);
-    pointer-events: none;
-    padding: 0;
-  }
-
-  .slider-nav__item {
-    display: flex;
-    align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    pointer-events: auto;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    position: relative;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px 8px;
+  }
+
+  .carousel-line {
+    width: 24px;
+    height: 3px;
+    background: var(--border);
+    border: none;
     padding: 0;
-    font: inherit;
-    color: inherit;
-    outline: none;
-    opacity: 0.7;
+    cursor: pointer;
+    border-radius: 2px;
+    transition:
+      width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.3s ease,
+      opacity 0.3s ease;
+    opacity: 0.6;
+    position: relative;
   }
 
-  .slider-nav__item_prev {
-    margin-left: 20px;
+  .carousel-line::before {
+    content: '';
+    position: absolute;
+    inset: -8px -6px;
   }
 
-  .slider-nav__item_next {
-    margin-right: 20px;
-  }
-
-  @media (min-width: 1024px) {
-    .slider-nav__item_prev {
-      margin-left: 32px;
-    }
-
-    .slider-nav__item_next {
-      margin-right: 32px;
-    }
-  }
-
-  .slider-nav__item:focus-visible {
+  .carousel-line:focus-visible {
     outline: 2px solid var(--accent-primary);
-    outline-offset: 2px;
+    outline-offset: 4px;
   }
 
-  .slider-nav__item.disabled {
-    cursor: default;
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
-    transform: scale(0.8);
-  }
-
-  .slider-nav__item i {
-    color: var(--text-primary);
-    font-size: 16px;
-    transition: color 0.28s ease;
+  .carousel-line.is-active {
+    width: 48px;
+    background: var(--accent-primary);
+    opacity: 1;
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .slider-nav__item:not(.disabled):hover {
-      border-color: var(--accent-primary);
-      opacity: 1;
-    }
-
-    .slider-nav__item:not(.disabled):hover i {
-      color: var(--accent-primary);
+    .carousel-line:not(.is-active):hover {
+      background: var(--text-secondary);
+      opacity: 0.8;
+      width: 32px;
     }
   }
 
   @media (hover: none) {
-    .slider-nav__item:not(.disabled):active {
-      border-color: var(--accent-primary);
-      opacity: 1;
-    }
-
-    .slider-nav__item:not(.disabled):active i {
-      color: var(--accent-primary);
+    .carousel-line:not(.is-active):active {
+      background: var(--text-secondary);
+      opacity: 0.8;
     }
   }
 
-  @media screen and (max-width: 767px) {
-    .slider-nav {
-      display: none;
+  @media (min-width: 768px) {
+    .carousel-lines {
+      gap: 16px;
+      padding: 24px 48px 12px;
+    }
+
+    .carousel-line {
+      width: 28px;
+    }
+
+    .carousel-line.is-active {
+      width: 56px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .carousel-lines {
+      padding: 28px 56px 16px;
     }
   }
 
