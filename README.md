@@ -56,7 +56,7 @@ _Mostrando mi experiencia como Ingeniero Informático especializado en Desarroll
 <div align="center">
 
 **Álvaro Lostal**  
-_Ingeniero Informático | Frontend Developer_
+_Ingeniero Informático | Desarrollador Web_
 
 [![Portafolio](https://img.shields.io/badge/Portafolio-lostal.dev-d5bd37?style=for-the-badge&logo=astro&logoColor=white)](https://lostal.dev)
 [![GitHub](https://img.shields.io/badge/GitHub-lostal-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lostal)
