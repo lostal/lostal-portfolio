@@ -13,6 +13,7 @@ export class HeroCardManager {
   private hideCardBound: (() => void) | null = null;
   private showCardBound: (() => void) | null = null;
   private resizeTimeout: number | null = null;
+  private keydownHandler: ((e: KeyboardEvent) => void) | null = null;
 
   constructor() {
     this.init();
@@ -66,11 +67,13 @@ export class HeroCardManager {
     this.closeButton?.addEventListener('click', () => this.hideCard());
     this.overlay?.addEventListener('click', () => this.hideCard());
 
-    document.addEventListener('keydown', (e: KeyboardEvent) => {
+    // Guardar referencia para cleanup
+    this.keydownHandler = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && this.isCardOpen) {
         this.hideCard();
       }
-    });
+    };
+    document.addEventListener('keydown', this.keydownHandler);
   }
 
   removeAllEvents() {
@@ -88,6 +91,9 @@ export class HeroCardManager {
     }
     if (this.toggleCardBound) {
       this.heroImageWrapper?.removeEventListener('click', this.toggleCardBound);
+    }
+    if (this.keydownHandler) {
+      document.removeEventListener('keydown', this.keydownHandler);
     }
   }
 

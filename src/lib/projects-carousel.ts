@@ -142,13 +142,15 @@ function initProjectsCarousel(): Swiper | null {
     }
   };
 
-  // Create debounce utility
-  const debounce = (fn: Function, ms: number) => {
+  // Utilidad debounce con tipado genérico
+  const debounce = <T extends (...args: Parameters<T>) => void>(
+    fn: T,
+    ms: number
+  ): ((...args: Parameters<T>) => void) => {
     let timeoutId: number;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (...args: any[]) => {
+    return (...args: Parameters<T>) => {
       clearTimeout(timeoutId);
-      timeoutId = window.setTimeout(() => fn.apply(null, args), ms);
+      timeoutId = window.setTimeout(() => fn(...args), ms);
     };
   };
 
