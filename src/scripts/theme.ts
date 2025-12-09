@@ -5,11 +5,14 @@ class ThemeToggle extends HTMLElement {
   private html: HTMLElement;
   private mediaQuery: MediaQueryList;
   private userHasOverridden: boolean = false;
+  private boundHandleSystemChange: (e: MediaQueryListEvent) => void;
 
   constructor() {
     super();
     this.html = document.documentElement;
     this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    // Bind handler once for proper cleanup
+    this.boundHandleSystemChange = this.handleSystemChange.bind(this);
   }
 
   connectedCallback() {
@@ -18,16 +21,15 @@ class ThemeToggle extends HTMLElement {
     const button = this.querySelector('button') || this;
     button.addEventListener('click', e => this.handleToggle(e));
 
-    // Listen to system theme changes (efficient - event-driven, no polling)
-    this.mediaQuery.addEventListener('change', e => this.handleSystemChange(e));
+    // Listen to system theme changes (event-driven, no polling)
+    this.mediaQuery.addEventListener('change', this.boundHandleSystemChange);
 
     // Initialize: always use system theme on page load
     this.applyTheme(this.getSystemTheme(), false);
   }
 
   disconnectedCallback() {
-    // Cleanup listener when element is removed
-    this.mediaQuery.removeEventListener('change', e => this.handleSystemChange(e));
+    this.mediaQuery.removeEventListener('change', this.boundHandleSystemChange);
   }
 
   private getSystemTheme(): 'dark' | 'light' {
@@ -59,8 +61,21 @@ class ThemeToggle extends HTMLElement {
     }
   }
 
+  private updateBrowserChrome(theme: string): void {
+    // Update theme-color meta for mobile browser navbar
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]:not([media])')
+      || document.querySelector('meta[name="theme-color"]');
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', theme === 'dark' ? '#000000' : '#ffffff');
+    }
+
+    // Update color-scheme for native elements (scrollbars, inputs, etc.)
+    this.html.style.colorScheme = theme;
+  }
+
   private applyTheme(theme: string, animate: boolean = false): void {
     this.html.setAttribute('data-theme', theme);
+    this.updateBrowserChrome(theme);
     this.updateThemeIcon(animate);
 
     // Dispatch event for other components if needed
