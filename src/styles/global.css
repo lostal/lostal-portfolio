@@ -147,6 +147,7 @@ body,
 
 /* Respeto por preferencias de accesibilidad y optimización móvil */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -380,8 +381,7 @@ section {
   transition: filter 0.3s ease;
   flex-shrink: 0;
   /* Filters for icon colors */
-  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%)
-    hue-rotate(202deg) brightness(92%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%) hue-rotate(202deg) brightness(92%) contrast(92%);
 }
 
 @media (max-width: 480px) {
@@ -399,19 +399,16 @@ section {
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .tech-mini-icon {
-    filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%)
-      hue-rotate(0deg) brightness(110%) contrast(90%);
+    filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(110%) contrast(90%);
   }
 }
 
 [data-theme='dark'] .tech-mini-icon {
-  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%)
-    hue-rotate(0deg) brightness(110%) contrast(90%);
+  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(110%) contrast(90%);
 }
 
 [data-theme='light'] .tech-mini-icon {
-  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%)
-    hue-rotate(202deg) brightness(92%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%) hue-rotate(202deg) brightness(92%) contrast(92%);
 }
 
 /* Theme Notification */
@@ -454,10 +451,37 @@ section {
   z-index: 99999;
   transform: translate(-50%, -50%);
   transition:
-    width 0.2s ease,
-    height 0.2s ease,
-    opacity 0.2s ease;
+    width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+}
+
+/* Pseudo-elements always present but hidden by default for smooth transitions */
+.cursor-dot::before,
+.cursor-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-left: 2px solid var(--accent-primary);
+  border-bottom: 2px solid var(--accent-primary);
+  opacity: 0;
+  transition:
+    opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cursor-dot::before {
+  left: 0;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.cursor-dot::after {
+  right: 0;
+  transform: translateY(-50%) rotate(-135deg);
 }
 
 /* Hover state - expands as highlighter */
@@ -472,6 +496,35 @@ section {
   opacity: 0;
 }
 
+/* Navigator state for projects carousel - < • > */
+.cursor-dot.is-navigating {
+  width: 12px;
+  height: 12px;
+}
+
+/* Chevrons slide out when navigating */
+.cursor-dot.is-navigating::before {
+  left: -18px;
+  opacity: 0.9;
+}
+
+.cursor-dot.is-navigating::after {
+  right: -18px;
+  opacity: 0.9;
+}
+
+/* Hover within carousel (on interactive elements) - chevrons fade out */
+.cursor-dot.is-navigating.is-hovering {
+  width: 36px;
+  height: 36px;
+  opacity: 0.4;
+}
+
+.cursor-dot.is-navigating.is-hovering::before,
+.cursor-dot.is-navigating.is-hovering::after {
+  opacity: 0;
+}
+
 /* Hide native cursor when custom cursor is active */
 .has-custom-cursor,
 .has-custom-cursor * {
@@ -479,7 +532,8 @@ section {
 }
 
 /* Hide custom cursor on touch devices and reduced motion */
-@media (hover: none), (prefers-reduced-motion: reduce) {
+@media (hover: none),
+(prefers-reduced-motion: reduce) {
   .cursor-dot {
     display: none !important;
   }

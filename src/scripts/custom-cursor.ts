@@ -63,7 +63,20 @@ function initCustomCursor(): void {
     '.contact-link',
     '.nav-link',
     '.theme-toggle',
+    '.timeline-item.card',
   ].join(', ');
+
+  // Navigator cursor for projects carousel
+  const carouselZone = document.querySelector('.projects-carousel');
+  if (carouselZone) {
+    carouselZone.addEventListener('mouseenter', () => {
+      cursor.classList.add('is-navigating');
+    }, { passive: true });
+
+    carouselZone.addEventListener('mouseleave', () => {
+      cursor.classList.remove('is-navigating');
+    }, { passive: true });
+  }
 
   // Use event delegation for performance
   document.addEventListener(
