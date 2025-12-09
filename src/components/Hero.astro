@@ -467,22 +467,6 @@ const t = useTranslations(lang);
     border-color: transparent;
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) .profile-indicator {
-      background: rgba(29, 29, 31, 0.9);
-      border-color: rgba(66, 66, 69, 0.3);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-    }
-
-    :root:not([data-theme='light'])
-      .hero-image-wrapper:hover
-      .profile-indicator {
-      background: var(--accent-primary);
-      color: #000;
-      border-color: transparent;
-    }
-  }
-
   .hero-subtitle {
     font-size: 16px;
     font-weight: 500;
@@ -663,17 +647,6 @@ const t = useTranslations(lang);
   }
 
   /* Tema oscuro para el card */
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) .about-card {
-      background: rgba(0, 0, 0, 0.85);
-      border-color: rgba(255, 255, 255, 0.1);
-      box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.5),
-        0 8px 25px rgba(0, 0, 0, 0.3),
-        0 0 1px rgba(255, 255, 255, 0.1);
-    }
-  }
-
   [data-theme='dark'] .about-card {
     background: var(--bg-primary);
     border-color: var(--border);
