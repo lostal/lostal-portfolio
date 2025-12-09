@@ -23,6 +23,37 @@ const description =
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const defaultOgImage = new URL('/assets/og/azulejos.jpg', Astro.site).href;
 const ogImage = propOgImage || defaultOgImage;
+
+// Calcular URLs alternativas para hreflang dinámicamente
+const currentPath = Astro.url.pathname;
+const siteBase = Astro.site?.href || 'https://lostal.dev';
+
+// Determinar las rutas equivalentes en cada idioma
+const getAlternateUrls = (path: string, currentLang: 'es' | 'en') => {
+  let esPath: string;
+  let enPath: string;
+
+  if (currentLang === 'en') {
+    // Estamos en /en/*, quitar el prefijo /en para obtener la versión española
+    esPath = path.replace(/^\/en\/?/, '/') || '/';
+    enPath = path;
+  } else {
+    // Estamos en la raíz (español), añadir /en/ para la versión inglesa
+    esPath = path;
+    enPath = path === '/' ? '/en/' : `/en${path}`;
+  }
+
+  // Normalizar trailing slashes
+  esPath = esPath === '/' ? '/' : esPath.replace(/\/$/, '') + '/';
+  enPath = enPath.endsWith('/') ? enPath : enPath + '/';
+
+  return {
+    es: new URL(esPath, siteBase).href,
+    en: new URL(enPath, siteBase).href,
+  };
+};
+
+const alternateUrls = getAlternateUrls(currentPath, lang);
 ---
 
 <!doctype html>
@@ -66,10 +97,10 @@ const ogImage = propOgImage || defaultOgImage;
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL.href} />
 
-    <!-- Hreflang for internationalization -->
-    <link rel="alternate" hreflang="es" href="https://lostal.dev/" />
-    <link rel="alternate" hreflang="en" href="https://lostal.dev/en/" />
-    <link rel="alternate" hreflang="x-default" href="https://lostal.dev/" />
+    <!-- Hreflang for internationalization - URLs dinámicas -->
+    <link rel="alternate" hreflang="es" href={alternateUrls.es} />
+    <link rel="alternate" hreflang="en" href={alternateUrls.en} />
+    <link rel="alternate" hreflang="x-default" href={alternateUrls.es} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
