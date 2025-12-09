@@ -400,22 +400,6 @@ const t = useTranslations(lang);
     }
   }
 
-  .projects-section__text {
-    margin-bottom: 60px;
-  }
-
-  @media screen and (max-width: 768px) {
-    .projects-section__text {
-      margin-bottom: 40px;
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    .projects-section__text {
-      margin-bottom: 30px;
-    }
-  }
-
   .projects-section__content {
     position: relative;
     margin: 0;
@@ -681,75 +665,6 @@ const t = useTranslations(lang);
   @media screen and (max-width: 768px) {
     .carousel-item__price {
       font-size: 18px;
-    }
-  }
-
-  .carousel-item__author {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .carousel-item__author-image {
-    flex-shrink: 0;
-    aspect-ratio: 1;
-    width: 20px;
-    border-radius: 100%;
-    overflow: hidden;
-  }
-
-  .carousel-item__author-image img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  .carousel-item__author-name {
-    font-family: var(--font-primary);
-    font-size: 14px;
-    line-height: calc(20 / 14);
-    color: var(--text-secondary);
-  }
-
-  .carousel-item__link {
-    font-family: var(--font-primary);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    text-decoration: none;
-    transition: color 0.3s ease;
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .carousel-item__link i {
-    font-size: 11px;
-    transition: opacity 0.3s ease;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .carousel-item__link:hover {
-      color: var(--accent-primary);
-    }
-
-    .carousel-item__link:hover i {
-      opacity: 0.8;
-    }
-  }
-
-  @media (hover: none) {
-    .carousel-item__link:active {
-      color: var(--accent-primary);
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    .carousel-item__author-name {
-      font-size: 12px;
     }
   }
 

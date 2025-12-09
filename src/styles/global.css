@@ -129,6 +129,7 @@ body,
 
 /* Respeto por preferencias de accesibilidad y optimización móvil */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -364,8 +365,7 @@ section {
   transition: filter 0.3s ease;
   flex-shrink: 0;
   /* Filters for icon colors */
-  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%)
-    hue-rotate(202deg) brightness(92%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%) hue-rotate(202deg) brightness(92%) contrast(92%);
 }
 
 @media (max-width: 480px) {
@@ -382,13 +382,7 @@ section {
 }
 
 [data-theme='dark'] .tech-mini-icon {
-  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%)
-    hue-rotate(0deg) brightness(110%) contrast(90%);
-}
-
-[data-theme='light'] .tech-mini-icon {
-  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%)
-    hue-rotate(202deg) brightness(92%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(110%) contrast(90%);
 }
 
 /* Notificación de cambio de tema */
@@ -512,7 +506,8 @@ section {
 }
 
 /* Ocultar cursor en dispositivos táctiles o movimiento reducido */
-@media (hover: none), (prefers-reduced-motion: reduce) {
+@media (hover: none),
+(prefers-reduced-motion: reduce) {
   .cursor-dot {
     display: none !important;
   }

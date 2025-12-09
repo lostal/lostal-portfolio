@@ -157,7 +157,6 @@ class AutoScrollManager {
       e.stopImmediatePropagation();
 
       this.executeImmediateAutoScroll();
-      return false;
     }
   }
 
