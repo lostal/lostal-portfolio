@@ -102,6 +102,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   background-color: var(--bg-primary);
+  height: 100%;
 }
 
 body {
@@ -110,6 +111,7 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  min-height: 100%;
 }
 
 /* Transiciones de tema para elementos principales */
@@ -414,8 +416,7 @@ section {
 }
 
 /* ===== FILM GRAIN OVERLAY ===== */
-body::after {
-  content: '';
+.noise-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -430,10 +431,16 @@ body::after {
   animation: grain 8s steps(10) infinite;
   /* Invertir en modo claro para grano oscuro sobre fondo claro */
   filter: invert(1);
+  /* iOS Safari GPU acceleration fixes */
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 /* Modo oscuro: grano claro (sin invertir) */
-[data-theme='dark'] body::after {
+[data-theme='dark'] .noise-overlay {
   filter: none;
 }
 
@@ -483,7 +490,7 @@ body::after {
 
 /* Desactivar grain en reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  body::after {
+  .noise-overlay {
     animation: none;
   }
 }
