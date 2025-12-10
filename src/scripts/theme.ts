@@ -1,4 +1,4 @@
-// src/scripts/theme.ts
+// src/scripts/theme.ts - Gestor de tema claro/oscuro
 
 class ThemeToggle extends HTMLElement {
   private themeIcon: HTMLElement | null = null;
@@ -11,7 +11,7 @@ class ThemeToggle extends HTMLElement {
     super();
     this.html = document.documentElement;
     this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    // Bind handler once for proper cleanup
+    // Vincular handler una vez para limpieza correcta
     this.boundHandleSystemChange = this.handleSystemChange.bind(this);
   }
 
@@ -21,10 +21,10 @@ class ThemeToggle extends HTMLElement {
     const button = this.querySelector('button') || this;
     button.addEventListener('click', e => this.handleToggle(e));
 
-    // Listen to system theme changes (event-driven, no polling)
+    // Escuchar cambios del tema del sistema (basado en eventos, sin polling)
     this.mediaQuery.addEventListener('change', this.boundHandleSystemChange);
 
-    // Initialize: always use system theme on page load
+    // Inicializar: siempre usar tema del sistema al cargar la página
     this.applyTheme(this.getSystemTheme(), false);
   }
 
@@ -37,7 +37,7 @@ class ThemeToggle extends HTMLElement {
   }
 
   private handleSystemChange(e: MediaQueryListEvent): void {
-    // Only follow system changes if user hasn't manually overridden
+    // Solo seguir cambios del sistema si el usuario no ha modificado manualmente
     if (!this.userHasOverridden) {
       this.applyTheme(e.matches ? 'dark' : 'light', false);
     }
@@ -62,7 +62,7 @@ class ThemeToggle extends HTMLElement {
   }
 
   private updateBrowserChrome(theme: string): void {
-    // Update theme-color meta for mobile browser navbar
+    // Actualizar meta theme-color para navbar del navegador móvil
     const themeColorMeta =
       document.querySelector('meta[name="theme-color"]:not([media])') ||
       document.querySelector('meta[name="theme-color"]');
@@ -73,7 +73,7 @@ class ThemeToggle extends HTMLElement {
       );
     }
 
-    // Update color-scheme for native elements (scrollbars, inputs, etc.)
+    // Actualizar color-scheme para elementos nativos (scrollbars, inputs, etc.)
     this.html.style.colorScheme = theme;
   }
 
@@ -82,7 +82,7 @@ class ThemeToggle extends HTMLElement {
     this.updateBrowserChrome(theme);
     this.updateThemeIcon(animate);
 
-    // Dispatch event for other components if needed
+    // Disparar evento para otros componentes si es necesario
     window.dispatchEvent(
       new CustomEvent('theme-changed', { detail: { theme } })
     );
@@ -91,7 +91,7 @@ class ThemeToggle extends HTMLElement {
   private handleToggle(e: Event): void {
     e.preventDefault();
 
-    // Mark that user has manually overridden
+    // Marcar que el usuario ha modificado manualmente
     this.userHasOverridden = true;
 
     const currentTheme = this.html.getAttribute('data-theme') || 'light';

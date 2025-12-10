@@ -1,4 +1,4 @@
-import { isTouchDevice } from '../utils/dom';
+import { canTouch } from '../utils/dom';
 
 class AutoScrollManager {
   isAutoScrolling: boolean;
@@ -9,7 +9,7 @@ class AutoScrollManager {
   wheelTimeout: number | null;
   lastScrollY: number;
   consecutiveScrollDown: number;
-  isTouchDevice: boolean;
+  esDispositivoTactil: boolean;
 
   constructor() {
     this.isAutoScrolling = false;
@@ -21,9 +21,9 @@ class AutoScrollManager {
     this.lastScrollY = window.scrollY;
     this.consecutiveScrollDown = 0;
 
-    this.isTouchDevice = isTouchDevice();
+    this.esDispositivoTactil = canTouch();
 
-    if (this.isTouchDevice) {
+    if (this.esDispositivoTactil) {
       return;
     }
     this.init();

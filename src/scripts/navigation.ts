@@ -1,8 +1,8 @@
 /**
- * Navigation Script
- * Handles: navbar scroll, mobile menu, language switching, smooth scroll
+ * Script de Navegación
+ * Gestiona: scroll de navbar, menú móvil, cambio de idioma, scroll suave
  */
-import { isTouchDevice } from '../utils/dom';
+import { canTouch } from '../utils/dom';
 
 class NavigationManager {
   private navbar: HTMLElement | null;
@@ -56,7 +56,7 @@ class NavigationManager {
   }
 
   private handleScroll(): void {
-    const scrollPosition = window.pageYOffset;
+    const scrollPosition = window.scrollY;
 
     // Estado de navbar al hacer scroll
     if (this.navbar) {
@@ -93,18 +93,18 @@ class NavigationManager {
     if (this.langMenu) this.langMenu.dataset.ready = '0';
 
     if (this.langBtn && this.langPopover && this.langMenu) {
-      // Desktop hover behavior
-      if (!isTouchDevice()) {
+      // Comportamiento hover en desktop
+      if (!canTouch()) {
         this.langMenu.addEventListener('mouseenter', () => this.openMenu());
         this.langMenu.addEventListener('mouseleave', () => this.closeMenu());
       }
 
-      // Main button click handler
+      // Manejador de click del botón principal
       this.langBtn.addEventListener('click', () => {
         this.animateIcon();
       });
 
-      // Animation end handlers
+      // Manejadores de fin de animación
       if (this.langIcon) {
         this.langIcon.addEventListener('animationend', e => {
           if (e.animationName?.includes('lang-click-bounce-icon')) {
@@ -120,12 +120,12 @@ class NavigationManager {
         }
       });
 
-      // Keyboard navigation
+      // Navegación por teclado
       this.langBtn.addEventListener('keydown', e =>
         this.handleLangBtnKeydown(e as KeyboardEvent)
       );
 
-      // Popover link handlers
+      // Manejadores de enlaces del popover
       this.langPopover.querySelectorAll('a[data-lang]').forEach(link => {
         link.addEventListener('click', () => {
           this.animateIcon();
@@ -153,7 +153,7 @@ class NavigationManager {
   private animateIcon(): void {
     if (this.langIcon) {
       this.langIcon.classList.remove('clicked');
-      void this.langIcon.offsetWidth; // Force reflow
+      void this.langIcon.offsetWidth; // Forzar reflow
       this.langIcon.classList.add('clicked');
       if (this.langAnimTimeout) clearTimeout(this.langAnimTimeout);
       this.langAnimTimeout = window.setTimeout(
@@ -213,7 +213,7 @@ class NavigationManager {
   private initLangState(): void {
     const current = this.getCurrentLang();
 
-    // Update button state
+    // Actualizar estado del botón
     this.langBtn?.setAttribute('data-lang', current);
     this.langBtn?.setAttribute(
       'aria-label',
@@ -222,17 +222,17 @@ class NavigationManager {
     if (this.langBtn)
       this.langBtn.title = current === 'es' ? 'Español' : 'English';
 
-    // Update popover selection
+    // Actualizar selección del popover
     this.langPopover?.querySelectorAll('a[data-lang]').forEach(a => {
       a.classList.toggle('selected', a.getAttribute('data-lang') === current);
     });
 
-    // Clean up initial state
+    // Limpiar estado inicial
     this.closeMenu();
     this.langIcon?.classList.remove('clicked');
     this.langBtn?.classList.remove('clicked');
 
-    // Mark as ready after short delay
+    // Marcar como listo después de pequeño delay
     setTimeout(() => {
       if (this.langMenu) this.langMenu.dataset.ready = '1';
     }, 50);
@@ -271,5 +271,5 @@ class NavigationManager {
   }
 }
 
-// Initialize
+// Inicializar
 new NavigationManager();

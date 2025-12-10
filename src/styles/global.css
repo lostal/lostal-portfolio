@@ -373,7 +373,7 @@ section {
   height: 14px;
   transition: filter 0.3s ease;
   flex-shrink: 0;
-  /* Filters for icon colors */
+  /* Filtros para colores de iconos */
   filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%) hue-rotate(202deg) brightness(92%) contrast(92%);
 }
 

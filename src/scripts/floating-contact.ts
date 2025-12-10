@@ -1,5 +1,5 @@
 // Widget flotante de contacto
-import { isTouchDevice } from '../utils/dom';
+import { canTouch } from '../utils/dom';
 
 class FloatingContactWidget {
   widget: HTMLElement | null = null;
@@ -12,7 +12,7 @@ class FloatingContactWidget {
 
   constructor() {
     // Solo inicializar en desktop
-    if (!isTouchDevice() && !window.matchMedia('(max-width: 768px)').matches) {
+    if (!canTouch() && !window.matchMedia('(max-width: 768px)').matches) {
       this.init();
     }
   }
@@ -161,7 +161,7 @@ class FloatingContactWidget {
     document.readyState === 'complete' ||
     document.readyState === 'interactive'
   ) {
-    // If the document is already parsed, initialize immediately
+    // Si el documento ya está parseado, inicializar inmediatamente
     bootstrap();
   } else {
     document.addEventListener('DOMContentLoaded', bootstrap, { once: true });

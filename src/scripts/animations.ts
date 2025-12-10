@@ -8,6 +8,8 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
+      // Dejar de observar una vez visible para liberar memoria
+      observer.unobserve(entry.target);
     }
   });
 }, observerOptions);

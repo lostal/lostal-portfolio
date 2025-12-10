@@ -153,6 +153,40 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
             name: 'Álvaro Lostal',
             url: 'https://lostal.dev',
             jobTitle: lang === 'es' ? 'Desarrollador Web' : 'Web Developer',
+            description:
+              lang === 'es'
+                ? 'Ingeniero Informático especializado en desarrollo web, diseño de interfaces minimalistas y UX.'
+                : 'Computer Engineer specialized in web development, minimalist interface design and UX.',
+            knowsAbout: [
+              'HTML',
+              'CSS',
+              'JavaScript',
+              'TypeScript',
+              'Astro',
+              'React',
+              'Node.js',
+              'SEO',
+              'UX/UI Design',
+              'Accessibility',
+            ],
+            alumniOf: {
+              '@type': 'CollegeOrUniversity',
+              name: 'Universidad Europea del Atlántico',
+              location: 'Santander, España',
+            },
+            knowsLanguage: [
+              {
+                '@type': 'Language',
+                name: 'Spanish',
+                alternateName: 'es',
+              },
+              {
+                '@type': 'Language',
+                name: 'English',
+                alternateName: 'en',
+                proficiencyLevel: 'B2',
+              },
+            ],
             sameAs: [
               'https://github.com/lostal',
               'https://linkedin.com/in/alvarolostal',

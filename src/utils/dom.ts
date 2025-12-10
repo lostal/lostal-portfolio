@@ -23,9 +23,3 @@ export function isPrimaryInputTouch(): boolean {
 
   return window.matchMedia('(hover: none)').matches;
 }
-
-/**
- * @deprecated Usar canTouch() o isPrimaryInputTouch() según el contexto.
- */
-export const isTouchDevice = canTouch;
-

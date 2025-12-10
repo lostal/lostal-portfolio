@@ -102,8 +102,8 @@ export class HeroCardManager {
     this.isMobile = window.innerWidth <= 768;
 
     if (wasMobile !== this.isMobile) {
-      this.hideCard(true); // Force hide without animation
-      this.bindEvents(); // Re-bind events for new device type
+      this.hideCard(true); // Forzar ocultar sin animación
+      this.bindEvents(); // Re-vincular eventos para nuevo tipo de dispositivo
     }
 
     if (this.isCardOpen) {
@@ -128,7 +128,7 @@ export class HeroCardManager {
       height: window.innerHeight,
     };
 
-    // Cache header height to avoid repeated DOM queries
+    // Cachear altura del header para evitar queries repetidas al DOM
     if (!this.cachedHeaderHeight) {
       const header =
         document.querySelector('nav') || document.querySelector('header');
@@ -190,7 +190,7 @@ export class HeroCardManager {
     // Calcular posición inicial
     this.calculateCardPosition();
 
-    // Note: Profile indicator stays visible during hover now
+    // Nota: El indicador de perfil permanece visible durante el hover
 
     // Añadir clases para animación
     this.aboutCard.classList.add('show');
@@ -209,7 +209,7 @@ export class HeroCardManager {
       });
     }
 
-    // Focus management para accesibilidad
+    // Gestión de focus para accesibilidad
     setTimeout(() => {
       if (this.isMobile) {
         this.closeButton?.focus();
@@ -222,7 +222,7 @@ export class HeroCardManager {
 
     this.isCardOpen = false;
 
-    // Note: Profile indicator visibility managed by CSS only now
+    // Nota: La visibilidad del indicador de perfil se gestiona solo con CSS
 
     // Remover clases para animación
     this.aboutCard.classList.remove('show');
