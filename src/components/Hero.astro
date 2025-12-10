@@ -143,6 +143,7 @@ const t = useTranslations(lang);
   /* Industrial dot pattern background - Technical grid aesthetic */
   .bg-dots {
     position: relative;
+    isolation: isolate;
   }
 
   .bg-dots::after {
@@ -157,7 +158,7 @@ const t = useTranslations(lang);
     background-size: 20px 20px;
     opacity: 0.25;
     pointer-events: none;
-    z-index: -1;
+    z-index: 0;
     /* Fade mask for subtle edges */
     mask-image: radial-gradient(
       ellipse 90% 70% at 50% 50%,

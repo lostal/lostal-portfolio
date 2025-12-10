@@ -11,59 +11,257 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer>
-  <div class="footer-content">
-    <div class="footer-links">
-      <a href="#projects" class="footer-link">{t('nav.projects')}</a>
-      <a href="#journey" class="footer-link">{t('nav.journey')}</a>
-      <a href="#technologies" class="footer-link">{t('nav.technologies')}</a>
-      <a href="#contact" class="footer-link">{t('nav.contact')}</a>
+  <div class="footer-main">
+    <!-- Identidad - Logo exactamente igual a navbar -->
+    <div class="footer-identity">
+      <a href="#top" class="footer-logo">AL</a>
+      <div class="footer-info">
+        <span class="footer-tagline">{t('footer.tagline')}</span>
+        <span class="footer-location">{t('footer.location')}</span>
+      </div>
     </div>
-    <p class="footer-text">
-      © {currentYear} · Álvaro Lostal — {t('footer.copyright')}
-    </p>
+
+    <!-- Navegación rediseñada - estilo técnico con índices -->
+    <nav class="footer-nav" aria-label={t('footer.nav.aria')}>
+      <ul class="footer-nav-list">
+        <li>
+          <span class="nav-index">01</span>
+          <a href="#projects">{t('nav.projects')}</a>
+        </li>
+        <li>
+          <span class="nav-index">02</span>
+          <a href="#journey">{t('nav.journey')}</a>
+        </li>
+        <li>
+          <span class="nav-index">03</span>
+          <a href="#technologies">{t('nav.technologies')}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Línea discontinua -->
+  <div class="footer-divider"></div>
+
+  <!-- Firma y metadata -->
+  <div class="footer-bottom">
+    <span class="footer-signature">
+      {t('footer.signature')}
+      <strong>Álvaro Lostal</strong>
+    </span>
+    <span class="footer-version">{t('footer.version')} · {currentYear}</span>
   </div>
 </footer>
 
 <style>
-  /* Footer */
+  /* Footer Grid Editorial - Estilo técnico */
   footer {
     background: var(--bg-primary);
-    padding: 32px 24px;
-    text-align: center;
     border-top: 1px solid var(--border);
+    padding: 64px 24px 48px;
   }
 
-  .footer-content {
+  .footer-main {
     max-width: 1200px;
     margin: 0 auto;
-  }
-
-  .footer-links {
     display: flex;
-    justify-content: center;
-    gap: 24px;
-    margin-bottom: 16px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 48px;
     flex-wrap: wrap;
   }
 
-  .footer-link {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    transition: color 0.2s ease;
-  }
-
-  @media (hover: hover) {
-    .footer-link:hover {
-      color: var(--accent-primary);
+  @media (max-width: 768px) {
+    .footer-main {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 48px;
     }
   }
 
-  .footer-text {
-    color: var(--text-tertiary);
-    font-size: 13px;
+  /* Identidad - Logo igual que navbar pero hover neutro */
+  .footer-identity {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .footer-identity {
+      align-items: center;
+    }
+  }
+
+  .footer-logo {
+    font-size: 24px;
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: -1px;
+    font-family: var(--font-primary);
+    color: var(--text-primary);
+    position: relative;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .footer-logo::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--text-primary);
+    transition: width 0.3s ease;
+  }
+
+  @media (hover: hover) {
+    .footer-logo:hover::after {
+      width: 100%;
+    }
+  }
+
+  .footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 12px;
     letter-spacing: 0.3px;
-    margin: 8px 0;
+  }
+
+  .footer-tagline {
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 0.8px;
+    font-weight: 500;
+  }
+
+  .footer-location {
+    color: var(--text-tertiary);
+  }
+
+  /* Navegación con índices - estilo técnico/editorial */
+  .footer-nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .footer-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @media (max-width: 480px) {
+    .footer-nav-list {
+      gap: 24px;
+    }
+  }
+
+  .footer-nav-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .nav-index {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.5px;
+    opacity: 0.6;
+  }
+
+  .footer-nav-list a {
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.2px;
+    transition: color 0.2s ease;
+    position: relative;
+  }
+
+  .footer-nav-list a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--text-primary);
+    transition: width 0.2s ease;
+  }
+
+  @media (hover: hover) {
+    .footer-nav-list a:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-nav-list a:hover::after {
+      width: 100%;
+    }
+
+    .footer-nav-list li:hover .nav-index {
+      opacity: 1;
+    }
+  }
+
+  /* Línea discontinua */
+  .footer-divider {
+    max-width: 1200px;
+    margin: 48px auto;
+    height: 1px;
+    background: repeating-linear-gradient(
+      to right,
+      var(--border) 0,
+      var(--border) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+  }
+
+  /* Footer Bottom */
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  .footer-signature {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.2px;
+  }
+
+  .footer-signature strong {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .footer-version {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.5px;
+    opacity: 0.7;
   }
 </style>
