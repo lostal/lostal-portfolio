@@ -318,22 +318,22 @@ const t = useTranslations(lang);
       </div>
 
       <!-- Líneas táctiles de navegación -->
-      <nav class="carousel-lines" aria-label="Navegación de proyectos">
+      <nav class="carousel-lines" aria-label={t('projects.carousel.nav')}>
         <button
           class="carousel-line is-active"
           data-slide="0"
-          aria-label="Ir al proyecto 1"
+          aria-label={t('projects.carousel.goto1')}
           aria-current="true"
           type="button"></button>
         <button
           class="carousel-line"
           data-slide="1"
-          aria-label="Ir al proyecto 2"
+          aria-label={t('projects.carousel.goto2')}
           type="button"></button>
         <button
           class="carousel-line"
           data-slide="2"
-          aria-label="Ir al proyecto 3"
+          aria-label={t('projects.carousel.goto3')}
           type="button"></button>
       </nav>
     </div>

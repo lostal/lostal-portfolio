@@ -131,17 +131,6 @@ function initProjectsCarousel(): Swiper | null {
     carousel.setAttribute('tabindex', '0');
   }
 
-  carousel.destroy = () => {
-    if (carousel._keyNavigationHandler) {
-      document.removeEventListener('keydown', carousel._keyNavigationHandler);
-      carousel._keyNavigationHandler = null;
-    }
-    if (carousel.swiperInstance) {
-      carousel.swiperInstance.destroy(true, true);
-      carousel.swiperInstance = null;
-    }
-  };
-
   // Utilidad debounce con tipado genérico
   const debounce = <T extends (...args: Parameters<T>) => void>(
     fn: T,

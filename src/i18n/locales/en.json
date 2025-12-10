@@ -91,5 +91,9 @@
   "footer.copyright": "Made with ❤️ in Santander, Spain.",
   "hero.image.alt": "View Álvaro Lostal's personal information",
   "about.close.label": "Close information",
-  "scroll.label": "Go to projects"
+  "scroll.label": "Go to projects",
+  "projects.carousel.nav": "Project navigation",
+  "projects.carousel.goto1": "Go to project 1",
+  "projects.carousel.goto2": "Go to project 2",
+  "projects.carousel.goto3": "Go to project 3"
 }

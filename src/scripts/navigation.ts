@@ -3,6 +3,8 @@
  * Gestiona: scroll de navbar, menú móvil, cambio de idioma, scroll suave
  */
 import { canTouch } from '../utils/dom';
+import { SCROLL } from '../utils/constants';
+import { onReady } from '../utils/init';
 
 class NavigationManager {
   private navbar: HTMLElement | null;
@@ -60,13 +62,13 @@ class NavigationManager {
 
     // Estado de navbar al hacer scroll
     if (this.navbar) {
-      if (scrollPosition > 50) this.navbar.classList.add('scrolled');
+      if (scrollPosition > SCROLL.NAVBAR_THRESHOLD) this.navbar.classList.add('scrolled');
       else this.navbar.classList.remove('scrolled');
     }
 
     // Ocultar flecha de scroll
     if (this.scrollDown) {
-      if (scrollPosition > 100) this.scrollDown.classList.add('hidden');
+      if (scrollPosition > SCROLL.SCROLL_DOWN_HIDE_THRESHOLD) this.scrollDown.classList.add('hidden');
       else this.scrollDown.classList.remove('hidden');
     }
   }
@@ -259,8 +261,7 @@ class NavigationManager {
         if (href) {
           const target = document.querySelector(href) as HTMLElement;
           if (target) {
-            const offset = 60;
-            const targetPosition = target.offsetTop - offset;
+            const targetPosition = target.offsetTop - SCROLL.SMOOTH_SCROLL_OFFSET;
             requestAnimationFrame(() => {
               window.scrollTo({ top: targetPosition, behavior: 'smooth' });
             });
@@ -271,5 +272,5 @@ class NavigationManager {
   }
 }
 
-// Inicializar
-new NavigationManager();
+// Inicializar con helper estandarizado
+onReady(() => new NavigationManager());

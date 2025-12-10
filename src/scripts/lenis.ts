@@ -1,6 +1,6 @@
 /**
  * Lenis Smooth Scroll - Inicialización y configuración
- * Proporciona un scroll "weighty" pero responsivo estilo premium
+ * Proporciona scroll suave estilo premium
  */
 
 import Lenis from 'lenis';
@@ -10,6 +10,10 @@ import { isPrimaryInputTouch } from '../utils/dom';
 const prefersReducedMotion = window.matchMedia(
   '(prefers-reduced-motion: reduce)'
 ).matches;
+
+// Referencia global para cleanup
+let lenisInstance: Lenis | null = null;
+let rafId: number | null = null;
 
 /**
  * Inicializa Lenis con configuración optimizada
@@ -21,7 +25,7 @@ function initLenis(): void {
     return;
   }
 
-  const lenis = new Lenis({
+  lenisInstance = new Lenis({
     duration: 1.2,
     easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     orientation: 'vertical',
@@ -32,13 +36,30 @@ function initLenis(): void {
     infinite: false,
   });
 
-  // RAF loop para Lenis
+  // RAF loop para Lenis con ID para cancelación
   function raf(time: number): void {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
+    if (lenisInstance) {
+      lenisInstance.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
   }
 
-  requestAnimationFrame(raf);
+  rafId = requestAnimationFrame(raf);
+}
+
+/**
+ * Destruye la instancia de Lenis y cancela el RAF loop
+ * Llamar al desmontar la página o en navegación SPA
+ */
+export function destroyLenis(): void {
+  if (rafId !== null) {
+    cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+  if (lenisInstance) {
+    lenisInstance.destroy();
+    lenisInstance = null;
+  }
 }
 
 // Inicializar cuando el DOM esté listo

@@ -91,5 +91,9 @@
   "footer.copyright": "Hecho con ❤️ en Santander, España.",
   "hero.image.alt": "Ver información personal de Álvaro Lostal",
   "about.close.label": "Cerrar información",
-  "scroll.label": "Ir a proyectos"
+  "scroll.label": "Ir a proyectos",
+  "projects.carousel.nav": "Navegación de proyectos",
+  "projects.carousel.goto1": "Ir al proyecto 1",
+  "projects.carousel.goto2": "Ir al proyecto 2",
+  "projects.carousel.goto3": "Ir al proyecto 3"
 }
