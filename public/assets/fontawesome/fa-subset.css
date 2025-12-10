@@ -1,5 +1,5 @@
-/* FontAwesome 7 Subset - Solo iconos utilizados */
-/* Basado en la sintaxis de Font Awesome 7 con variables CSS */
+/* FontAwesome 6 Subset - Solo iconos utilizados */
+/* Basado en la sintaxis de Font Awesome 6 con variables CSS */
 
 .fa,
 .fas,
@@ -23,13 +23,13 @@
 
 /* Solid icons */
 .fas {
-    font-family: "Font Awesome 7 Free";
+    font-family: "Font Awesome 6 Free";
     font-weight: 900
 }
 
 /* Brand icons */
 .fab {
-    font-family: "Font Awesome 7 Brands";
+    font-family: "Font Awesome 6 Brands";
     font-weight: 400
 }
 
@@ -112,7 +112,7 @@
 
 /* Font faces */
 @font-face {
-    font-family: "Font Awesome 7 Free";
+    font-family: "Font Awesome 6 Free";
     font-style: normal;
     font-weight: 900;
     font-display: swap;
@@ -120,7 +120,7 @@
 }
 
 @font-face {
-    font-family: "Font Awesome 7 Brands";
+    font-family: "Font Awesome 6 Brands";
     font-style: normal;
     font-weight: 400;
     font-display: swap;
