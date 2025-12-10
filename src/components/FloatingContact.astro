@@ -5,9 +5,7 @@ import ContactLinks from './ContactLinks.astro';
 
 <div id="floating-contact" class="floating-contact">
   <script src="../scripts/floating-contact.ts"></script>
-  <div class="floating-contact-inner">
-    <ContactLinks />
-  </div>
+  <ContactLinks />
 </div>
 
 <style>
@@ -40,28 +38,8 @@ import ContactLinks from './ContactLinks.astro';
     }
   }
 
-  /* Contenedor interno con glassmorphism */
-  .floating-contact-inner {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px 20px;
-    background: rgba(var(--bg-primary-rgb), 0.95);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(var(--border-rgb, 229, 231, 235), 0.3);
-    border-radius: 36px;
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.12),
-      0 2px 16px rgba(0, 0, 0, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
-    position: relative;
-  }
-
   /* Área invisible para hover estable */
-  .floating-contact-inner::after {
+  .floating-contact::after {
     content: '';
     position: absolute;
     bottom: -40px;
@@ -73,7 +51,7 @@ import ContactLinks from './ContactLinks.astro';
   }
 
   @media (hover: hover) {
-    .floating-contact.visible:hover .floating-contact-inner {
+    .floating-contact.visible:hover :global(.contact-pill) {
       transform: translateY(-4px);
       box-shadow:
         0 16px 48px rgba(0, 0, 0, 0.15),
@@ -125,7 +103,7 @@ import ContactLinks from './ContactLinks.astro';
   }
 
   /* Ocultar área de hover cuando está docked */
-  .floating-contact.docked .floating-contact-inner::after {
+  .floating-contact.docked::after {
     display: none;
   }
 
@@ -134,15 +112,5 @@ import ContactLinks from './ContactLinks.astro';
     .floating-contact {
       display: none !important;
     }
-  }
-
-  /* Tema oscuro */
-  :global([data-theme='dark']) .floating-contact-inner {
-    background: rgba(var(--bg-primary-rgb), 0.95);
-    border: 1px solid rgba(var(--border-rgb, 66, 66, 69), 0.5);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      0 2px 16px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 </style>

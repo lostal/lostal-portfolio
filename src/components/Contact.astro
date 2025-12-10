@@ -27,9 +27,7 @@ const t = useTranslations(lang);
 
     <!-- Enlaces de contacto estáticos (móvil) -->
     <div class="contact-mobile fade-in">
-      <div class="contact-links">
-        <ContactLinks />
-      </div>
+      <ContactLinks />
     </div>
   </div>
 </section>
@@ -90,25 +88,16 @@ const t = useTranslations(lang);
     }
   }
 
-  /* === ENLACES DE CONTACTO ESTÁTICOS (MÓVIL) === */
-
-  /* Ocultar en desktop (el widget flotante se encarga) */
+  /* Enlaces estáticos para móvil */
   .contact-mobile {
     display: none;
+    justify-content: center;
+    margin-top: 32px;
   }
 
-  /* Mostrar solo en móviles */
   @media (max-width: 768px), (orientation: portrait), (pointer: coarse) {
     .contact-mobile {
-      display: block;
+      display: flex;
     }
-  }
-
-  .contact-links {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    margin-top: 32px;
-    flex-wrap: wrap;
   }
 </style>

@@ -131,13 +131,7 @@ class FloatingContactWidget {
     if (!this.widget || !this.dockPoint || !this.originalParent) return;
 
     // Remover todas las clases de estado previas
-    this.widget.classList.remove(
-      'visible',
-      'docked',
-      'slide-up',
-      'slide-down',
-      'docking'
-    );
+    this.widget.classList.remove('visible', 'docked', 'slide-up', 'slide-down');
 
     switch (newState) {
       case 'hidden':

@@ -1,40 +1,69 @@
 ---
-// Enlaces de contacto compartidos - usados por FloatingContact y Contact
+// Widget de enlaces de contacto con fondo de píldora
+// Usado por FloatingContact (desktop) y Contact (móvil)
 ---
 
-<a
-  href="mailto:alvarolostal04@gmail.com"
-  class="contact-link"
-  title="Email"
-  data-contact="email"
->
-  <i class="fas fa-envelope"></i>
-</a>
+<div class="contact-pill">
+  <a
+    href="mailto:alvarolostal04@gmail.com"
+    class="contact-link"
+    title="Email"
+    data-contact="email"
+  >
+    <i class="fas fa-envelope"></i>
+  </a>
 
-<a
-  href="https://github.com/lostal"
-  target="_blank"
-  rel="noopener noreferrer"
-  class="contact-link"
-  title="GitHub"
-  data-contact="github"
->
-  <i class="fab fa-github"></i>
-</a>
+  <a
+    href="https://github.com/lostal"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="contact-link"
+    title="GitHub"
+    data-contact="github"
+  >
+    <i class="fab fa-github"></i>
+  </a>
 
-<a
-  href="https://linkedin.com/in/alvarolostal"
-  target="_blank"
-  rel="noopener noreferrer"
-  class="contact-link"
-  title="LinkedIn"
-  data-contact="linkedin"
->
-  <i class="fab fa-linkedin"></i>
-</a>
+  <a
+    href="https://linkedin.com/in/alvarolostal"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="contact-link"
+    title="LinkedIn"
+    data-contact="linkedin"
+  >
+    <i class="fab fa-linkedin"></i>
+  </a>
+</div>
 
 <style>
-  /* Estilos compartidos de los enlaces de contacto */
+  /* Contenedor píldora con glassmorphism */
+  .contact-pill {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 20px;
+    background: rgba(var(--bg-primary-rgb), 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(var(--border-rgb, 229, 231, 235), 0.3);
+    border-radius: 36px;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.12),
+      0 2px 16px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* Tema oscuro */
+  :global([data-theme='dark']) .contact-pill {
+    background: rgba(var(--bg-primary-rgb), 0.95);
+    border: 1px solid rgba(var(--border-rgb, 66, 66, 69), 0.5);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      0 2px 16px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* Enlaces de contacto */
   .contact-link {
     display: inline-flex;
     align-items: center;
