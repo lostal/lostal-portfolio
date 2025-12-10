@@ -171,14 +171,8 @@ const t = useTranslations(lang);
     transition: width 0.3s ease;
   }
 
-  @media (hover: hover) {
-    .logo:hover::after {
-      width: 100%;
-    }
-  }
-
-  /* Efecto táctil para móvil - simula hover al tocar */
-  .logo:active::after {
+  /* Hover siempre activo (incluido móvil) */
+  .logo:hover::after {
     width: 100%;
   }
 
@@ -276,36 +270,49 @@ const t = useTranslations(lang);
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Click animation: mini bounce on the icon (more visible) */
+  /* Animación de click elegante para el icono de idioma */
   @keyframes lang-click-bounce-icon {
     0% {
-      transform: translateY(0) scale(1);
+      transform: translateY(0) scale(1) rotate(0deg);
+      opacity: 1;
     }
 
-    25% {
-      transform: translateY(-3px) scale(1.05);
+    20% {
+      transform: translateY(-2px) scale(1.15) rotate(-8deg);
+      opacity: 0.9;
     }
 
-    50% {
-      transform: translateY(-1px) scale(1.02);
+    40% {
+      transform: translateY(0) scale(1.1) rotate(5deg);
+      opacity: 1;
     }
 
-    75% {
-      transform: translateY(-0.5px) scale(1.01);
+    60% {
+      transform: translateY(-1px) scale(1.05) rotate(-3deg);
+    }
+
+    80% {
+      transform: translateY(0) scale(1.02) rotate(1deg);
     }
 
     100% {
-      transform: translateY(0) scale(1);
+      transform: translateY(0) scale(1) rotate(0deg);
     }
   }
 
-  /* Apply animation to the inner icon for a clearer effect */
-
-  /* Stronger, specific selector to ensure FontAwesome icon gets animated reliably */
+  /* Efecto de feedback visual al hacer click */
   #langIcon.clicked,
   .lang-btn i.clicked {
-    /* Softer, slower animation with smooth easing for elegance */
-    animation: lang-click-bounce-icon 550ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: lang-click-bounce-icon 650ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Efecto visual adicional para el botón durante la transición */
+  .lang-btn.transitioning {
+    pointer-events: none;
+  }
+
+  .lang-btn.transitioning i {
+    color: var(--accent-primary);
   }
 
   /* Visual hint according to selected language (subtle) */

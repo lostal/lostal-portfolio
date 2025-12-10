@@ -422,6 +422,9 @@ section {
 }
 
 /* ===== FILM GRAIN OVERLAY ===== */
+/* Nota sobre visibilidad: el grano tiene diferente contraste según el tema.
+   En modo claro necesita más opacidad porque el contraste natural es menor.
+   En modo oscuro se reduce para evitar que sea demasiado llamativo. */
 .noise-overlay {
   position: fixed;
   top: 0;
@@ -430,16 +433,21 @@ section {
   height: 100%;
   pointer-events: none;
   z-index: 99998;
-  opacity: 0.10;
+  opacity: 0.14;
+  /* Mayor opacidad en claro para compensar bajo contraste */
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
   animation: grain 8s steps(10) infinite;
-  filter: invert(1);
+  filter: invert(1) contrast(1.1);
+  /* Ligero aumento de contraste para mejor visibilidad */
 }
 
 [data-theme='dark'] .noise-overlay {
-  filter: none;
+  opacity: 0.08;
+  /* Menor opacidad en oscuro porque el contraste natural es mayor */
+  filter: contrast(0.9);
+  /* Ligera reducción de contraste para suavizar */
 }
 
 @keyframes grain {

@@ -22,6 +22,7 @@ function initLenis(): void {
   // No inicializar en dispositivos táctiles ni si prefiere movimiento reducido
   // Lenis no aporta beneficio en táctiles y consume recursos (RAF constante)
   if (prefersReducedMotion || isPrimaryInputTouch()) {
+    window.lenis = null;
     return;
   }
 
@@ -35,6 +36,9 @@ function initLenis(): void {
     touchMultiplier: 2,
     infinite: false,
   });
+
+  // Exponer instancia globalmente para otros scripts
+  window.lenis = lenisInstance;
 
   // RAF loop para Lenis con ID para cancelación
   function raf(time: number): void {
@@ -59,6 +63,7 @@ export function destroyLenis(): void {
   if (lenisInstance) {
     lenisInstance.destroy();
     lenisInstance = null;
+    window.lenis = null;
   }
 }
 

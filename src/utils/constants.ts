@@ -13,8 +13,8 @@ export const SCROLL = {
     SMOOTH_SCROLL_OFFSET: 60,
     /** Zona de disparo del auto-scroll */
     AUTO_SCROLL_TRIGGER_ZONE: 150,
-    /** Umbral para reset de auto-scroll */
-    AUTO_SCROLL_RESET_ZONE: 80,
+    /** Umbral para reset de auto-scroll (mayor para compensar Lenis) */
+    AUTO_SCROLL_RESET_ZONE: 200,
     /** Delay de inicialización */
     INIT_DELAY_MS: 300,
 } as const;

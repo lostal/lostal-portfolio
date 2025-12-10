@@ -101,9 +101,10 @@ class NavigationManager {
         this.langMenu.addEventListener('mouseleave', () => this.closeMenu());
       }
 
-      // Manejador de click del botón principal
+      // Manejador de click: marcar cambio de idioma y navegar inmediatamente
       this.langBtn.addEventListener('click', () => {
-        this.animateIcon();
+        // Marcar que venimos de un cambio de idioma para animar en destino
+        sessionStorage.setItem('lang-switch', '1');
       });
 
       // Manejadores de fin de animación
@@ -233,6 +234,15 @@ class NavigationManager {
     this.closeMenu();
     this.langIcon?.classList.remove('clicked');
     this.langBtn?.classList.remove('clicked');
+
+    // Detectar si venimos de un cambio de idioma y animar
+    if (sessionStorage.getItem('lang-switch') === '1') {
+      sessionStorage.removeItem('lang-switch');
+      // Pequeño delay para que el icono ya esté renderizado
+      requestAnimationFrame(() => {
+        this.animateIcon();
+      });
+    }
 
     // Marcar como listo después de pequeño delay
     setTimeout(() => {

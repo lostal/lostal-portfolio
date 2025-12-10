@@ -1,4 +1,10 @@
+/**
+ * AutoScroll Manager - Versión restaurada y mejorada
+ * Basada en la versión original funcional, con umbrales ajustados
+ */
+
 import { canTouch } from '../utils/dom';
+import { SCROLL } from '../utils/constants';
 
 class AutoScrollManager {
   isAutoScrolling: boolean;
@@ -6,9 +12,6 @@ class AutoScrollManager {
   hasTriggeredAutoScroll: boolean;
   isInitialized: boolean;
   scrollTimeout: number | null;
-  wheelTimeout: number | null;
-  lastScrollY: number;
-  consecutiveScrollDown: number;
   esDispositivoTactil: boolean;
 
   constructor() {
@@ -17,9 +20,6 @@ class AutoScrollManager {
     this.hasTriggeredAutoScroll = false;
     this.isInitialized = false;
     this.scrollTimeout = null;
-    this.wheelTimeout = null;
-    this.lastScrollY = window.scrollY;
-    this.consecutiveScrollDown = 0;
 
     this.esDispositivoTactil = canTouch();
 
@@ -39,9 +39,13 @@ class AutoScrollManager {
 
   delayedInit() {
     setTimeout(() => {
+      // Si empezamos muy abajo, no activar nunca el autoscroll en esta sesión
+      if (window.scrollY > 300) {
+        this.hasTriggeredAutoScroll = true;
+      }
       this.isInitialized = true;
       this.bindEvents();
-    }, 300);
+    }, 400);
   }
 
   bindEvents() {
@@ -64,9 +68,7 @@ class AutoScrollManager {
           ticking = true;
         }
       },
-      {
-        passive: true,
-      }
+      { passive: true }
     );
 
     document.addEventListener('keydown', (e: KeyboardEvent) =>
@@ -77,45 +79,10 @@ class AutoScrollManager {
     );
   }
 
-  autoScrollToProjects() {
-    const projectsSection = document.getElementById('projects');
-    if (!projectsSection || this.hasTriggeredAutoScroll) {
-      return;
-    }
-
-    this.isAutoScrolling = true;
-    this.hasTriggeredAutoScroll = true;
-
-    this.clearTimeouts();
-
-    const projectsPosition =
-      projectsSection.getBoundingClientRect().top + window.scrollY;
-    const offset = 60;
-
-    window.scrollTo({
-      top: projectsPosition - offset,
-      behavior: 'smooth',
-    });
-
-    this.scrollTimeout = window.setTimeout(() => {
-      this.isAutoScrolling = false;
-
-      setTimeout(() => {
-        if (window.scrollY < 100) {
-          this.hasTriggeredAutoScroll = false;
-        }
-      }, 500);
-    }, 1200);
-  }
-
   clearTimeouts() {
     if (this.scrollTimeout) {
       clearTimeout(this.scrollTimeout);
       this.scrollTimeout = null;
-    }
-    if (this.wheelTimeout) {
-      clearTimeout(this.wheelTimeout);
-      this.wheelTimeout = null;
     }
   }
 
@@ -124,34 +91,36 @@ class AutoScrollManager {
 
     const currentScrollY = window.scrollY;
 
-    if (currentScrollY < 50 && this.hasTriggeredAutoScroll) {
+    // Resetear cuando el usuario vuelve cerca del top
+    // Umbral generoso (200px) para compensar el smooth scroll de Lenis
+    if (currentScrollY < SCROLL.AUTO_SCROLL_RESET_ZONE) {
       this.hasTriggeredAutoScroll = false;
-      this.consecutiveScrollDown = 0;
-
-      if (this.isManualNavigation) {
-        this.isManualNavigation = false;
-      }
+      this.isManualNavigation = false;
     }
-
-    this.lastScrollY = currentScrollY;
   }
 
   handleWheel(e: WheelEvent) {
+    if (!this.isInitialized || this.isAutoScrolling) return;
+
     const currentScrollY = window.scrollY;
 
-    if (e.deltaY > 0 && currentScrollY <= 150 && !this.hasTriggeredAutoScroll) {
-      if (!this.isInitialized || this.isAutoScrolling) {
-        return;
-      }
+    // Verificar reset primero
+    if (currentScrollY < SCROLL.AUTO_SCROLL_RESET_ZONE) {
+      this.hasTriggeredAutoScroll = false;
+      this.isManualNavigation = false;
+    }
 
-      if (this.isManualNavigation && currentScrollY < 80) {
-        this.isManualNavigation = false;
-      }
-
-      if (this.isManualNavigation) {
-        return;
-      }
-
+    // Solo activar autoscroll si:
+    // - Rueda hacia abajo (deltaY > 0)
+    // - Estamos en la zona de trigger
+    // - No ya activado
+    // - No navegación manual
+    if (
+      e.deltaY > 0 &&
+      currentScrollY <= SCROLL.AUTO_SCROLL_TRIGGER_ZONE &&
+      !this.hasTriggeredAutoScroll &&
+      !this.isManualNavigation
+    ) {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
@@ -162,18 +131,16 @@ class AutoScrollManager {
 
   executeImmediateAutoScroll() {
     const projectsSection = document.getElementById('projects');
-    if (!projectsSection) {
-      return;
-    }
+    if (!projectsSection) return;
 
     this.isAutoScrolling = true;
     this.hasTriggeredAutoScroll = true;
-
     this.clearTimeouts();
 
     const rect = projectsSection.getBoundingClientRect();
-    const targetPosition = window.scrollY + rect.top - 60;
+    const targetPosition = window.scrollY + rect.top - SCROLL.SMOOTH_SCROLL_OFFSET;
 
+    // Usar window.scrollTo nativo - más confiable que Lenis para esto
     window.scrollTo({
       top: targetPosition,
       behavior: 'smooth',
@@ -181,18 +148,12 @@ class AutoScrollManager {
 
     this.scrollTimeout = window.setTimeout(() => {
       this.isAutoScrolling = false;
-    }, 800);
+    }, 1000);
   }
 
   handleKeyNavigation(e: KeyboardEvent) {
     const navigationKeys = [
-      'PageDown',
-      'PageUp',
-      'Home',
-      'End',
-      'ArrowDown',
-      'ArrowUp',
-      'Space',
+      'PageDown', 'PageUp', 'Home', 'End', 'ArrowDown', 'ArrowUp', 'Space'
     ];
 
     if (navigationKeys.includes(e.code)) {
@@ -200,14 +161,14 @@ class AutoScrollManager {
 
       if (
         e.code === 'ArrowDown' &&
-        currentScrollY < 80 &&
+        currentScrollY < SCROLL.AUTO_SCROLL_TRIGGER_ZONE &&
         !this.hasTriggeredAutoScroll &&
         this.isInitialized &&
         !this.isAutoScrolling &&
         !this.isManualNavigation
       ) {
         e.preventDefault();
-        this.autoScrollToProjects();
+        this.executeImmediateAutoScroll();
       } else {
         this.setManualNavigation(true);
       }
@@ -223,7 +184,7 @@ class AutoScrollManager {
         this.setManualNavigation(true);
 
         setTimeout(() => {
-          if (window.scrollY < 100) {
+          if (window.scrollY < SCROLL.AUTO_SCROLL_RESET_ZONE) {
             this.hasTriggeredAutoScroll = false;
             this.isManualNavigation = false;
           }
@@ -239,9 +200,7 @@ class AutoScrollManager {
 
     if (isManual) {
       this.clearTimeouts();
-
       const resetTime = window.scrollY < 100 ? 1000 : 2000;
-
       setTimeout(() => {
         this.isManualNavigation = false;
       }, resetTime);
@@ -261,14 +220,11 @@ window.resetAutoScroll = function () {
   if (autoScrollManager) {
     autoScrollManager.hasTriggeredAutoScroll = false;
     autoScrollManager.isManualNavigation = false;
-    autoScrollManager.consecutiveScrollDown = 0;
   }
 };
 
 function initAutoScrollManager() {
-  if (autoScrollManager) {
-    return;
-  }
+  if (autoScrollManager) return;
   autoScrollManager = new AutoScrollManager();
 }
 
