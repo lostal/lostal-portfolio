@@ -1,0 +1,63 @@
+---
+// Enlaces de contacto compartidos - usados por FloatingContact y Contact
+---
+
+<a
+  href="mailto:alvarolostal04@gmail.com"
+  class="contact-link"
+  title="Email"
+  data-contact="email"
+>
+  <i class="fas fa-envelope"></i>
+</a>
+
+<a
+  href="https://github.com/lostal"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="contact-link"
+  title="GitHub"
+  data-contact="github"
+>
+  <i class="fab fa-github"></i>
+</a>
+
+<a
+  href="https://linkedin.com/in/alvarolostal"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="contact-link"
+  title="LinkedIn"
+  data-contact="linkedin"
+>
+  <i class="fab fa-linkedin"></i>
+</a>
+
+<style>
+  /* Estilos compartidos de los enlaces de contacto */
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: var(--bg-secondary);
+    border-radius: 24px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+    font-size: 20px;
+  }
+
+  @media (hover: hover) {
+    .contact-link:hover {
+      background: var(--accent-primary);
+      color: #000;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(var(--accent-primary-rgb), 0.3);
+      border-color: var(--accent-primary);
+    }
+  }
+</style>

@@ -1,13 +1,17 @@
-// Widget flotante de contacto
+// Widget flotante de contacto con efecto dock
 import { canTouch } from '../utils/dom';
+import { TIMING, FLOATING_CONTACT } from '../utils/constants';
+
+type WidgetState = 'hidden' | 'floating' | 'docked';
 
 class FloatingContactWidget {
   widget: HTMLElement | null = null;
-  contactSection: HTMLElement | null = null;
+  dockPoint: HTMLElement | null = null;
   projectsSection: HTMLElement | null = null;
-  isVisible = false;
+  originalParent: HTMLElement | null = null;
+  state: WidgetState = 'hidden';
   isAnimating = false;
-  cachedPositions = { projectsTop: 0, contactTop: 0, lastUpdate: 0 };
+  cachedPositions = { projectsTop: 0, dockPointTop: 0, lastUpdate: 0 };
   ticking = false;
 
   constructor() {
@@ -20,13 +24,16 @@ class FloatingContactWidget {
   init() {
     // Encontrar elementos
     this.widget = document.getElementById('floating-contact');
-    this.contactSection = document.getElementById('contact');
+    this.dockPoint = document.getElementById('contact-dock-point');
     this.projectsSection = document.getElementById('projects');
 
-    if (!this.widget || !this.contactSection || !this.projectsSection) {
+    if (!this.widget || !this.dockPoint || !this.projectsSection) {
       console.warn('FloatingContact: Elementos requeridos no encontrados');
       return;
     }
+
+    // Guardar padre original para poder restaurar
+    this.originalParent = this.widget.parentElement;
 
     // Calcular posiciones iniciales
     this.updateCachedPositions();
@@ -57,20 +64,15 @@ class FloatingContactWidget {
   }
 
   updateCachedPositions() {
-    if (!this.projectsSection || !this.contactSection) return;
+    if (!this.projectsSection || !this.dockPoint) return;
 
-    // Usar getBoundingClientRect() y calcular una sola vez
-    const projectsRect = (
-      this.projectsSection as HTMLElement
-    ).getBoundingClientRect();
-    const contactRect = (
-      this.contactSection as HTMLElement
-    ).getBoundingClientRect();
+    const projectsRect = this.projectsSection.getBoundingClientRect();
+    const dockRect = this.dockPoint.getBoundingClientRect();
     const scrollY = window.scrollY;
 
     this.cachedPositions = {
       projectsTop: projectsRect.top + scrollY,
-      contactTop: contactRect.top + scrollY,
+      dockPointTop: dockRect.top + scrollY,
       lastUpdate: Date.now(),
     };
   }
@@ -80,75 +82,129 @@ class FloatingContactWidget {
 
     if (this.isAnimating || !this.widget) return;
 
-    // Actualizar cache si es muy antigua (más de 5 segundos)
-    if (Date.now() - this.cachedPositions.lastUpdate > 5000) {
+    // Actualizar cache si es muy antigua
+    if (Date.now() - this.cachedPositions.lastUpdate > TIMING.CACHE_EXPIRY) {
       this.updateCachedPositions();
     }
 
     const scrollY = window.scrollY;
     const windowHeight = window.innerHeight;
 
-    // Usar posiciones cacheadas para evitar reflows
-    const { projectsTop, contactTop } = this.cachedPositions;
+    const { projectsTop, dockPointTop } = this.cachedPositions;
 
-    // LÓGICA EXACTA:
-    // 1. Mostrar después de proyectos
-    const afterProjects = scrollY + windowHeight > projectsTop + 200;
+    // LÓGICA DE ESTADOS:
+    // 1. HIDDEN: Aún no hemos pasado proyectos
+    const afterProjects =
+      scrollY + windowHeight >
+      projectsTop + FLOATING_CONTACT.PROJECTS_TRIGGER_OFFSET;
 
-    // 2. OCULTAR EXACTAMENTE cuando los iconos de contacto están visibles
-    const contactIconsVisible = scrollY + windowHeight > contactTop + 100;
+    // 2. Calcular posición visual del widget flotante
+    const { WIDGET_HEIGHT, WIDGET_BOTTOM_OFFSET } = FLOATING_CONTACT;
+    const widgetVisualCenter =
+      windowHeight - WIDGET_BOTTOM_OFFSET - WIDGET_HEIGHT / 2;
+    const widgetAbsoluteY = scrollY + widgetVisualCenter;
 
-    const shouldShow = afterProjects && !contactIconsVisible;
+    // 3. Anclar cuando el widget llegue visualmente al dock point
+    const shouldDock = widgetAbsoluteY >= dockPointTop - WIDGET_HEIGHT / 2;
 
-    // Actualizar visibilidad con animaciones
-    if (shouldShow && !this.isVisible) {
-      this.show();
-    } else if (!shouldShow && this.isVisible) {
-      this.hide();
+    // Determinar nuevo estado
+    let newState: WidgetState;
+
+    if (!afterProjects) {
+      newState = 'hidden';
+    } else if (shouldDock) {
+      newState = 'docked';
+    } else {
+      newState = 'floating';
+    }
+
+    // Transicionar si cambió el estado
+    if (newState !== this.state) {
+      this.transitionTo(newState);
     }
   }
 
-  show() {
-    if (this.isVisible || this.isAnimating) return;
+  transitionTo(newState: WidgetState) {
+    const oldState = this.state;
+    this.state = newState;
 
-    this.isAnimating = true;
-    this.isVisible = true;
+    if (!this.widget || !this.dockPoint || !this.originalParent) return;
 
-    // Remover clases de animación previa
-    this.widget!.classList.remove('slide-down');
+    // Remover todas las clases de estado previas
+    this.widget.classList.remove(
+      'visible',
+      'docked',
+      'slide-up',
+      'slide-down',
+      'docking'
+    );
 
-    // Mostrar widget
-    this.widget!.classList.add('visible');
+    switch (newState) {
+      case 'hidden':
+        if (oldState === 'floating') {
+          // Estábamos flotando, animar hacia abajo
+          this.isAnimating = true;
+          this.widget.classList.add('visible', 'slide-down');
+          setTimeout(() => {
+            this.widget!.classList.remove('visible', 'slide-down');
+            this.isAnimating = false;
+          }, 400);
+        } else if (oldState === 'docked') {
+          // Estábamos anclados, mover de vuelta al body y ocultar
+          this.undockWidget();
+        }
+        break;
 
-    // Agregar animación de deslizamiento hacia arriba
-    this.widget!.classList.add('slide-up');
+      case 'floating':
+        if (oldState === 'hidden') {
+          // Aparecer desde abajo
+          this.isAnimating = true;
+          this.widget.classList.add('visible', 'slide-up');
+          setTimeout(() => {
+            this.widget!.classList.remove('slide-up');
+            this.isAnimating = false;
+          }, 500);
+        } else if (oldState === 'docked') {
+          // Desanclar y volver a flotar
+          this.undockWidget();
+          this.widget.classList.add('visible');
+        }
+        break;
 
-    // Limpiar animación después
-    setTimeout(() => {
-      this.widget!.classList.remove('slide-up');
-      this.isAnimating = false;
-    }, 500);
+      case 'docked':
+        if (oldState === 'floating' || oldState === 'hidden') {
+          // Anclar el widget en el dock point
+          this.dockWidget();
+        }
+        break;
+    }
   }
 
-  hide() {
-    if (!this.isVisible || !this.widget) return;
+  dockWidget() {
+    if (!this.widget || !this.dockPoint) return;
 
-    if (this.isAnimating) return;
+    // Mover el widget dentro del dock point
+    this.dockPoint.appendChild(this.widget);
 
-    this.isAnimating = true;
-    this.isVisible = false;
+    // Aplicar estado docked
+    this.widget.classList.remove('visible');
+    this.widget.classList.add('docked');
 
-    // Remover clases de animación previa
-    this.widget.classList.remove('slide-up');
+    // Actualizar posiciones después del dock
+    setTimeout(() => this.updateCachedPositions(), 50);
+  }
 
-    // Agregar animación de deslizamiento hacia abajo
-    this.widget!.classList.add('slide-down');
+  undockWidget() {
+    if (!this.widget || !this.originalParent) return;
 
-    // Después de la animación, ocultar completamente
-    setTimeout(() => {
-      this.widget!.classList.remove('visible', 'slide-down');
-      this.isAnimating = false;
-    }, 400);
+    // Mover el widget de vuelta a su padre original (body)
+    this.originalParent.appendChild(this.widget);
+
+    // Quitar estado docked
+    this.widget.classList.remove('docked');
+
+    // Actualizar posiciones después del undock
+    setTimeout(() => this.updateCachedPositions(), 50);
   }
 }
 
@@ -161,7 +217,6 @@ class FloatingContactWidget {
     document.readyState === 'complete' ||
     document.readyState === 'interactive'
   ) {
-    // Si el documento ya está parseado, inicializar inmediatamente
     bootstrap();
   } else {
     document.addEventListener('DOMContentLoaded', bootstrap, { once: true });

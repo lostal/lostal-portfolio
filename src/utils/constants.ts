@@ -47,3 +47,13 @@ export const TIMING = {
     /** Cache de posiciones expira en ms */
     CACHE_EXPIRY: 5000,
 } as const;
+
+// Widget flotante de contacto
+export const FLOATING_CONTACT = {
+    /** Altura aproximada del widget */
+    WIDGET_HEIGHT: 72,
+    /** Distancia entre el fondo del widget y el borde de la ventana cuando está visible */
+    WIDGET_BOTTOM_OFFSET: 37,
+    /** Offset para mostrar widget después de proyectos */
+    PROJECTS_TRIGGER_OFFSET: 200,
+} as const;

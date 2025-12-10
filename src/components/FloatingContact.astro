@@ -1,50 +1,22 @@
 ---
 // Componente flotante de contacto - solo visible en desktop
+import ContactLinks from './ContactLinks.astro';
 ---
 
 <div id="floating-contact" class="floating-contact">
   <script src="../scripts/floating-contact.ts"></script>
   <div class="floating-contact-inner">
-    <a
-      href="mailto:alvarolostal04@gmail.com"
-      class="floating-contact-link"
-      title="Email"
-      data-contact="email"
-    >
-      <i class="fas fa-envelope"></i>
-    </a>
-
-    <a
-      href="https://github.com/lostal"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="floating-contact-link"
-      title="GitHub"
-      data-contact="github"
-    >
-      <i class="fab fa-github"></i>
-    </a>
-
-    <a
-      href="https://linkedin.com/in/alvarolostal"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="floating-contact-link"
-      title="LinkedIn"
-      data-contact="linkedin"
-    >
-      <i class="fab fa-linkedin"></i>
-    </a>
+    <ContactLinks />
   </div>
 </div>
 
 <style>
-  /* === FLOATING CONTACT WIDGET - PEEK BEHAVIOR === */
+  /* === FLOATING CONTACT WIDGET === */
 
-  /* Widget base - posición centrada con peek */
+  /* Widget base - oculto por defecto */
   .floating-contact {
     position: fixed;
-    bottom: -45px; /* Punto medio entre -32px y -42px = -37px, un poco más bajo */
+    bottom: -45px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
@@ -54,39 +26,41 @@
     visibility: hidden;
   }
 
-  /* Widget visible con peek */
+  /* Widget visible (flotando) */
   .floating-contact.visible {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    bottom: -37px; /* Punto medio ajustado para mostrar peek perfecto */
+    bottom: -37px;
   }
 
   @media (hover: hover) {
     .floating-contact.visible:hover {
-      bottom: 10px; /* Reducido de 24px para elevación más sutil */
+      bottom: 10px;
     }
   }
 
-  /* Contenedor interno con glassmorphism - más compacto */
+  /* Contenedor interno con glassmorphism */
   .floating-contact-inner {
     display: flex;
     align-items: center;
-    gap: 14px; /* Mismo gap que la sección de contacto */
-    padding: 12px 20px; /* Más padding horizontal para hacer el widget más largo por los lados */
+    gap: 14px;
+    padding: 12px 20px;
     background: rgba(var(--bg-primary-rgb), 0.95);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(var(--border-rgb, 229, 231, 235), 0.3);
-    border-radius: 36px; /* Reducido de 40px para ser más compacto */
+    border-radius: 36px;
     box-shadow:
       0 8px 32px rgba(0, 0, 0, 0.12),
       0 2px 16px rgba(0, 0, 0, 0.04),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
     position: relative;
   }
 
-  /* Área invisible para hover estable - ANTI TEMBLOR */
+  /* Área invisible para hover estable */
   .floating-contact-inner::after {
     content: '';
     position: absolute;
@@ -105,33 +79,6 @@
         0 16px 48px rgba(0, 0, 0, 0.15),
         0 4px 24px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    }
-  }
-
-  /* Enlaces de contacto - IDÉNTICOS a la sección de contacto */
-  .floating-contact-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px; /* Mismo tamaño que contact-link */
-    height: 48px; /* Mismo tamaño que contact-link */
-    background: var(--bg-secondary); /* Mismo background */
-    border-radius: 24px; /* Mismo border-radius */
-    color: var(--text-primary); /* Mismo color */
-    text-decoration: none;
-    font-weight: 500; /* Mismo font-weight */
-    transition: all 0.3s ease; /* Misma transición */
-    border: 1px solid var(--border); /* Mismo borde */
-    font-size: 20px; /* Mismo font-size */
-  }
-
-  @media (hover: hover) {
-    .floating-contact-link:hover {
-      background: var(--accent-primary); /* Mismo hover background */
-      color: #000; /* Mismo hover color */
-      transform: translateY(-4px); /* Mismo hover transform */
-      box-shadow: 0 12px 32px rgba(var(--accent-primary-rgb), 0.3); /* Misma sombra */
-      border-color: var(--accent-primary); /* Mismo hover border */
     }
   }
 
@@ -164,6 +111,22 @@
       bottom: -37px;
       opacity: 1;
     }
+  }
+
+  /* Estado DOCKED - anclado en la sección de contacto */
+  .floating-contact.docked {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* Ocultar área de hover cuando está docked */
+  .floating-contact.docked .floating-contact-inner::after {
+    display: none;
   }
 
   /* Ocultar en móviles */

@@ -1,5 +1,6 @@
 ---
 import { useTranslations } from '../i18n/utils';
+import ContactLinks from './ContactLinks.astro';
 
 interface Props {
   lang: 'es' | 'en';
@@ -19,38 +20,15 @@ const t = useTranslations(lang);
       </p>
     </div>
 
-    <div class="contact-content fade-in">
-      <div class="contact-links" id="main-contact-links">
-        <a
-          href="mailto:alvarolostal04@gmail.com"
-          class="contact-link"
-          title="Email"
-          data-contact="email"
-        >
-          <i class="fas fa-envelope"></i>
-        </a>
+    <!-- Punto de anclaje para el widget flotante (desktop) -->
+    <div class="contact-dock-wrapper fade-in">
+      <div id="contact-dock-point" class="contact-dock-point"></div>
+    </div>
 
-        <a
-          href="https://github.com/lostal"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="contact-link"
-          title="GitHub"
-          data-contact="github"
-        >
-          <i class="fab fa-github"></i>
-        </a>
-
-        <a
-          href="https://linkedin.com/in/alvarolostal"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="contact-link"
-          title="LinkedIn"
-          data-contact="linkedin"
-        >
-          <i class="fab fa-linkedin"></i>
-        </a>
+    <!-- Enlaces de contacto estáticos (móvil) -->
+    <div class="contact-mobile fade-in">
+      <div class="contact-links">
+        <ContactLinks />
       </div>
     </div>
   </div>
@@ -88,11 +66,42 @@ const t = useTranslations(lang);
     }
   }
 
-  /* Contact Section */
-  .contact-content {
-    max-width: 500px;
-    margin: 0 auto;
-    text-align: center;
+  /* Contact dock wrapper */
+  .contact-dock-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+    position: relative;
+  }
+
+  /* Punto de anclaje para el widget flotante */
+  .contact-dock-point {
+    position: relative;
+    min-height: 72px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Ocultar dock point en móviles */
+  @media (max-width: 768px), (orientation: portrait), (pointer: coarse) {
+    .contact-dock-point {
+      display: none;
+    }
+  }
+
+  /* === ENLACES DE CONTACTO ESTÁTICOS (MÓVIL) === */
+
+  /* Ocultar en desktop (el widget flotante se encarga) */
+  .contact-mobile {
+    display: none;
+  }
+
+  /* Mostrar solo en móviles */
+  @media (max-width: 768px), (orientation: portrait), (pointer: coarse) {
+    .contact-mobile {
+      display: block;
+    }
   }
 
   .contact-links {
@@ -101,32 +110,5 @@ const t = useTranslations(lang);
     gap: 14px;
     margin-top: 32px;
     flex-wrap: wrap;
-  }
-
-  .contact-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    background: var(--bg-secondary);
-    border-radius: 24px;
-    /* Border radius circular para consonancia con el widget */
-    color: var(--text-primary);
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    border: 1px solid var(--border);
-    font-size: 20px;
-  }
-
-  @media (hover: hover) {
-    .contact-link:hover {
-      background: var(--accent-primary);
-      color: #000;
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(var(--accent-primary-rgb), 0.3);
-      border-color: var(--accent-primary);
-    }
   }
 </style>
