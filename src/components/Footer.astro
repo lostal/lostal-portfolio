@@ -12,13 +12,12 @@ const currentYear = new Date().getFullYear();
 
 <footer>
   <div class="footer-main">
-    <!-- Identidad - Logo exactamente igual a navbar -->
-    <div class="footer-identity">
-      <a href="#top" class="footer-logo">AL</a>
-      <div class="footer-info">
-        <span class="footer-tagline">{t('footer.tagline')}</span>
-        <span class="footer-location">{t('footer.location')}</span>
-      </div>
+    <!-- Ubicación + Hora local -->
+    <div class="footer-location-time">
+      <span class="footer-location">Santander, ES</span>
+      <span class="footer-time-separator">·</span>
+      <span class="footer-time" id="footer-local-time">--:--</span>
+      <span class="footer-timezone">CET</span>
     </div>
 
     <!-- Navegación rediseñada - estilo técnico con índices -->
@@ -80,68 +79,35 @@ const currentYear = new Date().getFullYear();
     }
   }
 
-  /* Identidad - Logo igual que navbar pero hover neutro */
-  .footer-identity {
+  /* Ubicación + Hora local */
+  .footer-location-time {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  @media (max-width: 768px) {
-    .footer-identity {
-      align-items: center;
-    }
-  }
-
-  .footer-logo {
-    font-size: 24px;
-    font-weight: 800;
-    text-decoration: none;
-    letter-spacing: -1px;
-    font-family: var(--font-primary);
-    color: var(--text-primary);
-    position: relative;
-    text-transform: uppercase;
-    transition: color 0.3s ease;
-    display: inline-block;
-    width: fit-content;
-  }
-
-  .footer-logo::after {
-    content: '';
-    position: absolute;
-    bottom: 2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--text-primary);
-    transition: width 0.3s ease;
-  }
-
-  @media (hover: hover) {
-    .footer-logo:hover::after {
-      width: 100%;
-    }
-  }
-
-  .footer-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    gap: 6px;
     font-family: var(--font-mono);
     font-size: 12px;
     letter-spacing: 0.3px;
-  }
-
-  .footer-tagline {
-    text-transform: uppercase;
-    color: var(--text-secondary);
-    letter-spacing: 0.8px;
-    font-weight: 500;
+    color: var(--text-tertiary);
   }
 
   .footer-location {
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
+  }
+
+  .footer-time-separator {
+    opacity: 0.4;
+  }
+
+  .footer-time {
+    font-variant-numeric: tabular-nums;
+    min-width: 40px;
+  }
+
+  .footer-timezone {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.6;
   }
 
   /* Navegación con índices - estilo técnico/editorial */
@@ -265,3 +231,38 @@ const currentYear = new Date().getFullYear();
     opacity: 0.7;
   }
 </style>
+
+<script>
+  // Reloj en tiempo real - Hora local de Santander (Europe/Madrid)
+  function updateFooterClock(): void {
+    const timeElement = document.getElementById('footer-local-time');
+    const timezoneElement = document.querySelector('.footer-timezone');
+    if (!timeElement) return;
+
+    const now = new Date();
+    const options: Intl.DateTimeFormatOptions = {
+      timeZone: 'Europe/Madrid',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    };
+
+    const timeString = now.toLocaleTimeString('es-ES', options);
+    timeElement.textContent = timeString;
+
+    // Detectar CET o CEST (horario de verano)
+    if (timezoneElement) {
+      const madridTime = new Date().toLocaleString('en-US', {
+        timeZone: 'Europe/Madrid',
+        timeZoneName: 'short',
+      });
+      // En verano incluye "+2" o "CEST", en invierno "+1" o "CET"
+      const isCEST = madridTime.includes('+2') || madridTime.includes('CEST');
+      timezoneElement.textContent = isCEST ? 'CEST' : 'CET';
+    }
+  }
+
+  // Actualizar inmediatamente y cada segundo
+  updateFooterClock();
+  setInterval(updateFooterClock, 1000);
+</script>
