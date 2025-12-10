@@ -54,8 +54,10 @@ const currentYear = new Date().getFullYear();
     transition: color 0.2s ease;
   }
 
-  .footer-link:hover {
-    color: var(--accent-primary);
+  @media (hover: hover) {
+    .footer-link:hover {
+      color: var(--accent-primary);
+    }
   }
 
   .footer-text {

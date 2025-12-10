@@ -237,13 +237,14 @@ const t = useTranslations(lang);
     z-index: var(--z-hero-image);
   }
 
-  /* Interactividad con glow y rotación sutil */
-  .hero-image.interactive-image:hover {
-    transform: scale(1.03) rotate(1.5deg);
-    border-color: var(--accent-dark);
-    box-shadow:
-      0 12px 32px rgba(var(--accent-primary-rgb), 0.25),
-      0 0 20px rgba(var(--accent-primary-rgb), 0.15);
+  @media (hover: hover) {
+    .hero-image.interactive-image:hover {
+      transform: scale(1.03) rotate(1.5deg);
+      border-color: var(--accent-dark);
+      box-shadow:
+        0 12px 32px rgba(var(--accent-primary-rgb), 0.25),
+        0 0 20px rgba(var(--accent-primary-rgb), 0.15);
+    }
   }
 
   .hero-image.interactive-image:focus {
@@ -326,8 +327,10 @@ const t = useTranslations(lang);
     outline: none;
   }
 
-  .hero-image-wrapper:hover {
-    transform: translateY(-2px);
+  @media (hover: hover) {
+    .hero-image-wrapper:hover {
+      transform: translateY(-2px);
+    }
   }
 
   /* Mejor indicador de foco para accesibilidad */
@@ -389,14 +392,15 @@ const t = useTranslations(lang);
     justify-content: center;
   }
 
-  /* Comportamiento en hover del contenedor */
-  .hero-image-wrapper:hover .profile-indicator {
-    background: var(--accent-primary);
-    color: #000;
-    border-color: var(--accent-primary);
-    /* No rotation, only subtle scale */
-    transform: scale(1.05) rotate(0deg);
-    animation: none;
+  @media (hover: hover) {
+    .hero-image-wrapper:hover .profile-indicator {
+      background: var(--accent-primary);
+      color: #000;
+      border-color: var(--accent-primary);
+      /* No rotation, only subtle scale */
+      transform: scale(1.05) rotate(0deg);
+      animation: none;
+    }
   }
 
   /* Ocultar indicador cuando la tarjeta está visible */
@@ -455,11 +459,12 @@ const t = useTranslations(lang);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   }
 
-  /* Dark mode: hover mantiene fondo amarillo y texto negro */
-  :root[data-theme='dark'] .hero-image-wrapper:hover .profile-indicator {
-    background: var(--accent-primary);
-    color: #000;
-    border-color: transparent;
+  @media (hover: hover) {
+    :root[data-theme='dark'] .hero-image-wrapper:hover .profile-indicator {
+      background: var(--accent-primary);
+      color: #000;
+      border-color: transparent;
+    }
   }
 
   .hero-subtitle {
@@ -552,11 +557,13 @@ const t = useTranslations(lang);
     visibility: hidden;
   }
 
-  .scroll-down:hover {
-    color: var(--accent-primary);
-    background: rgba(var(--accent-primary-rgb), 0.1);
-    /* Pausar la animación de bounce en hover para mejor interacción */
-    animation-play-state: paused;
+  @media (hover: hover) {
+    .scroll-down:hover {
+      color: var(--accent-primary);
+      background: rgba(var(--accent-primary-rgb), 0.1);
+      /* Pausar la animación de bounce en hover para mejor interacción */
+      animation-play-state: paused;
+    }
   }
 
   .scroll-down i {
@@ -675,10 +682,12 @@ const t = useTranslations(lang);
     opacity: 0.7;
   }
 
-  .about-card__close:hover {
-    background: rgba(var(--text-tertiary-rgb), 0.2);
-    opacity: 1;
-    transform: scale(1.1);
+  @media (hover: hover) {
+    .about-card__close:hover {
+      background: rgba(var(--text-tertiary-rgb), 0.2);
+      opacity: 1;
+      transform: scale(1.1);
+    }
   }
 
   .about-card__close:focus {

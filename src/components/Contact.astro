@@ -120,11 +120,13 @@ const t = useTranslations(lang);
     font-size: 20px;
   }
 
-  .contact-link:hover {
-    background: var(--accent-primary);
-    color: #000;
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(var(--accent-primary-rgb), 0.3);
-    border-color: var(--accent-primary);
+  @media (hover: hover) {
+    .contact-link:hover {
+      background: var(--accent-primary);
+      color: #000;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(var(--accent-primary-rgb), 0.3);
+      border-color: var(--accent-primary);
+    }
   }
 </style>

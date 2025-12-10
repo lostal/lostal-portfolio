@@ -171,8 +171,10 @@ const t = useTranslations(lang);
     transition: width 0.3s ease;
   }
 
-  .logo:hover::after {
-    width: 100%;
+  @media (hover: hover) {
+    .logo:hover::after {
+      width: 100%;
+    }
   }
 
   .nav-links {
@@ -196,8 +198,14 @@ const t = useTranslations(lang);
     position: relative;
   }
 
-  .nav-links a:hover {
-    color: var(--text-primary);
+  @media (hover: hover) {
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
   }
 
   .nav-links a::after {
@@ -209,10 +217,6 @@ const t = useTranslations(lang);
     height: 2px;
     background: var(--accent-primary);
     transition: width 0.3s ease;
-  }
-
-  .nav-links a:hover::after {
-    width: 100%;
   }
 
   .nav-actions {
@@ -246,9 +250,11 @@ const t = useTranslations(lang);
     text-decoration: none;
   }
 
-  .lang-btn:hover {
-    background: var(--bg-secondary);
-    color: var(--accent-primary);
+  @media (hover: hover) {
+    .lang-btn:hover {
+      background: var(--bg-secondary);
+      color: var(--accent-primary);
+    }
   }
 
   .lang-btn:focus {
@@ -349,10 +355,15 @@ const t = useTranslations(lang);
     border-radius: 4px;
   }
 
-  .lang-item > a:hover,
   .lang-item > a:focus {
     background: var(--bg-secondary);
     outline: none;
+  }
+
+  @media (hover: hover) {
+    .lang-item > a:hover {
+      background: var(--bg-secondary);
+    }
   }
 
   /* Selected language in the popover: slightly bolder label to highlight */
@@ -446,9 +457,11 @@ const t = useTranslations(lang);
     -webkit-tap-highlight-color: transparent;
   }
 
-  .theme-toggle:hover {
-    background: var(--bg-secondary);
-    color: var(--accent-primary);
+  @media (hover: hover) {
+    .theme-toggle:hover {
+      background: var(--bg-secondary);
+      color: var(--accent-primary);
+    }
   }
 
   .theme-toggle:focus {
@@ -482,9 +495,19 @@ const t = useTranslations(lang);
     border-radius: 8px;
   }
 
-  .mobile-menu-btn:hover {
-    background: var(--bg-secondary);
-    transform: scale(1.05);
+  @media (hover: hover) {
+    .mobile-menu-btn:hover {
+      background: var(--bg-secondary);
+      transform: scale(1.05);
+    }
+
+    .mobile-menu-btn:hover .hamburger-line {
+      background: var(--accent-primary);
+    }
+
+    .mobile-menu-btn.active:hover .hamburger-line {
+      background: var(--accent-primary);
+    }
   }
 
   .mobile-menu-btn:active {
@@ -516,10 +539,6 @@ const t = useTranslations(lang);
     transform-origin: center;
   }
 
-  .mobile-menu-btn:hover .hamburger-line {
-    background: var(--accent-primary);
-  }
-
   /* Animation when menu is active */
   .mobile-menu-btn.active .hamburger-line:nth-child(1) {
     transform: translateY(9px) rotate(45deg);
@@ -532,10 +551,6 @@ const t = useTranslations(lang);
 
   .mobile-menu-btn.active .hamburger-line:nth-child(3) {
     transform: translateY(-9px) rotate(-45deg);
-  }
-
-  .mobile-menu-btn.active:hover .hamburger-line {
-    background: var(--accent-primary);
   }
 
   @media (min-width: 768px) {
@@ -636,8 +651,10 @@ const t = useTranslations(lang);
     position: relative;
   }
 
-  .mobile-menu-links a:hover {
-    color: var(--accent-primary);
-    transform: translateX(8px);
+  @media (hover: hover) {
+    .mobile-menu-links a:hover {
+      color: var(--accent-primary);
+      transform: translateX(8px);
+    }
   }
 </style>

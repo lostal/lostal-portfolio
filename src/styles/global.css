@@ -318,9 +318,11 @@ section {
   border-color: var(--accent-primary);
 }
 
-.btn-primary:hover {
-  background: var(--accent-dark);
-  border-color: var(--accent-dark);
+@media (hover: hover) {
+  .btn-primary:hover {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+  }
 }
 
 .btn:active {
@@ -334,9 +336,11 @@ section {
   border: 1px solid var(--border);
 }
 
-.btn-secondary:hover {
-  background: var(--bg-tertiary);
-  border-color: var(--accent-primary);
+@media (hover: hover) {
+  .btn-secondary:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--accent-primary);
+  }
 }
 
 /* Tags */
@@ -356,10 +360,12 @@ section {
   gap: 6px;
 }
 
-.tag:hover {
-  border-color: var(--accent-primary);
-  color: var(--accent-primary);
-  background: rgba(var(--accent-primary-rgb), 0.05);
+@media (hover: hover) {
+  .tag:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    background: rgba(var(--accent-primary-rgb), 0.05);
+  }
 }
 
 .tech-mini-icon {

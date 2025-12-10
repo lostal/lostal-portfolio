@@ -213,8 +213,10 @@ const t = useTranslations(lang);
     border: 1px solid var(--border);
   }
 
-  .technology-card:hover {
-    border-color: var(--accent-primary);
+  @media (hover: hover) {
+    .technology-card:hover {
+      border-color: var(--accent-primary);
+    }
   }
 
   .technology-icon {

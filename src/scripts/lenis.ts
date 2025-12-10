@@ -4,6 +4,7 @@
  */
 
 import Lenis from 'lenis';
+import { isPrimaryInputTouch } from '../utils/dom';
 
 // Respetar preferencias de accesibilidad
 const prefersReducedMotion = window.matchMedia(
@@ -14,8 +15,9 @@ const prefersReducedMotion = window.matchMedia(
  * Inicializa Lenis con configuración optimizada
  */
 function initLenis(): void {
-  if (prefersReducedMotion) {
-    // Si el usuario prefiere movimiento reducido, no inicializar Lenis
+  // No inicializar en dispositivos táctiles ni si prefiere movimiento reducido
+  // Lenis no aporta beneficio en táctiles y consume recursos (RAF constante)
+  if (prefersReducedMotion || isPrimaryInputTouch()) {
     return;
   }
 

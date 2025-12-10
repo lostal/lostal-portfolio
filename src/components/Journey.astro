@@ -267,8 +267,10 @@ const t = useTranslations(lang);
     background: var(--bg-primary);
   }
 
-  .card:hover {
-    border-color: var(--accent-primary);
+  @media (hover: hover) {
+    .card:hover {
+      border-color: var(--accent-primary);
+    }
   }
 
   .card-inner {

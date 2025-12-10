@@ -62,9 +62,10 @@
     bottom: -37px; /* Punto medio ajustado para mostrar peek perfecto */
   }
 
-  /* Hover: widget completamente visible con elevación sutil */
-  .floating-contact.visible:hover {
-    bottom: 10px; /* Reducido de 24px para elevación más sutil */
+  @media (hover: hover) {
+    .floating-contact.visible:hover {
+      bottom: 10px; /* Reducido de 24px para elevación más sutil */
+    }
   }
 
   /* Contenedor interno con glassmorphism - más compacto */
@@ -97,13 +98,14 @@
     pointer-events: auto;
   }
 
-  /* Hover elevado del contenedor */
-  .floating-contact.visible:hover .floating-contact-inner {
-    transform: translateY(-4px);
-    box-shadow:
-      0 16px 48px rgba(0, 0, 0, 0.15),
-      0 4px 24px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  @media (hover: hover) {
+    .floating-contact.visible:hover .floating-contact-inner {
+      transform: translateY(-4px);
+      box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.15),
+        0 4px 24px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
   }
 
   /* Enlaces de contacto - IDÉNTICOS a la sección de contacto */
@@ -123,13 +125,14 @@
     font-size: 20px; /* Mismo font-size */
   }
 
-  /* Hover idéntico a la sección de contacto */
-  .floating-contact-link:hover {
-    background: var(--accent-primary); /* Mismo hover background */
-    color: #000; /* Mismo hover color */
-    transform: translateY(-4px); /* Mismo hover transform */
-    box-shadow: 0 12px 32px rgba(var(--accent-primary-rgb), 0.3); /* Misma sombra */
-    border-color: var(--accent-primary); /* Mismo hover border */
+  @media (hover: hover) {
+    .floating-contact-link:hover {
+      background: var(--accent-primary); /* Mismo hover background */
+      color: #000; /* Mismo hover color */
+      transform: translateY(-4px); /* Mismo hover transform */
+      box-shadow: 0 12px 32px rgba(var(--accent-primary-rgb), 0.3); /* Misma sombra */
+      border-color: var(--accent-primary); /* Mismo hover border */
+    }
   }
 
   /* Animaciones de deslizamiento */
