@@ -177,6 +177,11 @@ const t = useTranslations(lang);
     }
   }
 
+  /* Efecto táctil para móvil - simula hover al tocar */
+  .logo:active::after {
+    width: 100%;
+  }
+
   .nav-links {
     display: none;
     gap: 32px;

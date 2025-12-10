@@ -441,15 +441,23 @@ const t = useTranslations(lang);
       font-size: 11px;
     }
 
-    /* Feedback táctil para móviles */
+    /* Feedback táctil para móviles - simula hover al tocar */
     .hero-image-wrapper:active .hero-image {
-      transform: scale(0.95);
-      transition: transform 0.1s ease;
+      transform: scale(0.97);
+      border-color: var(--accent-dark);
+      box-shadow:
+        0 12px 32px rgba(var(--accent-primary-rgb), 0.25),
+        0 0 20px rgba(var(--accent-primary-rgb), 0.15);
+      transition: all 0.1s ease;
     }
 
     .hero-image-wrapper:active .profile-indicator {
-      transform: scale(0.9);
-      opacity: 0.8;
+      background: var(--accent-primary);
+      color: #000;
+      border-color: var(--accent-primary);
+      transform: scale(1.05);
+      opacity: 1;
+      animation: none;
     }
   }
 
