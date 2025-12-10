@@ -1,5 +1,7 @@
 // src/scripts/theme.ts - Gestor de tema claro/oscuro
 
+const THEME_STORAGE_KEY = 'user-theme-preference';
+
 class ThemeToggle extends HTMLElement {
   private themeIcon: HTMLElement | null = null;
   private html: HTMLElement;
@@ -24,8 +26,34 @@ class ThemeToggle extends HTMLElement {
     // Escuchar cambios del tema del sistema (basado en eventos, sin polling)
     this.mediaQuery.addEventListener('change', this.boundHandleSystemChange);
 
-    // Inicializar: siempre usar tema del sistema al cargar la página
-    this.applyTheme(this.getSystemTheme(), false);
+    // Inicializar: usar tema guardado o tema del sistema
+    const savedTheme = this.getSavedTheme();
+    if (savedTheme) {
+      this.userHasOverridden = true;
+      this.applyTheme(savedTheme, false);
+    } else {
+      this.applyTheme(this.getSystemTheme(), false);
+    }
+  }
+
+  private getSavedTheme(): 'dark' | 'light' | null {
+    try {
+      const saved = localStorage.getItem(THEME_STORAGE_KEY);
+      if (saved === 'dark' || saved === 'light') {
+        return saved;
+      }
+    } catch {
+      // localStorage no disponible (modo privado en algunos navegadores)
+    }
+    return null;
+  }
+
+  private saveTheme(theme: string): void {
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch {
+      // localStorage no disponible
+    }
   }
 
   disconnectedCallback() {
@@ -96,6 +124,9 @@ class ThemeToggle extends HTMLElement {
 
     const currentTheme = this.html.getAttribute('data-theme') || 'light';
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+    // Guardar preferencia del usuario
+    this.saveTheme(newTheme);
     this.applyTheme(newTheme, true);
 
     const button = this.querySelector('button');
