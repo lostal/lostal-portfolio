@@ -494,3 +494,10 @@ section {
     animation: none;
   }
 }
+
+/* Desactivar grain en dispositivos táctiles (móviles) - evita bugs de iOS Safari */
+@media (hover: none) {
+  .noise-overlay {
+    display: none;
+  }
+}
