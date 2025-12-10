@@ -156,20 +156,25 @@ const t = useTranslations(lang);
       transparent 1px
     );
     background-size: 20px 20px;
-    opacity: 0.25;
+    opacity: 0.28;
     pointer-events: none;
     z-index: 0;
-    /* Fade mask for subtle edges */
+    /* Fade mask for subtle edges - elipse más pequeña para fade más visible */
     mask-image: radial-gradient(
-      ellipse 90% 70% at 50% 50%,
+      ellipse 80% 60% at 50% 50%,
       black 40%,
       transparent 100%
     );
     -webkit-mask-image: radial-gradient(
-      ellipse 90% 70% at 50% 50%,
+      ellipse 80% 60% at 50% 50%,
       black 40%,
       transparent 100%
     );
+  }
+
+  /* Mayor opacidad en modo claro para compensar bajo contraste de pantallas */
+  :root:not([data-theme='dark']) .bg-dots::after {
+    opacity: 0.35;
   }
 
   /* Hero Section */
