@@ -234,6 +234,10 @@ body,
 section {
   padding: 80px 24px;
   position: relative;
+  /* z-index > hero sticky para efecto reveal */
+  z-index: 1;
+  /* Background sólido para tapar el hero al pasar por encima */
+  background: var(--bg-primary);
 }
 
 .section-alt {

@@ -177,7 +177,7 @@ const t = useTranslations(lang);
     opacity: 0.35;
   }
 
-  /* Hero Section */
+  /* Hero Section - Sticky para efecto reveal */
   .hero {
     min-height: 100dvh;
     display: flex;
@@ -185,7 +185,10 @@ const t = useTranslations(lang);
     justify-content: center;
     padding: 120px 24px 60px;
     text-align: center;
-    position: relative;
+    /* Sticky para que projects suba por encima */
+    position: sticky;
+    top: 0;
+    z-index: 0;
     overflow: hidden;
   }
 
@@ -222,6 +225,8 @@ const t = useTranslations(lang);
     position: relative;
     z-index: var(--z-content);
     animation: fadeInUp 0.8s ease-out;
+    /* Optimización para fade en sticky reveal */
+    will-change: opacity;
   }
 
   .hero-image-wrapper {

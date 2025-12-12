@@ -11,12 +11,6 @@ export const SCROLL = {
     SCROLL_DOWN_HIDE_THRESHOLD: 100,
     /** Offset para scroll suave hacia secciones (navbar ~72px + margen) */
     SMOOTH_SCROLL_OFFSET: 72,
-    /** Zona de disparo del auto-scroll */
-    AUTO_SCROLL_TRIGGER_ZONE: 150,
-    /** Umbral para reset de auto-scroll (mayor para compensar Lenis) */
-    AUTO_SCROLL_RESET_ZONE: 200,
-    /** Delay de inicialización */
-    INIT_DELAY_MS: 300,
 } as const;
 
 // Dimensiones del card About en Hero
@@ -35,11 +29,6 @@ export const HERO_CARD = {
 
 // Tiempos de animación (en milisegundos)
 export const TIMING = {
-    /** Duración de la animación de auto-scroll */
-    AUTO_SCROLL_DURATION: 800,
-    /** Tiempo de reset de navegación manual */
-    MANUAL_NAV_RESET_SHORT: 1000,
-    MANUAL_NAV_RESET_LONG: 2000,
     /** Debounce de resize */
     RESIZE_DEBOUNCE: 150,
     /** Delay para animaciones de iconos */

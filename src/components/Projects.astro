@@ -348,6 +348,8 @@ const t = useTranslations(lang);
   #projects {
     background: var(--bg-primary);
     position: relative;
+    /* z-index > hero para efecto reveal (hero es sticky con z-index: 0) */
+    z-index: 1;
   }
 
   /* Animación de línea expandible */

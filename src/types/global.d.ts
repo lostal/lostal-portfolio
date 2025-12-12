@@ -9,10 +9,6 @@ declare global {
     interface Window {
         // Lenis smooth scroll
         lenis: Lenis | null;
-
-        // AutoScroll controls
-        setManualNavigation?: (isManual: boolean) => void;
-        resetAutoScroll?: () => void;
     }
 }
 
