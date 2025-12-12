@@ -5,6 +5,36 @@
   box-sizing: border-box;
 }
 
+/* Estilo de selección de texto */
+::selection {
+  background: var(--accent-primary);
+  color: #000;
+}
+
+/* View Transitions para cambio de tema cinematográfico */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* Respetar preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
 /* Fuentes Geist (WOFF2) */
 @font-face {
   font-family: 'Geist';
@@ -99,6 +129,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-height) + 28px);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   background-color: var(--bg-primary);
@@ -107,10 +138,12 @@ html {
 
 body {
   font-family: var(--font-primary);
+  font-feature-settings: "kern" 1, "liga" 1;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  overscroll-behavior-y: none;
   min-height: 100%;
 }
 
@@ -274,6 +307,7 @@ section {
   font-weight: 700;
   margin-bottom: 12px;
   letter-spacing: -1px;
+  text-wrap: balance;
 }
 
 .section-description {

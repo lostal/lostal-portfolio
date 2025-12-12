@@ -9,8 +9,8 @@ export const SCROLL = {
     NAVBAR_THRESHOLD: 50,
     /** Distancia para ocultar flecha de scroll-down */
     SCROLL_DOWN_HIDE_THRESHOLD: 100,
-    /** Offset para scroll suave hacia secciones */
-    SMOOTH_SCROLL_OFFSET: 60,
+    /** Offset para scroll suave hacia secciones (navbar ~72px + margen) */
+    SMOOTH_SCROLL_OFFSET: 72,
     /** Zona de disparo del auto-scroll */
     AUTO_SCROLL_TRIGGER_ZONE: 150,
     /** Umbral para reset de auto-scroll (mayor para compensar Lenis) */

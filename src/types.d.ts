@@ -1,4 +1,4 @@
-export {};
+export { };
 
 declare global {
   interface DeviceInfo {
@@ -38,5 +38,17 @@ declare global {
     removeListener(
       _listener: (this: MediaQueryList, _ev: MediaQueryListEvent) => void
     ): void;
+  }
+
+  // View Transitions API types
+  interface ViewTransition {
+    ready: Promise<void>;
+    finished: Promise<void>;
+    updateCallbackDone: Promise<void>;
+    skipTransition(): void;
+  }
+
+  interface Document {
+    startViewTransition?(callback: () => void | Promise<void>): ViewTransition;
   }
 }

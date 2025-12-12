@@ -430,6 +430,8 @@ const t = useTranslations(lang);
     /* Altura controlada por JS ahora */
     min-height: auto;
     outline: none;
+    /* Mejora precisión del swipe en móvil */
+    touch-action: pan-y pinch-zoom;
   }
 
   /* Indicador visual cuando el carrusel tiene foco (para navegación por teclado) */

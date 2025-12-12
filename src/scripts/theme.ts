@@ -1,4 +1,4 @@
-// src/scripts/theme.ts - Gestor de tema claro/oscuro
+// src/scripts/theme.ts - Gestor de tema claro/oscuro con transición cinematográfica
 
 const THEME_STORAGE_KEY = 'user-theme-preference';
 
@@ -13,7 +13,6 @@ class ThemeToggle extends HTMLElement {
     super();
     this.html = document.documentElement;
     this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    // Vincular handler una vez para limpieza correcta
     this.boundHandleSystemChange = this.handleSystemChange.bind(this);
   }
 
@@ -23,10 +22,8 @@ class ThemeToggle extends HTMLElement {
     const button = this.querySelector('button') || this;
     button.addEventListener('click', e => this.handleToggle(e));
 
-    // Escuchar cambios del tema del sistema (basado en eventos, sin polling)
     this.mediaQuery.addEventListener('change', this.boundHandleSystemChange);
 
-    // Inicializar: usar tema guardado o tema del sistema
     const savedTheme = this.getSavedTheme();
     if (savedTheme) {
       this.userHasOverridden = true;
@@ -43,7 +40,7 @@ class ThemeToggle extends HTMLElement {
         return saved;
       }
     } catch {
-      // localStorage no disponible (modo privado en algunos navegadores)
+      // localStorage no disponible
     }
     return null;
   }
@@ -65,7 +62,6 @@ class ThemeToggle extends HTMLElement {
   }
 
   private handleSystemChange(e: MediaQueryListEvent): void {
-    // Solo seguir cambios del sistema si el usuario no ha modificado manualmente
     if (!this.userHasOverridden) {
       this.applyTheme(e.matches ? 'dark' : 'light', false);
     }
@@ -90,14 +86,10 @@ class ThemeToggle extends HTMLElement {
   }
 
   private updateBrowserChrome(theme: string): void {
-    // Actualizar TODAS las meta theme-color para iOS Safari
-    // iOS necesita que se actualicen todas (con y sin media queries) para reflejar el cambio inmediatamente
     const themeColor = theme === 'dark' ? '#000000' : '#fafaf9';
     document.querySelectorAll('meta[name="theme-color"]').forEach(meta => {
       meta.setAttribute('content', themeColor);
     });
-
-    // Actualizar color-scheme para elementos nativos (scrollbars, inputs, etc.)
     this.html.style.colorScheme = theme;
   }
 
@@ -106,26 +98,68 @@ class ThemeToggle extends HTMLElement {
     this.updateBrowserChrome(theme);
     this.updateThemeIcon(animate);
 
-    // Disparar evento para otros componentes si es necesario
     window.dispatchEvent(
       new CustomEvent('theme-changed', { detail: { theme } })
     );
   }
 
-  private handleToggle(e: Event): void {
+  /**
+   * Transición cinematográfica de tema con círculo expandible
+   * Usa View Transitions API para crear efecto premium
+   */
+  private async handleToggle(e: Event): Promise<void> {
     e.preventDefault();
 
-    // Marcar que el usuario ha modificado manualmente
     this.userHasOverridden = true;
 
     const currentTheme = this.html.getAttribute('data-theme') || 'light';
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
 
-    // Guardar preferencia del usuario
     this.saveTheme(newTheme);
-    this.applyTheme(newTheme, true);
 
-    const button = this.querySelector('button');
+    // Obtener posición del botón para el origen del círculo
+    const button = this.querySelector('button') as HTMLElement;
+    const rect = button?.getBoundingClientRect();
+    const x = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
+    const y = rect ? rect.top + rect.height / 2 : 0;
+
+    // Calcular el radio máximo necesario para cubrir toda la pantalla
+    const maxRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+    // Verificar si View Transitions API está disponible
+    if (!document.startViewTransition) {
+      // Fallback sin animación
+      this.applyTheme(newTheme, true);
+      return;
+    }
+
+    // Crear la transición con círculo expandible
+    const transition = document.startViewTransition(() => {
+      this.applyTheme(newTheme, true);
+    });
+
+    // Animar el clip-path del círculo
+    transition.ready.then(() => {
+      // Siempre expandir el círculo revelando el nuevo tema
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${maxRadius}px at ${x}px ${y}px)`
+          ]
+        },
+        {
+          duration: 500,
+          easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+          pseudoElement: '::view-transition-new(root)'
+        }
+      );
+    });
+
+    // Animación del botón
     if (button) {
       button.classList.add('animate');
       setTimeout(() => button.classList.remove('animate'), 800);
