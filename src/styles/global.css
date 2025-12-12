@@ -11,29 +11,6 @@
   color: #000;
 }
 
-/* View Transitions para cambio de tema cinematográfico */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-::view-transition-old(root) {
-  z-index: 1;
-}
-
-::view-transition-new(root) {
-  z-index: 9999;
-}
-
-/* Respetar preferencias de movimiento reducido */
-@media (prefers-reduced-motion: reduce) {
-
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation: none !important;
-  }
-}
 
 /* Fuentes Geist (WOFF2) */
 @font-face {

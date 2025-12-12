@@ -104,10 +104,9 @@ class ThemeToggle extends HTMLElement {
   }
 
   /**
-   * Transición cinematográfica de tema con círculo expandible
-   * Usa View Transitions API para crear efecto premium
+   * Toggle de tema - usa las transiciones CSS existentes
    */
-  private async handleToggle(e: Event): Promise<void> {
+  private handleToggle(e: Event): void {
     e.preventDefault();
 
     this.userHasOverridden = true;
@@ -116,50 +115,10 @@ class ThemeToggle extends HTMLElement {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
 
     this.saveTheme(newTheme);
-
-    // Obtener posición del botón para el origen del círculo
-    const button = this.querySelector('button') as HTMLElement;
-    const rect = button?.getBoundingClientRect();
-    const x = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
-    const y = rect ? rect.top + rect.height / 2 : 0;
-
-    // Calcular el radio máximo necesario para cubrir toda la pantalla
-    const maxRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
-    );
-
-    // Verificar si View Transitions API está disponible
-    if (!document.startViewTransition) {
-      // Fallback sin animación
-      this.applyTheme(newTheme, true);
-      return;
-    }
-
-    // Crear la transición con círculo expandible
-    const transition = document.startViewTransition(() => {
-      this.applyTheme(newTheme, true);
-    });
-
-    // Animar el clip-path del círculo
-    transition.ready.then(() => {
-      // Siempre expandir el círculo revelando el nuevo tema
-      document.documentElement.animate(
-        {
-          clipPath: [
-            `circle(0px at ${x}px ${y}px)`,
-            `circle(${maxRadius}px at ${x}px ${y}px)`
-          ]
-        },
-        {
-          duration: 500,
-          easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-          pseudoElement: '::view-transition-new(root)'
-        }
-      );
-    });
+    this.applyTheme(newTheme, true);
 
     // Animación del botón
+    const button = this.querySelector('button');
     if (button) {
       button.classList.add('animate');
       setTimeout(() => button.classList.remove('animate'), 800);
