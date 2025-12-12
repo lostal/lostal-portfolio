@@ -231,9 +231,10 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
         const theme = prefersDark ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', theme);
         document.documentElement.style.colorScheme = theme;
-        // Update theme-color meta for browser chrome
-        const meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.content = prefersDark ? '#000000' : '#ffffff';
+        // Update theme-color metas for iOS Safari
+        document.querySelectorAll('meta[name="theme-color"]').forEach(m => {
+          m.content = prefersDark ? '#000000' : '#fafaf9';
+        });
       } catch {
         // no-op
       }
@@ -258,8 +259,18 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
     />
     <!-- iOS touch icon -->
     <link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png" />
-    <!-- Theme color - updated dynamically by theme.ts -->
-    <meta name="theme-color" content="#ffffff" />
+    <!-- Theme color for iOS Safari - needs both with media queries -->
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#fafaf9"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#000000"
+    />
+    <meta name="theme-color" content="#fafaf9" />
   </head>
   <body>
     <a href="#main" class="skip-link"

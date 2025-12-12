@@ -90,16 +90,12 @@ class ThemeToggle extends HTMLElement {
   }
 
   private updateBrowserChrome(theme: string): void {
-    // Actualizar meta theme-color para navbar del navegador móvil
-    const themeColorMeta =
-      document.querySelector('meta[name="theme-color"]:not([media])') ||
-      document.querySelector('meta[name="theme-color"]');
-    if (themeColorMeta) {
-      themeColorMeta.setAttribute(
-        'content',
-        theme === 'dark' ? '#000000' : '#ffffff'
-      );
-    }
+    // Actualizar TODAS las meta theme-color para iOS Safari
+    // iOS necesita que se actualicen todas (con y sin media queries) para reflejar el cambio inmediatamente
+    const themeColor = theme === 'dark' ? '#000000' : '#fafaf9';
+    document.querySelectorAll('meta[name="theme-color"]').forEach(meta => {
+      meta.setAttribute('content', themeColor);
+    });
 
     // Actualizar color-scheme para elementos nativos (scrollbars, inputs, etc.)
     this.html.style.colorScheme = theme;
