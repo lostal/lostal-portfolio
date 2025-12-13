@@ -113,7 +113,7 @@ const t = useTranslations(lang);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
-    transition: all 0.3s ease;
+    transition: all var(--animation-duration) ease;
   }
 
   :global([data-theme='dark']) nav {
@@ -133,7 +133,7 @@ const t = useTranslations(lang);
   }
 
   .logo {
-    font-size: 24px;
+    font-size: var(--font-size-2xl);
     font-weight: 800;
     color: var(--accent-primary);
     text-decoration: none;
@@ -168,7 +168,7 @@ const t = useTranslations(lang);
     width: 0;
     height: 2px;
     background: var(--accent-primary);
-    transition: width 0.3s ease;
+    transition: width var(--animation-duration) ease;
   }
 
   /* Hover siempre activo (incluido móvil) */
@@ -191,9 +191,9 @@ const t = useTranslations(lang);
   .nav-links a {
     color: var(--text-secondary);
     text-decoration: none;
-    font-size: 16px;
-    font-weight: 400;
-    transition: color 0.3s ease;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    transition: color var(--animation-duration) ease;
     position: relative;
   }
 
@@ -215,7 +215,7 @@ const t = useTranslations(lang);
     width: 0;
     height: 2px;
     background: var(--accent-primary);
-    transition: width 0.3s ease;
+    transition: width var(--animation-duration) ease;
   }
 
   .nav-actions {
@@ -655,11 +655,11 @@ const t = useTranslations(lang);
   .mobile-menu-links a {
     color: var(--text-primary);
     text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
     display: block;
     padding: 12px 0;
-    transition: all 0.3s ease;
+    transition: all var(--animation-duration) ease;
     position: relative;
   }
 

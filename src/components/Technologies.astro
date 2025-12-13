@@ -208,7 +208,7 @@ const t = useTranslations(lang);
     background: var(--bg-secondary);
     padding: 28px;
     border-radius: 12px;
-    transition: all 0.2s ease;
+    transition: all var(--animation-duration) ease;
     animation: fadeInUp 0.8s ease-out;
     border: 1px solid var(--border);
   }
@@ -227,8 +227,8 @@ const t = useTranslations(lang);
   }
 
   .technology-title {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
     margin-bottom: 12px;
     color: var(--text-primary);
   }

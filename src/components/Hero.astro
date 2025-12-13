@@ -237,7 +237,7 @@ const t = useTranslations(lang);
     margin: 0 auto;
     border: 2px solid var(--accent-primary);
     box-shadow: 0 8px 24px rgba(var(--accent-primary-rgb), 0.15);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--animation-duration) cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     position: relative;
     z-index: var(--z-hero-image);
@@ -472,8 +472,8 @@ const t = useTranslations(lang);
   }
 
   .hero-subtitle {
-    font-size: 16px;
-    font-weight: 500;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
     color: var(--accent-primary);
     margin-bottom: 12px;
     letter-spacing: 0.5px;
@@ -481,8 +481,8 @@ const t = useTranslations(lang);
   }
 
   .hero-title {
-    font-size: 64px;
-    font-weight: 700;
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-bold);
     line-height: 1;
     min-height: 64px;
     /* Prevent layout shift during typing animation */
@@ -501,7 +501,7 @@ const t = useTranslations(lang);
   }
 
   .hero-description {
-    font-size: 18px;
+    font-size: var(--font-size-lg);
     color: var(--text-secondary);
     max-width: 600px;
     margin: 0 auto 32px;
@@ -548,7 +548,7 @@ const t = useTranslations(lang);
       fadeInUp 0.8s ease-out 0.6s both,
       bounce-dynamic 2.5s ease-in-out 1.4s infinite;
     border-radius: 50%;
-    background: rgba(var(--background-rgb), 0.8);
+    background: rgba(var(--bg-primary-rgb), 0.8);
     backdrop-filter: blur(10px);
     border: none;
     opacity: 1;
@@ -681,8 +681,8 @@ const t = useTranslations(lang);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    transition: all 0.2s ease;
+    font-size: var(--font-size-sm);
+    transition: all var(--animation-duration) ease;
     opacity: 0.7;
   }
 
@@ -705,15 +705,15 @@ const t = useTranslations(lang);
   }
 
   .about-card__title {
-    font-size: 24px;
-    font-weight: 700;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
     color: var(--text-primary);
     margin-bottom: 16px;
     letter-spacing: -0.5px;
   }
 
   .about-card__text {
-    font-size: 16px;
+    font-size: var(--font-size-base);
     line-height: 1.6;
     color: var(--text-secondary);
     margin-bottom: 24px;
@@ -733,18 +733,18 @@ const t = useTranslations(lang);
 
   .about-card__stats .stat-number {
     display: block;
-    font-size: 24px;
-    font-weight: 700;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
     color: var(--accent-primary);
     line-height: 1.2;
   }
 
   .about-card__stats .stat-label {
     display: block;
-    font-size: 14px;
+    font-size: var(--font-size-sm);
     color: var(--text-tertiary);
     margin-top: 4px;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 
   /* Overlay para móvil */

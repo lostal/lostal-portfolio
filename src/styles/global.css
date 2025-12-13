@@ -77,8 +77,8 @@
   padding: 8px 16px;
   border-radius: 4px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
   z-index: var(--z-skip-link);
   transition: top 0.3s ease;
   border: 2px solid var(--accent-dark);
@@ -246,7 +246,7 @@ section {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   section {
     padding-left: 28px;
     padding-right: 28px;
@@ -271,8 +271,8 @@ section {
   background: none;
   color: var(--accent-primary);
   font-family: monospace;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
   margin: 0 auto 16px;
   padding-bottom: 0;
   display: flex;
@@ -280,8 +280,8 @@ section {
 }
 
 .section-title {
-  font-size: 42px;
-  font-weight: 700;
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
   margin-bottom: 12px;
   letter-spacing: -1px;
   text-wrap: balance;
@@ -291,7 +291,7 @@ section {
   max-width: 640px;
   margin: 0 auto;
   color: var(--text-secondary);
-  font-size: 16px;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 
@@ -312,10 +312,10 @@ section {
 .btn {
   padding: 12px 28px;
   border-radius: 12px;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all var(--animation-duration) ease;
   cursor: pointer;
   border: 1px solid var(--border);
   display: inline-flex;
@@ -359,13 +359,13 @@ section {
   padding: 6px 12px;
   background: var(--bg-secondary);
   border-radius: 8px;
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   font-family: var(--font-mono);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text-secondary);
   border: 1px solid var(--border);
-  transition: all 0.2s ease;
+  transition: all var(--animation-duration) ease;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -415,7 +415,7 @@ section {
   padding: 12px 16px;
   border-radius: 8px;
   border: 1px solid var(--border);
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   z-index: var(--z-skip-link);
   opacity: 0;
   transform: translateX(100%);

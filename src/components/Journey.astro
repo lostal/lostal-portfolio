@@ -219,8 +219,8 @@ const t = useTranslations(lang);
   }
 
   .column-title {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
     margin-bottom: 6px;
   }
@@ -258,7 +258,7 @@ const t = useTranslations(lang);
     padding: 20px 22px;
     border-radius: 12px;
     border: 1px solid var(--border);
-    transition: all 0.2s ease;
+    transition: all var(--animation-duration) ease;
   }
 
   /* Modo claro: en secciones con fondo --bg-secondary, las cards intercalan a --bg-primary */
@@ -330,24 +330,24 @@ const t = useTranslations(lang);
 
   .timeline-title {
     font-size: 17px;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
   }
 
   .timeline-date {
-    font-size: 12px;
+    font-size: var(--font-size-xs);
     font-family: var(--font-mono);
     color: var(--text-tertiary);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
   .timeline-subtitle {
-    font-size: 14px;
+    font-size: var(--font-size-sm);
     color: var(--accent-primary);
     margin-bottom: 8px;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 
   .timeline-description {
@@ -366,7 +366,7 @@ const t = useTranslations(lang);
     padding-left: 16px;
     position: relative;
     margin-bottom: 6px;
-    font-size: 14px;
+    font-size: var(--font-size-sm);
   }
 
   .timeline-list li::before {
@@ -377,7 +377,7 @@ const t = useTranslations(lang);
     font-weight: bold;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     .timeline-item::before {
       display: none;
     }
@@ -414,6 +414,16 @@ const t = useTranslations(lang);
     }
   }
 
+  @media (max-width: 768px) {
+    .experience-grid {
+      gap: 40px;
+    }
+
+    .column-header {
+      margin-bottom: 28px;
+    }
+  }
+
   @media (max-width: 600px) {
     .card {
       padding: 18px;
@@ -431,16 +441,6 @@ const t = useTranslations(lang);
 
     .column-header {
       margin-bottom: 24px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .experience-grid {
-      gap: 40px;
-    }
-
-    .column-header {
-      margin-bottom: 28px;
     }
   }
 </style>
