@@ -16,7 +16,11 @@
   --border: #e0dfdd;
   --border-rgb: 224, 223, 221;
   --shadow: rgba(0, 0, 0, 0.04);
-  --shadow-lg: rgba(0, 0, 0, 0.08);
+  --shadow-md: rgba(0, 0, 0, 0.08);
+  --shadow-lg: rgba(0, 0, 0, 0.12);
+
+  /* Color de texto sobre fondo accent (botones amarillos) */
+  --text-on-accent: #000000;
 
   /* Fuentes */
   --font-primary:
@@ -95,5 +99,6 @@
   --border: #424245;
   --border-rgb: 66, 66, 69;
   --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-md: rgba(0, 0, 0, 0.4);
   --shadow-lg: rgba(0, 0, 0, 0.5);
 }

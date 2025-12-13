@@ -8,7 +8,7 @@
 /* Estilo de selección de texto */
 ::selection {
   background: var(--accent-primary);
-  color: #000;
+  color: var(--text-on-accent);
 }
 
 
@@ -73,14 +73,14 @@
   top: -40px;
   left: 6px;
   background: var(--accent-primary);
-  color: #000;
+  color: var(--text-on-accent);
   padding: 8px 16px;
   border-radius: 4px;
   text-decoration: none;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
   z-index: var(--z-skip-link);
-  transition: top 0.3s ease;
+  transition: top var(--animation-duration) ease;
   border: 2px solid var(--accent-dark);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   /* Oculto por defecto */
@@ -325,7 +325,7 @@ section {
 
 .btn-primary {
   background: var(--accent-primary);
-  color: #000;
+  color: var(--text-on-accent);
   border-color: var(--accent-primary);
 }
 
@@ -382,7 +382,7 @@ section {
 .tech-mini-icon {
   width: 14px;
   height: 14px;
-  transition: filter 0.3s ease;
+  transition: filter var(--animation-duration) ease;
   flex-shrink: 0;
   /* Filtros para colores de iconos */
   filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%) hue-rotate(202deg) brightness(92%) contrast(92%);

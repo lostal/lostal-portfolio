@@ -28,7 +28,6 @@ class FloatingContactWidget {
     this.projectsSection = document.getElementById('projects');
 
     if (!this.widget || !this.dockPoint || !this.projectsSection) {
-      console.warn('FloatingContact: Elementos requeridos no encontrados');
       return;
     }
 

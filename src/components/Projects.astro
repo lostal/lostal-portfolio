@@ -751,7 +751,7 @@ const t = useTranslations(lang);
 
   .carousel-item__btn i {
     font-size: 12px;
-    transition: transform 0.3s ease;
+    transition: transform var(--animation-duration) ease;
   }
 
   @media screen and (max-width: 768px) {
@@ -768,7 +768,7 @@ const t = useTranslations(lang);
   @media (hover: hover) and (pointer: fine) {
     .carousel-item__btn:hover {
       background: var(--accent-primary);
-      color: #000;
+      color: var(--text-on-accent);
       border-color: var(--accent-primary);
     }
 
@@ -780,7 +780,7 @@ const t = useTranslations(lang);
   @media (hover: none) {
     .carousel-item__btn:active {
       background: var(--accent-primary);
-      color: #000;
+      color: var(--text-on-accent);
       border-color: var(--accent-primary);
     }
   }
@@ -854,7 +854,7 @@ const t = useTranslations(lang);
   @media (hover: hover) and (pointer: fine) {
     .carousel-item__action:hover {
       background: var(--accent-primary);
-      color: #000;
+      color: var(--text-on-accent);
       border-color: var(--accent-primary);
     }
   }

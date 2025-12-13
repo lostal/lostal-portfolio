@@ -328,7 +328,7 @@ const t = useTranslations(lang);
     position: relative;
     display: inline-block;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform var(--animation-duration) ease;
     border-radius: 24px;
     outline: none;
   }
@@ -363,7 +363,7 @@ const t = useTranslations(lang);
     display: flex;
     align-items: center;
     gap: 5px;
-    transition: all 0.2s ease;
+    transition: all var(--animation-duration) ease;
     pointer-events: none;
     white-space: nowrap;
     animation: smooth-breathe 3s ease-in-out infinite;
@@ -400,7 +400,7 @@ const t = useTranslations(lang);
   /* Hover siempre activo (incluido móvil) */
   .hero-image-wrapper:hover .profile-indicator {
     background: var(--accent-primary);
-    color: #000;
+    color: var(--text-on-accent);
     border-color: var(--accent-primary);
     /* No rotation, only subtle scale */
     transform: scale(1.05) rotate(0deg);
@@ -466,7 +466,7 @@ const t = useTranslations(lang);
   @media (hover: hover) {
     :root[data-theme='dark'] .hero-image-wrapper:hover .profile-indicator {
       background: var(--accent-primary);
-      color: #000;
+      color: var(--text-on-accent);
       border-color: transparent;
     }
   }
@@ -646,7 +646,7 @@ const t = useTranslations(lang);
     visibility: hidden;
     transform: scale(0.95) translateY(-10px);
     transform-origin: left center;
-    transition: all 0.2s ease;
+    transition: all var(--animation-duration) ease;
     will-change: transform, opacity;
     pointer-events: none;
     isolation: isolate;
@@ -760,7 +760,7 @@ const t = useTranslations(lang);
     z-index: var(--z-card-overlay);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all var(--animation-duration) ease;
   }
 
   .about-card-overlay.show {
