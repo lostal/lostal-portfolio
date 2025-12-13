@@ -1,16 +1,18 @@
 /**
- * Hero Sticky Reveal - Efecto de hero fijo con reveal
+ * Hero Cinematic Zoom Out - Efecto dramático de scroll
  * 
- * El hero queda fijo (sticky) mientras la sección de proyectos
- * sube por encima como una cortina, cubriendo el hero.
+ * Al scrollear, el hero:
+ * - Se encoge (scale down) alejándose
+ * - Sube ligeramente (translateY) reforzando el alejamiento
+ * - Se desenfoca (blur) creando profundidad
+ * - Se desvanece (opacity)
  * 
- * El hero se desvanece sutilmente al ser cubierto.
+ * Efecto cinematográfico con curva ease-out (empieza rápido, termina suave)
  */
 
-class HeroStickyReveal {
+class HeroCinematicZoom {
     private hero: HTMLElement | null = null;
-    private heroInner: HTMLElement | null = null;
-    private projects: HTMLElement | null = null;
+    private heroContent: HTMLElement | null = null;
     private rafId: number | null = null;
     private ticking = false;
     private isEnabled = true;
@@ -35,27 +37,21 @@ class HeroStickyReveal {
     }
 
     private setup(): void {
-        // Cachear elementos
         this.hero = document.getElementById('hero');
-        this.heroInner = document.querySelector('.hero-content');
-        this.projects = document.getElementById('projects');
+        this.heroContent = document.querySelector('.hero-content');
 
-        if (!this.hero || !this.projects) {
+        if (!this.hero || !this.heroContent) {
             this.isEnabled = false;
             return;
         }
 
-        // Cachear dimensiones
         this.heroHeight = this.hero.offsetHeight;
-
         this.bindEvents();
     }
 
     private bindEvents(): void {
-        // Scroll con throttling via RAF
         window.addEventListener('scroll', () => this.requestTick(), { passive: true });
 
-        // Resize con debounce
         let resizeTimeout: number | null = null;
         window.addEventListener('resize', () => {
             if (resizeTimeout) clearTimeout(resizeTimeout);
@@ -72,62 +68,73 @@ class HeroStickyReveal {
         }
     }
 
+    /**
+     * Curva ease-out: empieza rápido, termina suave
+     * t^0.6 da una curva más pronunciada al inicio
+     */
+    private easeOut(t: number): number {
+        return 1 - Math.pow(1 - t, 2.5);
+    }
+
     private update(): void {
         this.ticking = false;
 
-        if (!this.heroInner) return;
+        if (!this.heroContent) return;
 
         const scrollY = window.scrollY;
 
-        // Solo aplicar efecto mientras el hero está parcialmente visible
+        // Solo aplicar mientras el hero es visible
         if (scrollY > this.heroHeight) {
             return;
         }
 
-        // Calcular cuánto del hero ha sido "cubierto" por projects
-        // El fade empieza después del 30% del scroll y termina al 100%
-        const fadeStart = this.heroHeight * 0.3;
-        const fadeEnd = this.heroHeight;
+        // Progreso lineal del scroll (0 = top, 1 = 70% del hero scrolleado)
+        const linearProgress = Math.min(scrollY / (this.heroHeight * 0.7), 1);
 
-        if (scrollY <= fadeStart) {
-            // Sin fade aún
-            this.heroInner.style.opacity = '1';
-        } else {
-            // Fade progresivo
-            const fadeProgress = (scrollY - fadeStart) / (fadeEnd - fadeStart);
-            const opacity = 1 - (fadeProgress * 0.7); // No bajar de 0.3
-            this.heroInner.style.opacity = `${Math.max(0.3, opacity)}`;
-        }
+        // Aplicar curva ease-out para mayor impacto inicial
+        const progress = this.easeOut(linearProgress);
+
+        // ZOOM OUT CINEMATOGRÁFICO
+        // Scale: 1 → 0.85 (se encoge un 15%)
+        const scale = 1 - (progress * 0.15);
+
+        // Blur: 0 → 8px (desenfoque progresivo)
+        const blur = progress * 8;
+
+        // Opacity: 1 → 0.1 (casi desaparece)
+        const opacity = 1 - (progress * 0.9);
+
+        // Aplicar transformaciones
+        this.heroContent.style.transform = `scale(${scale})`;
+        this.heroContent.style.filter = `blur(${blur}px)`;
+        this.heroContent.style.opacity = `${Math.max(0.1, opacity)}`;
     }
 
-    /**
-     * Limpia recursos
-     */
     public destroy(): void {
         if (this.rafId !== null) {
             cancelAnimationFrame(this.rafId);
             this.rafId = null;
         }
 
-        if (this.heroInner) {
-            this.heroInner.style.opacity = '';
+        if (this.heroContent) {
+            this.heroContent.style.transform = '';
+            this.heroContent.style.filter = '';
+            this.heroContent.style.opacity = '';
         }
     }
 }
 
-// Instancia global
-let heroStickyReveal: HeroStickyReveal | null = null;
+let heroCinematicZoom: HeroCinematicZoom | null = null;
 
-function initHeroStickyReveal(): void {
-    if (heroStickyReveal) return;
-    heroStickyReveal = new HeroStickyReveal();
+function initHeroCinematicZoom(): void {
+    if (heroCinematicZoom) return;
+    heroCinematicZoom = new HeroCinematicZoom();
 }
 
-// Inicializar cuando el DOM esté listo
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHeroStickyReveal);
+    document.addEventListener('DOMContentLoaded', initHeroCinematicZoom);
 } else {
-    initHeroStickyReveal();
+    initHeroCinematicZoom();
 }
 
-export { HeroStickyReveal };
+export { HeroCinematicZoom };
