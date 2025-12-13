@@ -196,6 +196,9 @@ export class HeroCardManager {
     this.aboutCard.classList.add('show');
     this.aboutCard.setAttribute('aria-hidden', 'false');
 
+    // Animar counters de stats
+    this.animateCounters();
+
     if (this.isMobile && this.overlay) {
       this.overlay.classList.add('show');
       this.overlay.setAttribute('aria-hidden', 'false');
@@ -215,6 +218,77 @@ export class HeroCardManager {
         this.closeButton?.focus();
       }
     }, 300);
+  }
+
+  /**
+   * Anima los números de stats contando hacia arriba
+   */
+  private animateCounters() {
+    const statNumbers = this.aboutCard?.querySelectorAll('.stat-number');
+    if (!statNumbers) return;
+
+    statNumbers.forEach((stat) => {
+      const element = stat as HTMLElement;
+
+      // Usar data attribute para guardar el valor original (evita bugs con animaciones repetidas)
+      if (!element.dataset.originalValue) {
+        element.dataset.originalValue = element.textContent || '';
+      }
+      const finalValue = element.dataset.originalValue;
+
+      // Solo animar si es un número
+      const numericValue = parseInt(finalValue, 10);
+      if (isNaN(numericValue)) {
+        // Para B2, animar ciclando por niveles de inglés A1→A2→B1→B2
+        if (finalValue === 'B2') {
+          const levels = ['A1', 'A2', 'B1', 'B2'];
+          const duration = 800;
+          const startTime = performance.now();
+
+          const animateLevel = (currentTime: number) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Calcular qué nivel mostrar basado en el progreso
+            const levelIndex = Math.min(Math.floor(progress * levels.length), levels.length - 1);
+            element.textContent = levels[levelIndex];
+
+            if (progress < 1) {
+              requestAnimationFrame(animateLevel);
+            } else {
+              element.textContent = 'B2'; // Asegurar valor final
+            }
+          };
+
+          requestAnimationFrame(animateLevel);
+        }
+        return;
+      }
+
+      // Animar contador numérico (siempre desde un valor fijo cerca del final)
+      const duration = 800;
+      const startTime = performance.now();
+      const startValue = numericValue - 50; // Empezar 50 antes del valor final
+
+      const animate = (currentTime: number) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Ease-out curve
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const currentValue = Math.round(startValue + (numericValue - startValue) * easeOut);
+
+        element.textContent = currentValue.toString();
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          element.textContent = finalValue; // Asegurar valor final exacto
+        }
+      };
+
+      requestAnimationFrame(animate);
+    });
   }
 
   hideCard(force = false) {
