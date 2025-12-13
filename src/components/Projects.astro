@@ -366,25 +366,26 @@ const t = useTranslations(lang);
 
   /* Animación de slider horizontal - representa el movimiento del carrusel */
   .divider-slider::before {
-    content: '[–··]';
-    animation: slider-step 1.6s step-end infinite;
+    content: '<–  >';
+    white-space: pre;
+    animation: slider-step 1.2s step-end infinite;
   }
 
   @keyframes slider-step {
     0% {
-      content: '[–··]';
+      content: '<–  >';
     }
     20% {
-      content: '[·–·]';
+      content: '< – >';
     }
     40% {
-      content: '[··–]';
+      content: '<  –>';
     }
     60% {
-      content: '[·–·]';
+      content: '< – >';
     }
     80% {
-      content: '[–··]';
+      content: '<–  >';
     }
   }
 
