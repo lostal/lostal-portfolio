@@ -124,7 +124,12 @@ body {
   min-height: 100%;
 }
 
-/* Transiciones de tema para elementos principales */
+/*
+ * Transiciones de tema para elementos principales.
+ * NOTA: Estos son estilos BASE que se pueden extender en componentes.
+ * Por ejemplo, '.card' aquí define transiciones de tema, pero Journey.astro
+ * añade estilos adicionales específicos de ese componente.
+ */
 body,
 .section-header,
 .section-title,

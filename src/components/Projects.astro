@@ -16,7 +16,7 @@ const t = useTranslations(lang);
 <section class="projects-section" id="projects">
   <div class="wrapper">
     <div class="section-header fade-in">
-      <div class="section-divider divider-line"></div>
+      <div class="section-divider divider-slider"></div>
       <h2 class="section-title">{t('projects.title')}</h2>
       <p class="section-description">
         {t('projects.description')}
@@ -28,7 +28,12 @@ const t = useTranslations(lang);
     <div class="projects-carousel">
       <div class="projects-carousel__slider swiper">
         <div class="projects-carousel__wrapper swiper-wrapper">
-          <div class="projects-carousel__slide swiper-slide">
+          <div
+            class="projects-carousel__slide swiper-slide"
+            role="group"
+            aria-roledescription="slide"
+            aria-label="1 / 3"
+          >
             <div class="carousel-item">
               <Picture
                 src={parkingImg}
@@ -124,7 +129,12 @@ const t = useTranslations(lang);
             </div>
           </div>
 
-          <div class="projects-carousel__slide swiper-slide">
+          <div
+            class="projects-carousel__slide swiper-slide"
+            role="group"
+            aria-roledescription="slide"
+            aria-label="2 / 3"
+          >
             <div class="carousel-item">
               <Picture
                 src={creativeHandsImg}
@@ -220,7 +230,12 @@ const t = useTranslations(lang);
             </div>
           </div>
 
-          <div class="projects-carousel__slide swiper-slide">
+          <div
+            class="projects-carousel__slide swiper-slide"
+            role="group"
+            aria-roledescription="slide"
+            aria-label="3 / 3"
+          >
             <div class="carousel-item">
               <Picture
                 src={vivenzaImg}
@@ -349,28 +364,27 @@ const t = useTranslations(lang);
     position: relative;
   }
 
-  /* Animación de línea expandible */
-  .divider-line {
-    width: 0;
-    height: 2px;
-    background: var(--accent-primary);
-    animation: line-expand 2.5s ease-in-out infinite;
+  /* Animación de slider horizontal - representa el movimiento del carrusel */
+  .divider-slider::before {
+    content: '[–··]';
+    animation: slider-step 1.6s step-end infinite;
   }
 
-  .divider-line::before {
-    content: none;
-  }
-
-  @keyframes line-expand {
-    0%,
-    100% {
-      width: 0;
-      opacity: 0.5;
+  @keyframes slider-step {
+    0% {
+      content: '[–··]';
     }
-
-    50% {
-      width: 60px;
-      opacity: 1;
+    20% {
+      content: '[·–·]';
+    }
+    40% {
+      content: '[··–]';
+    }
+    60% {
+      content: '[·–·]';
+    }
+    80% {
+      content: '[–··]';
     }
   }
 
