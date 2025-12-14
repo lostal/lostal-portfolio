@@ -96,10 +96,57 @@ const t = useTranslations(lang);
     // Hero Card Manager - Funcionalidad interactiva del card flotante
 
     import { HeroCardManager } from '../scripts/hero-card';
+    import { isPrimaryInputTouch } from '../utils/dom';
+
+    // Espacio mínimo requerido entre botones CTA y borde inferior para mostrar la flecha (px)
+    const MIN_SPACE_FOR_ARROW = 100;
+    // Tamaño de la flecha + margen de seguridad
+    const ARROW_TOTAL_HEIGHT = 80;
+
+    /**
+     * Evalúa si la flecha de scroll debe mostrarse basándose en:
+     * 1. Espacio disponible entre los botones CTA y el borde inferior
+     * 2. Tipo de dispositivo (no mostrar en táctiles que suelen tener barra inferior)
+     */
+    function evaluateScrollArrowVisibility(): void {
+      const scrollDown = document.getElementById('scrollDown');
+      const heroCta = document.querySelector('.hero-cta') as HTMLElement;
+      const heroSection = document.getElementById('hero');
+
+      if (!scrollDown || !heroCta || !heroSection) return;
+
+      // No mostrar en dispositivos táctiles (suelen tener barra de navegación inferior)
+      if (isPrimaryInputTouch()) {
+        scrollDown.classList.remove('visible');
+        return;
+      }
+
+      // Calcular espacio disponible
+      const ctaRect = heroCta.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const spaceBelow = viewportHeight - ctaRect.bottom;
+
+      // Solo mostrar si hay espacio suficiente para la flecha sin superponerse
+      if (spaceBelow >= MIN_SPACE_FOR_ARROW + ARROW_TOTAL_HEIGHT) {
+        scrollDown.classList.add('visible');
+      } else {
+        scrollDown.classList.remove('visible');
+      }
+    }
 
     // Inicializar cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', () => {
       new HeroCardManager();
+
+      // Evaluar visibilidad de la flecha
+      evaluateScrollArrowVisibility();
+
+      // Re-evaluar en resize (con debounce)
+      let resizeTimeout: number;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = window.setTimeout(evaluateScrollArrowVisibility, 150);
+      });
 
       // Animación de escritura para el título
       const heroTitle = document.querySelector(
@@ -526,7 +573,7 @@ const t = useTranslations(lang);
     }
   }
 
-  /* Flecha de scroll hacia abajo */
+  /* Flecha de scroll hacia abajo - Oculta por defecto, JS la muestra si hay espacio */
   .scroll-down {
     position: absolute;
     bottom: 30px;
@@ -535,27 +582,35 @@ const t = useTranslations(lang);
     margin: 0 auto;
     width: 40px;
     height: 40px;
-    display: flex;
+    display: none; /* Oculta por defecto */
     align-items: center;
     justify-content: center;
     color: var(--text-secondary);
     font-size: 20px;
     transition:
       color var(--animation-duration, 0.3s) ease,
-      background var(--animation-duration, 0.3s) ease;
-    /* Combinamos fade-in inicial con bounce continuo con delay para que se vea el fade-in primero */
-    animation:
-      fadeInUp 0.8s ease-out 0.6s both,
-      bounce-dynamic 2.5s ease-in-out 1.4s infinite;
+      background var(--animation-duration, 0.3s) ease,
+      opacity var(--animation-duration, 0.3s) ease;
     border-radius: 50%;
     background: rgba(var(--bg-primary-rgb), 0.8);
     backdrop-filter: blur(10px);
     border: none;
-    opacity: 1;
-    visibility: visible;
+    opacity: 0;
+    visibility: hidden;
     text-decoration: none;
   }
 
+  /* Solo visible cuando JS determina que hay espacio suficiente */
+  .scroll-down.visible {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+    animation:
+      fadeInUp 0.8s ease-out both,
+      bounce-dynamic 2.5s ease-in-out 0.8s infinite;
+  }
+
+  /* Ocultar cuando el usuario ha hecho scroll */
   .scroll-down.hidden {
     opacity: 0;
     visibility: hidden;
@@ -602,29 +657,6 @@ const t = useTranslations(lang);
 
     75% {
       transform: translateY(-2px) scale(1.01);
-    }
-  }
-
-  @media (max-width: 768px) {
-    .scroll-down {
-      bottom: 35px;
-      width: 36px;
-      height: 36px;
-      font-size: 18px;
-    }
-  }
-
-  /* Ocultar la flecha en tablets y móviles - solo mostrar en desktop */
-  @media (max-width: 1024px) {
-    .scroll-down {
-      display: none;
-    }
-  }
-
-  /* También ocultar en pantallas con poca altura (landscape móvil, ventanas reducidas) */
-  @media (max-height: 600px) {
-    .scroll-down {
-      display: none;
     }
   }
 
