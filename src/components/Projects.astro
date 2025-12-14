@@ -568,7 +568,6 @@ const t = useTranslations(lang);
 
   .carousel-item {
     --border-radius: 12px;
-    --carousel-transition-duration: 0.2s;
 
     width: 100%;
     max-width: 100%;
@@ -578,18 +577,12 @@ const t = useTranslations(lang);
     position: relative;
     overflow: hidden;
     transition:
-      transform var(--carousel-transition-duration) ease,
-      opacity var(--carousel-transition-duration) ease,
-      border-color var(--carousel-transition-duration) ease;
+      transform var(--animation-duration) ease,
+      opacity var(--animation-duration) ease,
+      border-color var(--animation-duration) ease;
     opacity: 0.6;
     transform: scale(0.88);
     border: 1px solid var(--border);
-  }
-
-  @media screen and (max-width: 1023px) {
-    .carousel-item {
-      --carousel-transition-duration: 0.4s;
-    }
   }
 
   .swiper-slide-active .carousel-item {
@@ -658,20 +651,12 @@ const t = useTranslations(lang);
 
   .carousel-item__header,
   .carousel-item__footer {
-    --header-footer-transition-duration: 0.28s;
     max-height: 50px;
     overflow: hidden;
     transition:
-      max-height var(--header-footer-transition-duration) ease,
-      opacity var(--header-footer-transition-duration) ease,
-      visibility var(--header-footer-transition-duration) ease;
-  }
-
-  @media screen and (max-width: 1023px) {
-    .carousel-item__header,
-    .carousel-item__footer {
-      --header-footer-transition-duration: 0.4s;
-    }
+      max-height var(--animation-duration) ease,
+      opacity var(--animation-duration) ease,
+      visibility var(--animation-duration) ease;
   }
 
   .carousel-item__header-inner {

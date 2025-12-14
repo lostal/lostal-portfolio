@@ -337,8 +337,8 @@ const t = useTranslations(lang);
     transform: translateY(-6px) scale(0.98);
     pointer-events: none;
     transition:
-      opacity 0.28s ease,
-      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity var(--animation-duration) ease,
+      transform var(--animation-duration) cubic-bezier(0.22, 1, 0.36, 1);
     z-index: var(--z-nav-popover);
   }
 
@@ -503,7 +503,7 @@ const t = useTranslations(lang);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all var(--animation-duration) ease;
     border-radius: 8px;
   }
 
@@ -547,7 +547,8 @@ const t = useTranslations(lang);
     height: 2px;
     background: var(--text-secondary);
     border-radius: 2px;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all var(--animation-duration)
+      cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform-origin: center;
   }
 
@@ -583,7 +584,8 @@ const t = useTranslations(lang);
     transform: scaleY(0);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all var(--animation-duration)
+      cubic-bezier(0.25, 0.46, 0.45, 0.94);
     max-height: calc(100vh - var(--nav-height));
     overflow: hidden;
     box-shadow: 0 4px 20px var(--shadow);
@@ -599,7 +601,8 @@ const t = useTranslations(lang);
     background: var(--accent-primary);
     transform: scaleX(0);
     transform-origin: center;
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
+    transition: transform var(--animation-duration)
+      cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
   }
 
   .mobile-menu.active {
@@ -624,7 +627,8 @@ const t = useTranslations(lang);
   .mobile-menu-links li {
     transform: translateY(-20px);
     opacity: 0;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all var(--animation-duration)
+      cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .mobile-menu.active .mobile-menu-links li {

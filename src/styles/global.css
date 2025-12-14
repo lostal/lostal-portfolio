@@ -158,16 +158,11 @@ body,
   }
 }
 
-/* Optimización adicional para móviles con conexión lenta */
-@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
-  .section-title {
-    transition-duration: 0.2s;
-  }
-}
+
 
 /* Animaciones específicas para el botón de tema */
 .theme-toggle.animate {
-  animation: themeTogglePress 0.3s ease;
+  animation: themeTogglePress var(--animation-duration) ease;
 }
 
 /* Animación para el cambio de tema */
@@ -224,8 +219,8 @@ body,
   opacity: 0;
   transform: translateY(30px);
   transition:
-    opacity 0.8s ease-out,
-    transform 0.8s ease-out;
+    opacity var(--animation-duration-slow) ease-out,
+    transform var(--animation-duration-slow) ease-out;
   position: relative;
   z-index: auto;
 }
@@ -267,7 +262,7 @@ section {
 .section-header {
   text-align: center;
   margin-bottom: 60px;
-  animation: fadeInUp 0.8s ease-out;
+  animation: fadeInUp var(--animation-duration-slow, 0.8s) ease-out;
 }
 
 .section-divider {

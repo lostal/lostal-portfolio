@@ -46,8 +46,10 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Duración de animaciones optimizada para dispositivo */
+  /* Duración de animaciones unificada */
   --animation-duration: 0.3s;
+  --animation-duration-slow: 0.8s;
+  /* Para animaciones de entrada más lentas */
 
   /* Optimización: usar transform en lugar de multiple color changes donde sea posible */
   --theme-transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
@@ -73,13 +75,6 @@
 
   /* Altura de la navbar para cálculos de espaciado */
   --nav-height: 72px;
-}
-
-/* Optimización para móviles */
-@media (max-width: 768px) {
-  :root {
-    --animation-duration: 0.2s;
-  }
 }
 
 /* Tema oscuro (Delta inheritance) - Solo lo que cambia */
