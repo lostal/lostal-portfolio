@@ -67,17 +67,20 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-    <!-- Preload Geist fonts (WOFF2) -->
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
+
+    <!-- Preload Geist fonts (WOFF2) - Most critical for LCP -->
     <link
       rel="preload"
-      href="/assets/geist/Geist-Regular.woff2"
+      href="/assets/geist/Geist-Medium.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
     <link
       rel="preload"
-      href="/assets/geist/Geist-SemiBold.woff2"
+      href="/assets/geist/Geist-Bold.woff2"
       as="font"
       type="font/woff2"
       crossorigin
