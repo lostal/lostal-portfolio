@@ -614,14 +614,14 @@ const t = useTranslations(lang);
     }
   }
 
-  /* Ocultar la flecha en pantallas verticales de móviles */
-  @media (max-width: 768px) and (orientation: portrait) {
+  /* Ocultar la flecha en tablets y móviles - solo mostrar en desktop */
+  @media (max-width: 1024px) {
     .scroll-down {
       display: none;
     }
   }
 
-  /* También ocultar en pantallas muy pequeñas independientemente de la orientación */
+  /* También ocultar en pantallas con poca altura (landscape móvil, ventanas reducidas) */
   @media (max-height: 600px) {
     .scroll-down {
       display: none;

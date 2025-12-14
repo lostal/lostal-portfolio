@@ -259,7 +259,12 @@ class NavigationManager {
 
         if (href === '#top') {
           if (window.setManualNavigation) window.setManualNavigation(true);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          // Usar Lenis si está disponible para evitar conflictos de scroll
+          if (window.lenis) {
+            window.lenis.scrollTo(0, { duration: 1.2 });
+          } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
           setTimeout(() => {
             if (window.resetAutoScroll) window.resetAutoScroll();
           }, 600);
@@ -272,9 +277,14 @@ class NavigationManager {
           const target = document.querySelector(href) as HTMLElement;
           if (target) {
             const targetPosition = target.offsetTop - SCROLL.SMOOTH_SCROLL_OFFSET;
-            requestAnimationFrame(() => {
-              window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-            });
+            // Usar Lenis si está disponible para evitar conflictos de scroll
+            if (window.lenis) {
+              window.lenis.scrollTo(targetPosition, { duration: 1.2 });
+            } else {
+              requestAnimationFrame(() => {
+                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+              });
+            }
           }
         }
       });
