@@ -51,6 +51,20 @@
   --animation-duration-slow: 0.8s;
   /* Para animaciones de entrada más lentas */
 
+  /* Border radius scale */
+  --radius-xs: 2px;
+  /* Líneas, elementos mínimos */
+  --radius-sm: 4px;
+  /* Píldoras pequeñas, flags */
+  --radius-md: 8px;
+  /* Botones, tags, items interactivos */
+  --radius-lg: 12px;
+  /* Cards, modales, contenedores */
+  --radius-xl: 16px;
+  /* Cards grandes, avatares */
+  --radius-full: 9999px;
+  /* Círculos perfectos */
+
   /* Optimización: usar transform en lugar de multiple color changes donde sea posible */
   --theme-transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
 

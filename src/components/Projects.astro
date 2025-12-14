@@ -462,7 +462,7 @@ const t = useTranslations(lang);
   .projects-carousel:focus-visible {
     outline: 2px solid var(--accent-primary);
     outline-offset: -4px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
   }
 
   .projects-carousel__slider {
@@ -499,7 +499,7 @@ const t = useTranslations(lang);
     border: none;
     padding: 0;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: var(--radius-xs);
     transition:
       width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
       background-color 0.3s ease,
@@ -567,7 +567,7 @@ const t = useTranslations(lang);
   }
 
   .carousel-item {
-    --border-radius: 12px;
+    --border-radius: var(--radius-lg);
 
     width: 100%;
     max-width: 100%;
@@ -748,7 +748,7 @@ const t = useTranslations(lang);
     letter-spacing: 0.5px;
     text-decoration: none;
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     cursor: pointer;
     transition: all var(--animation-duration) ease;
     outline: none;
@@ -853,7 +853,7 @@ const t = useTranslations(lang);
     letter-spacing: 0.5px;
     text-decoration: none;
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     transition: all var(--animation-duration) ease;
   }
 

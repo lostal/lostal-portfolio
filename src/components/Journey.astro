@@ -256,7 +256,7 @@ const t = useTranslations(lang);
     background: var(--bg-secondary);
     /* Modo oscuro: contenido gris siempre */
     padding: 20px 22px;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border);
     transition: all var(--animation-duration) ease;
   }
@@ -427,7 +427,7 @@ const t = useTranslations(lang);
   @media (max-width: 600px) {
     .card {
       padding: 18px;
-      border-radius: 14px;
+      border-radius: var(--radius-lg);
     }
 
     .timeline {

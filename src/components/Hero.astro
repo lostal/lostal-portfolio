@@ -232,7 +232,7 @@ const t = useTranslations(lang);
   .hero-image {
     width: 180px;
     height: 180px;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     object-fit: cover;
     margin: 0 auto;
     border: 2px solid var(--accent-primary);
@@ -329,7 +329,7 @@ const t = useTranslations(lang);
     display: inline-block;
     cursor: pointer;
     transition: transform var(--animation-duration) ease;
-    border-radius: 24px;
+    border-radius: var(--radius-xl);
     outline: none;
   }
 
@@ -351,7 +351,7 @@ const t = useTranslations(lang);
     right: -8px;
     background: var(--bg-primary);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: var(--radius-xl);
     padding: 4px 10px;
     font-family: var(--font-mono);
     font-size: 10px;
@@ -424,7 +424,7 @@ const t = useTranslations(lang);
     .profile-indicator {
       font-size: 10px;
       padding: 6px 10px;
-      border-radius: 16px;
+      border-radius: var(--radius-xl);
       /* Usar los mismos colores que desktop sin hover */
       background: rgba(var(--bg-primary-rgb), 0.95);
       color: var(--text-secondary);
@@ -458,9 +458,9 @@ const t = useTranslations(lang);
 
   /* Tema oscuro - Profile Indicator */
   [data-theme='dark'] .profile-indicator {
-    background: rgba(29, 29, 31, 0.9);
-    border-color: rgba(66, 66, 69, 0.3);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    background: rgba(var(--bg-secondary-rgb), 0.9);
+    border-color: rgba(var(--border-rgb), 0.3);
+    box-shadow: 0 4px 16px var(--shadow-md);
   }
 
   @media (hover: hover) {
@@ -638,7 +638,7 @@ const t = useTranslations(lang);
     background: var(--bg-primary);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border);
     padding: 32px;
     z-index: var(--z-floating-contact);
