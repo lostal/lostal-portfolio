@@ -78,16 +78,10 @@ class NavigationManager {
       this.mobileMenuBtn.addEventListener('click', () => {
         const isOpening = !this.mobileMenu?.classList.contains('active');
 
-        this.mobileMenu?.classList.toggle('active');
-        this.mobileMenuBtn?.classList.toggle('active');
-
-        // Navbar sólida cuando el menú está abierto
         if (isOpening) {
-          this.navbar?.classList.add('menu-open');
-          document.body.style.overflow = 'hidden';
+          this.openMobileMenu();
         } else {
-          this.navbar?.classList.remove('menu-open');
-          document.body.style.overflow = '';
+          this.closeMobileMenu();
         }
 
         if (navigator.vibrate) navigator.vibrate(50);
@@ -97,13 +91,36 @@ class NavigationManager {
     this.mobileLinks.forEach(link => {
       link.addEventListener('click', () => {
         if (window.setManualNavigation) window.setManualNavigation(true);
-        if (this.mobileMenu) this.mobileMenu.classList.remove('active');
-        if (this.mobileMenuBtn) this.mobileMenuBtn.classList.remove('active');
-        // Restaurar navbar translúcida y scroll
-        this.navbar?.classList.remove('menu-open');
-        document.body.style.overflow = '';
+        this.closeMobileMenu();
       });
     });
+
+    // Cerrar menú al hacer clic fuera de él
+    document.addEventListener('click', (e) => {
+      if (!this.mobileMenu?.classList.contains('active')) return;
+
+      const target = e.target as HTMLElement;
+      const isClickInsideMenu = this.mobileMenu?.contains(target);
+      const isClickOnButton = this.mobileMenuBtn?.contains(target);
+
+      if (!isClickInsideMenu && !isClickOnButton) {
+        this.closeMobileMenu();
+      }
+    });
+  }
+
+  private openMobileMenu(): void {
+    this.mobileMenu?.classList.add('active');
+    this.mobileMenuBtn?.classList.add('active');
+    this.navbar?.classList.add('menu-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  private closeMobileMenu(): void {
+    if (this.mobileMenu) this.mobileMenu.classList.remove('active');
+    if (this.mobileMenuBtn) this.mobileMenuBtn.classList.remove('active');
+    this.navbar?.classList.remove('menu-open');
+    document.body.style.overflow = '';
   }
 
   private initLanguageSwitcher(): void {
