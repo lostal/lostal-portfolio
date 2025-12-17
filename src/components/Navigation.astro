@@ -120,18 +120,6 @@ const t = useTranslations(lang);
     background: rgba(var(--bg-primary-rgb), 0.5);
   }
 
-  /* Navbar sólida cuando el menú móvil está abierto */
-  nav.menu-open {
-    background: var(--bg-primary);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    border-bottom-color: transparent;
-  }
-
-  :global([data-theme='dark']) nav.menu-open {
-    background: var(--bg-primary);
-  }
-
   nav.scrolled {
     box-shadow: 0 2px 12px var(--shadow);
   }
