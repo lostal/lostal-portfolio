@@ -112,12 +112,14 @@ class NavigationManager {
   private openMobileMenu(): void {
     this.mobileMenu?.classList.add('active');
     this.mobileMenuBtn?.classList.add('active');
+    this.navbar?.classList.add('menu-open');
     document.body.style.overflow = 'hidden';
   }
 
   private closeMobileMenu(): void {
     if (this.mobileMenu) this.mobileMenu.classList.remove('active');
     if (this.mobileMenuBtn) this.mobileMenuBtn.classList.remove('active');
+    this.navbar?.classList.remove('menu-open');
     document.body.style.overflow = '';
   }
 

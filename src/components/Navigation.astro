@@ -120,6 +120,14 @@ const t = useTranslations(lang);
     background: rgba(var(--bg-primary-rgb), 0.5);
   }
 
+  /* Navbar sólida cuando el menú móvil está abierto */
+  nav.menu-open {
+    background: var(--bg-primary) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom-color: transparent;
+  }
+
   nav.scrolled {
     box-shadow: 0 2px 12px var(--shadow);
   }
@@ -577,9 +585,7 @@ const t = useTranslations(lang);
     top: var(--nav-height);
     left: 0;
     right: 0;
-    background: rgba(var(--bg-primary-rgb), 0.5);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: var(--bg-primary);
     border-bottom: 1px solid var(--border);
     padding: 0 20px;
     transform-origin: top center;
