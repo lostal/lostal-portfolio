@@ -76,8 +76,20 @@ class NavigationManager {
   private initMobileMenu(): void {
     if (this.mobileMenuBtn && this.mobileMenu) {
       this.mobileMenuBtn.addEventListener('click', () => {
+        const isOpening = !this.mobileMenu?.classList.contains('active');
+
         this.mobileMenu?.classList.toggle('active');
         this.mobileMenuBtn?.classList.toggle('active');
+
+        // Navbar sólida cuando el menú está abierto
+        if (isOpening) {
+          this.navbar?.classList.add('menu-open');
+          document.body.style.overflow = 'hidden';
+        } else {
+          this.navbar?.classList.remove('menu-open');
+          document.body.style.overflow = '';
+        }
+
         if (navigator.vibrate) navigator.vibrate(50);
       });
     }
@@ -87,6 +99,9 @@ class NavigationManager {
         if (window.setManualNavigation) window.setManualNavigation(true);
         if (this.mobileMenu) this.mobileMenu.classList.remove('active');
         if (this.mobileMenuBtn) this.mobileMenuBtn.classList.remove('active');
+        // Restaurar navbar translúcida y scroll
+        this.navbar?.classList.remove('menu-open');
+        document.body.style.overflow = '';
       });
     });
   }
