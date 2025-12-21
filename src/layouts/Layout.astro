@@ -234,16 +234,6 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
         const theme = prefersDark ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', theme);
         document.documentElement.style.colorScheme = theme;
-        // Update theme-color meta for mobile status bar
-        const themeColorMeta = document.querySelector(
-          'meta[name="theme-color"]'
-        );
-        if (themeColorMeta) {
-          themeColorMeta.setAttribute(
-            'content',
-            prefersDark ? '#000000' : '#fafaf9'
-          );
-        }
       } catch {
         // no-op
       }
@@ -268,8 +258,17 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
     />
     <!-- iOS touch icon -->
     <link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png" />
-    <!-- Theme color for mobile browsers - controlled by JavaScript based on site theme -->
-    <meta name="theme-color" content="#fafaf9" />
+    <!-- Theme color for mobile browsers - follows system preference -->
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#fafaf9"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#000000"
+    />
   </head>
   <body>
     <a href="#main" class="skip-link"

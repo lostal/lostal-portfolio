@@ -86,10 +86,6 @@ class ThemeToggle extends HTMLElement {
   }
 
   private updateBrowserChrome(theme: string): void {
-    const themeColor = theme === 'dark' ? '#000000' : '#fafaf9';
-    document.querySelectorAll('meta[name="theme-color"]').forEach(meta => {
-      meta.setAttribute('content', themeColor);
-    });
     this.html.style.colorScheme = theme;
   }
 
