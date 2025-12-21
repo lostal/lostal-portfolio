@@ -26,7 +26,7 @@
   "projects.vivenza.description": "Rediseño completo de la landing page de Vivenza Expo, aplicando principios de diseño moderno.",
   "projects.vivenza.preview": "Visitar",
   "projects.creative.title": "Creative Hands",
-  "projects.creative.description": "Tienda PWA con autenticación JWT y chat en tiempo real (Socket.io).",
+  "projects.creative.description": "Portal de productos artesanales con autenticación JWT, chat en tiempo real y roles de usuario.",
   "projects.creative.preview": "Visitar",
   "projects.parking.title": "Gruposiete Parking",
   "projects.parking.description": "Sistema inteligente de gestión de reservas de parking corporativo con roles diferenciados, validaciones robustas y prevención de conflictos en tiempo real.",
