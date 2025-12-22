@@ -18,6 +18,14 @@ class NavigationManager {
   private langIcon: HTMLElement | null;
   private langAnimTimeout: number | undefined;
 
+  // Scroll direction tracking
+  private lastScrollY: number = 0;
+  private scrollDirection: 'down' | 'up' = 'down';
+  private logo: HTMLElement | null;
+  private navLinks: NodeListOf<HTMLAnchorElement>;
+  private currentActiveSection: string | null = null;
+  private sectionObserver: IntersectionObserver | null = null;
+
   constructor() {
     this.navbar = document.getElementById('navbar');
     this.scrollDown = document.getElementById('scrollDown');
@@ -28,6 +36,8 @@ class NavigationManager {
     this.langPopover = document.getElementById('langPopover');
     this.langMenu = document.querySelector('.lang-menu');
     this.langIcon = document.getElementById('langIcon');
+    this.logo = document.querySelector('.logo');
+    this.navLinks = document.querySelectorAll('.nav-links a');
 
     this.init();
   }
@@ -37,6 +47,7 @@ class NavigationManager {
     this.initMobileMenu();
     this.initLanguageSwitcher();
     this.initSmoothScroll();
+    this.initActiveSection();
   }
 
   private initNavbarScroll(): void {
@@ -60,6 +71,14 @@ class NavigationManager {
   private handleScroll(): void {
     const scrollPosition = window.scrollY;
 
+    // Track scroll direction
+    if (scrollPosition > this.lastScrollY) {
+      this.scrollDirection = 'down';
+    } else if (scrollPosition < this.lastScrollY) {
+      this.scrollDirection = 'up';
+    }
+    this.lastScrollY = scrollPosition;
+
     // Estado de navbar al hacer scroll
     if (this.navbar) {
       if (scrollPosition > SCROLL.NAVBAR_THRESHOLD) this.navbar.classList.add('scrolled');
@@ -71,6 +90,104 @@ class NavigationManager {
       if (scrollPosition > SCROLL.SCROLL_DOWN_HIDE_THRESHOLD) this.scrollDown.classList.add('hidden');
       else this.scrollDown.classList.remove('hidden');
     }
+  }
+
+  private initActiveSection(): void {
+    // Only apply on desktop (>= 768px)
+    if (window.innerWidth < 768) return;
+
+    const sections = ['hero', 'projects', 'journey', 'technologies', 'contact'];
+    const sectionElements = sections
+      .map(id => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (sectionElements.length === 0) return;
+
+    // Set initial active state based on scroll position
+    // If at the top, hero should be active
+    if (window.scrollY < 100) {
+      this.setActiveSection('hero');
+    }
+
+    // Create IntersectionObserver to detect which section is in view
+    this.sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            this.setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-40% 0px -55% 0px', // Trigger when section is in the middle 45% of viewport
+        threshold: 0
+      }
+    );
+
+    sectionElements.forEach(section => {
+      this.sectionObserver?.observe(section);
+    });
+
+    // Handle window resize to disable on mobile
+    window.addEventListener('resize', () => {
+      this.handleResize();
+    });
+  }
+
+  private handleResize(): void {
+    const isMobile = window.innerWidth < 768;
+
+    if (isMobile) {
+      // Remove all active states on mobile
+      this.clearActiveStates();
+    }
+  }
+
+  private setActiveSection(sectionId: string): void {
+    // Only apply on desktop
+    if (window.innerWidth < 768) return;
+
+    this.currentActiveSection = sectionId;
+
+    // Determine scroll direction class
+    const directionClass = this.scrollDirection === 'down' ? 'scroll-down' : 'scroll-up';
+    const oppositeDirectionClass = this.scrollDirection === 'down' ? 'scroll-up' : 'scroll-down';
+
+    // Handle logo active state (for hero section)
+    if (this.logo) {
+      this.logo.classList.remove('scroll-down', 'scroll-up');
+      this.logo.classList.add(directionClass);
+
+      if (sectionId === 'hero') {
+        this.logo.classList.add('active');
+      } else {
+        this.logo.classList.remove('active');
+      }
+    }
+
+    // Handle nav links active states
+    this.navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      const linkSection = href?.replace('#', '') || '';
+
+      // Remove opposite direction class, add current direction
+      link.classList.remove(oppositeDirectionClass);
+      link.classList.add(directionClass);
+
+      if (linkSection === sectionId) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+
+  private clearActiveStates(): void {
+    this.logo?.classList.remove('active', 'scroll-down', 'scroll-up');
+    this.navLinks.forEach(link => {
+      link.classList.remove('active', 'scroll-down', 'scroll-up');
+    });
+    this.currentActiveSection = null;
   }
 
   private initMobileMenu(): void {
