@@ -600,38 +600,63 @@ const t = useTranslations(lang);
     border-radius: var(--border-radius);
     position: relative;
     overflow: hidden;
+    /* Punchy transitions with blur and depth */
     transition:
-      transform var(--animation-duration) ease,
-      opacity var(--animation-duration) ease,
-      border-color var(--animation-duration) ease;
-    opacity: 0.6;
-    transform: scale(0.88);
+      transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 0.3s ease;
+    opacity: 0.5;
+    transform: scale(0.88) perspective(1000px) translateZ(-40px);
+    filter: blur(1.5px);
     border: 1px solid var(--border);
   }
 
   .swiper-slide-active .carousel-item {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) perspective(1000px) translateZ(0);
+    filter: blur(0);
     border-color: var(--accent-primary);
   }
 
   @media screen and (min-width: 769px) and (max-width: 1024px) {
     .carousel-item {
-      transform: scale(0.9);
+      transform: scale(0.9) perspective(1000px) translateZ(-30px);
     }
 
     .swiper-slide-active .carousel-item {
-      transform: scale(1);
+      transform: scale(1) perspective(1000px) translateZ(0);
     }
   }
 
   @media screen and (min-width: 481px) and (max-width: 768px) {
     .carousel-item {
-      transform: scale(0.92);
+      transform: scale(0.92) perspective(1000px) translateZ(-25px);
+      filter: blur(1.5px);
     }
 
     .swiper-slide-active .carousel-item {
-      transform: scale(1);
+      transform: scale(1) perspective(1000px) translateZ(0);
+      filter: blur(0);
+    }
+  }
+
+  /* Reduce blur on mobile for performance */
+  @media screen and (max-width: 480px) {
+    .carousel-item {
+      filter: blur(1px);
+    }
+
+    .swiper-slide-active .carousel-item {
+      filter: blur(0);
+    }
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-item {
+      filter: none;
+      transition-duration: 0.1s;
     }
   }
 

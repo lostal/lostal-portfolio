@@ -50,7 +50,7 @@ const currentYear = new Date().getFullYear();
   <div class="footer-bottom">
     <span class="footer-signature">
       {t('footer.signature')}
-      <strong>Álvaro Lostal</strong>
+      <strong class="footer-name" title="👋">Álvaro Lostal</strong>
     </span>
     <span class="footer-version">{t('footer.version')} · {currentYear}</span>
   </div>
@@ -221,9 +221,48 @@ const currentYear = new Date().getFullYear();
     letter-spacing: 0.2px;
   }
 
-  .footer-signature strong {
+  .footer-signature strong,
+  .footer-name {
     color: var(--text-secondary);
     font-weight: var(--font-weight-medium);
+    cursor: default;
+    transition: all var(--animation-duration) ease;
+    display: inline-block;
+  }
+
+  /* Easter egg: name animation on hover */
+  @media (hover: hover) {
+    .footer-name:hover {
+      color: var(--accent-primary);
+      animation: easter-egg-wave 0.6s ease;
+    }
+  }
+
+  @keyframes easter-egg-wave {
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    20% {
+      transform: rotate(-8deg) scale(1.05);
+    }
+    40% {
+      transform: rotate(6deg);
+    }
+    60% {
+      transform: rotate(-4deg);
+    }
+    80% {
+      transform: rotate(2deg);
+    }
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .footer-name {
+      animation: none;
+      transition: none;
+    }
   }
 
   .footer-version {
