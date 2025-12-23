@@ -1,0 +1,38 @@
+{
+  "id": "vivenza",
+  "order": 3,
+  "image": "/assets/projects/vivenza-preview.png",
+  "imageAlt": "Rediseño Vivenza Expo",
+  "liveUrl": "https://vivenza-redesign.vercel.app",
+  "repoUrl": "https://github.com/lostal/vivenza-redesign",
+  "technologies": [
+    {
+      "name": "HTML5",
+      "icon": "/assets/tech-icons/html5.svg"
+    },
+    {
+      "name": "CSS3",
+      "icon": "/assets/tech-icons/css3.svg"
+    },
+    {
+      "name": "JavaScript",
+      "icon": "/assets/tech-icons/javascript.svg"
+    },
+    {
+      "name": "Next.js",
+      "icon": "/assets/tech-icons/nextjs.svg"
+    }
+  ],
+  "translations": {
+    "es": {
+      "title": "Rediseño Vivenza Expo",
+      "description": "Rediseño completo de la landing page de Vivenza Expo, aplicando principios de diseño moderno.",
+      "preview": "Visitar"
+    },
+    "en": {
+      "title": "Vivenza Expo Redesign",
+      "description": "Complete redesign of the Vivenza Expo landing page, applying modern design principles.",
+      "preview": "Visit"
+    }
+  }
+}

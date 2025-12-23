@@ -1,8 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
-import vivenzaImg from '../assets/projects/vivenza-preview.png';
-import creativeHandsImg from '../assets/projects/creative-hands-preview.png';
-import parkingImg from '../assets/projects/gruposiete-parking.png';
+import { getCollection } from 'astro:content';
 import { useTranslations } from '../i18n/utils';
 
 interface Props {
@@ -11,6 +8,12 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+
+// Obtener proyectos ordenados por el campo 'order'
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const totalProjects = projects.length;
 ---
 
 <section class="projects-section" id="projects">
@@ -28,352 +31,108 @@ const t = useTranslations(lang);
     <div class="projects-carousel">
       <div class="projects-carousel__slider swiper">
         <div class="projects-carousel__wrapper swiper-wrapper">
-          <div
-            class="projects-carousel__slide swiper-slide"
-            role="group"
-            aria-roledescription="slide"
-            aria-label="1 / 3"
-          >
-            <div class="carousel-item">
-              <Picture
-                src={parkingImg}
-                alt="Gruposiete Parking"
-                widths={[285, 400, 500]}
-                sizes="(max-width: 768px) 285px, (max-width: 1024px) 400px, 400px"
-                formats={['avif', 'webp']}
-                loading="lazy"
-                quality={80}
-                class="carousel-item__image"
-              />
+          {
+            projects.map((project, index) => {
+              const { data } = project;
+              const translation = data.translations[lang];
 
-              <div class="carousel-item__content">
-                <div class="carousel-item__header">
-                  <div class="carousel-item__header-inner">
-                    <div class="carousel-item__price">
-                      <div class="carousel-item__tech">
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/nextjs.svg"
-                            alt="Next.js"
-                            class="tech-mini-icon"
-                            width="14"
-                            height="14"
-                            loading="lazy"
-                          />
-                          Next.js
-                        </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/typescript.svg"
-                            alt="TypeScript"
-                            class="tech-mini-icon"
-                            width="14"
-                            height="14"
-                            loading="lazy"
-                          />
-                          TypeScript
-                        </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/mongodb.svg"
-                            alt="MongoDB"
-                            class="tech-mini-icon"
-                            width="14"
-                            height="14"
-                            loading="lazy"
-                          />
-                          MongoDB
-                        </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/tailwind.svg"
-                            alt="Tailwind CSS"
-                            class="tech-mini-icon"
-                            width="14"
-                            height="14"
-                            loading="lazy"
-                          />
-                          Tailwind CSS
-                        </span>
+              return (
+                <div
+                  class="projects-carousel__slide swiper-slide"
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`${index + 1} / ${totalProjects}`}
+                >
+                  <div class="carousel-item">
+                    <img
+                      src={data.image}
+                      alt={data.imageAlt}
+                      width="400"
+                      height="270"
+                      loading="lazy"
+                      decoding="async"
+                      class="carousel-item__image"
+                    />
+
+                    <div class="carousel-item__content">
+                      <div class="carousel-item__header">
+                        <div class="carousel-item__header-inner">
+                          <div class="carousel-item__price">
+                            <div class="carousel-item__tech">
+                              {data.technologies.map(tech => (
+                                <span class="tag">
+                                  <img
+                                    src={tech.icon}
+                                    alt={tech.name}
+                                    class="tech-mini-icon"
+                                    width="14"
+                                    height="14"
+                                    loading="lazy"
+                                  />
+                                  {tech.name}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="carousel-item__info">
+                        <h2 class="carousel-item__title">
+                          {translation.title}
+                        </h2>
+                        <div class="carousel-item__text">
+                          {translation.description}
+                        </div>
+                      </div>
+
+                      <div class="carousel-item__footer">
+                        <div class="carousel-item__actions">
+                          <a
+                            class="carousel-item__action"
+                            href={data.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <i
+                              class="fas fa-arrow-up-right-from-square"
+                              aria-hidden="true"
+                            />
+                            <span>{translation.preview}</span>
+                          </a>
+                          <a
+                            class="carousel-item__action"
+                            href={data.repoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <i class="fab fa-github" aria-hidden="true" />
+                            <span>{t('projects.more')}</span>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <div class="carousel-item__info">
-                  <h2 class="carousel-item__title">
-                    {t('projects.parking.title')}
-                  </h2>
-                  <div class="carousel-item__text">
-                    {t('projects.parking.description')}
-                  </div>
-                </div>
-
-                <div class="carousel-item__footer">
-                  <div class="carousel-item__actions">
-                    <a
-                      class="carousel-item__action"
-                      href="https://gruposiete-parking.vercel.app/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <i
-                        class="fas fa-arrow-up-right-from-square"
-                        aria-hidden="true"></i>
-                      <span>{t('projects.parking.preview')}</span>
-                    </a>
-                    <a
-                      class="carousel-item__action"
-                      href="https://github.com/lostal/gruposiete-parking"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <i class="fab fa-github" aria-hidden="true"></i>
-                      <span>{t('projects.more')}</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="projects-carousel__slide swiper-slide"
-            role="group"
-            aria-roledescription="slide"
-            aria-label="2 / 3"
-          >
-            <div class="carousel-item">
-              <Picture
-                src={creativeHandsImg}
-                alt="Creative Hands"
-                widths={[285, 400, 500]}
-                sizes="(max-width: 768px) 285px, (max-width: 1024px) 400px, 400px"
-                formats={['avif', 'webp']}
-                loading="lazy"
-                quality={80}
-                class="carousel-item__image"
-              />
-
-              <div class="carousel-item__content">
-                <div class="carousel-item__header">
-                  <div class="carousel-item__header-inner">
-                    <div class="carousel-item__price">
-                      <div class="carousel-item__tech">
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/react.svg"
-                            alt="React.js"
-                            class="tech-mini-icon"
-                            width="14"
-                            height="14"
-                            loading="lazy"
-                          />
-                          React.js
-                        </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/nodejs.svg"
-                            alt="Node.js"
-                            class="tech-mini-icon"
-                            width="14"
-                            height="14"
-                            loading="lazy"
-                          />
-                          Node.js
-                        </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/mongodb.svg"
-                            alt="MongoDB"
-                            class="tech-mini-icon"
-                            width="14"
-                            height="14"
-                            loading="lazy"
-                          />
-                          MongoDB
-                        </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/tailwind.svg"
-                            alt="Tailwind CSS"
-                            class="tech-mini-icon"
-                            width="14"
-                            height="14"
-                            loading="lazy"
-                          />
-                          Tailwind CSS
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="carousel-item__info">
-                  <h2 class="carousel-item__title">
-                    {t('projects.creative.title')}
-                  </h2>
-                  <div class="carousel-item__text">
-                    {t('projects.creative.description')}
-                  </div>
-                </div>
-
-                <div class="carousel-item__footer">
-                  <div class="carousel-item__actions">
-                    <a
-                      class="carousel-item__action"
-                      href="https://creative-hands-cjzg.onrender.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <i
-                        class="fas fa-arrow-up-right-from-square"
-                        aria-hidden="true"></i>
-                      <span>{t('projects.creative.preview')}</span>
-                    </a>
-                    <a
-                      class="carousel-item__action"
-                      href="https://github.com/lostal/creative-hands"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <i class="fab fa-github" aria-hidden="true"></i>
-                      <span>{t('projects.more')}</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="projects-carousel__slide swiper-slide"
-            role="group"
-            aria-roledescription="slide"
-            aria-label="3 / 3"
-          >
-            <div class="carousel-item">
-              <Picture
-                src={vivenzaImg}
-                alt="Rediseño Vivenza Expo"
-                widths={[285, 400, 500]}
-                sizes="(max-width: 768px) 285px, (max-width: 1024px) 400px, 400px"
-                formats={['avif', 'webp']}
-                loading="lazy"
-                quality={80}
-                class="carousel-item__image"
-              />
-              <div class="carousel-item__content">
-                <div class="carousel-item__header">
-                  <div class="carousel-item__header-inner">
-                    <div class="carousel-item__price">
-                      <div class="carousel-item__tech">
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/html5.svg"
-                            alt="HTML5"
-                            class="tech-mini-icon"
-                            width="14"
-                            height="14"
-                            loading="lazy"
-                          />
-                          HTML5
-                        </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/css3.svg"
-                            alt="CSS3"
-                            class="tech-mini-icon"
-                            width="14"
-                            height="14"
-                            loading="lazy"
-                          />
-                          CSS3
-                        </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/javascript.svg"
-                            alt="JavaScript"
-                            class="tech-mini-icon"
-                            width="14"
-                            height="14"
-                            loading="lazy"
-                          />
-                          JavaScript
-                        </span>
-                        <span class="tag">
-                          <img
-                            src="/assets/tech-icons/nextjs.svg"
-                            alt="Next.js"
-                            class="tech-mini-icon"
-                            width="14"
-                            height="14"
-                            loading="lazy"
-                          />
-                          Next.js
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="carousel-item__info">
-                  <h2 class="carousel-item__title">
-                    {t('projects.vivenza.title')}
-                  </h2>
-                  <div class="carousel-item__text">
-                    {t('projects.vivenza.description')}
-                  </div>
-                </div>
-
-                <div class="carousel-item__footer">
-                  <div class="carousel-item__actions">
-                    <a
-                      class="carousel-item__action"
-                      href="https://vivenza-redesign.vercel.app"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <i
-                        class="fas fa-arrow-up-right-from-square"
-                        aria-hidden="true"></i>
-                      <span>{t('projects.vivenza.preview')}</span>
-                    </a>
-                    <a
-                      class="carousel-item__action"
-                      href="https://github.com/lostal/vivenza-redesign"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <i class="fab fa-github" aria-hidden="true"></i>
-                      <span>{t('projects.more')}</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+              );
+            })
+          }
         </div>
       </div>
 
-      <!-- Líneas táctiles de navegación -->
+      <!-- Líneas táctiles de navegación (generadas dinámicamente) -->
       <nav class="carousel-lines" aria-label={t('projects.carousel.nav')}>
-        <button
-          class="carousel-line is-active"
-          data-slide="0"
-          aria-label={t('projects.carousel.goto1')}
-          aria-current="true"
-          type="button"></button>
-        <button
-          class="carousel-line"
-          data-slide="1"
-          aria-label={t('projects.carousel.goto2')}
-          type="button"></button>
-        <button
-          class="carousel-line"
-          data-slide="2"
-          aria-label={t('projects.carousel.goto3')}
-          type="button"></button>
+        {
+          projects.map((_, index) => (
+            <button
+              class:list={['carousel-line', { 'is-active': index === 0 }]}
+              data-slide={index}
+              aria-label={`${t('projects.carousel.goto')} ${index + 1}`}
+              aria-current={index === 0 ? 'true' : undefined}
+              type="button"
+            />
+          ))
+        }
       </nav>
     </div>
   </div>

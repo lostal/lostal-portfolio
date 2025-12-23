@@ -1,0 +1,38 @@
+{
+  "id": "creative",
+  "order": 2,
+  "image": "/assets/projects/creative-hands-preview.png",
+  "imageAlt": "Creative Hands",
+  "liveUrl": "https://creative-hands-cjzg.onrender.com",
+  "repoUrl": "https://github.com/lostal/creative-hands",
+  "technologies": [
+    {
+      "name": "React.js",
+      "icon": "/assets/tech-icons/react.svg"
+    },
+    {
+      "name": "Node.js",
+      "icon": "/assets/tech-icons/nodejs.svg"
+    },
+    {
+      "name": "MongoDB",
+      "icon": "/assets/tech-icons/mongodb.svg"
+    },
+    {
+      "name": "Tailwind CSS",
+      "icon": "/assets/tech-icons/tailwind.svg"
+    }
+  ],
+  "translations": {
+    "es": {
+      "title": "Creative Hands",
+      "description": "Portal de productos artesanales con autenticación JWT, chat en tiempo real y roles de usuario.",
+      "preview": "Visitar"
+    },
+    "en": {
+      "title": "Creative Hands",
+      "description": "Artisan products portal with JWT authentication, real-time chat and user roles.",
+      "preview": "Visit"
+    }
+  }
+}

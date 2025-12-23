@@ -22,15 +22,6 @@
   "projects.next": "Next project",
   "projects.view": "Visit",
   "projects.more": "Code",
-  "projects.vivenza.title": "Vivenza Expo Redesign",
-  "projects.vivenza.description": "Complete redesign of the Vivenza Expo landing page, applying modern design principles.",
-  "projects.vivenza.preview": "Visit",
-  "projects.creative.title": "Creative Hands",
-  "projects.creative.description": "Artisan products portal with JWT authentication, real-time chat and user roles.",
-  "projects.creative.preview": "Visit",
-  "projects.parking.title": "Gruposiete Parking",
-  "projects.parking.description": "Intelligent corporate parking reservation management system with differentiated roles, robust validations and real-time conflict prevention.",
-  "projects.parking.preview": "Visit",
   "projects.modal.close": "Close modal",
   "journey.title": "Journey",
   "journey.description": "My academic and professional background",
@@ -71,7 +62,5 @@
   "about.close.label": "Close information",
   "scroll.label": "Go to projects",
   "projects.carousel.nav": "Project navigation",
-  "projects.carousel.goto1": "Go to project 1",
-  "projects.carousel.goto2": "Go to project 2",
-  "projects.carousel.goto3": "Go to project 3"
+  "projects.carousel.goto": "Go to project"
 }
