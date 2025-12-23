@@ -1,4 +1,4 @@
-// src/scripts/theme.ts - Gestor de tema claro/oscuro con transición cinematográfica
+/** theme.ts - Gestor de tema claro/oscuro con Web Component */
 
 const THEME_STORAGE_KEY = 'user-theme-preference';
 
@@ -6,7 +6,7 @@ class ThemeToggle extends HTMLElement {
   private themeIcon: HTMLElement | null = null;
   private html: HTMLElement;
   private mediaQuery: MediaQueryList;
-  private userHasOverridden: boolean = false;
+  private userHasOverridden = false;
   private boundHandleSystemChange: (e: MediaQueryListEvent) => void;
 
   constructor() {
@@ -18,10 +18,8 @@ class ThemeToggle extends HTMLElement {
 
   connectedCallback() {
     this.themeIcon = this.querySelector('#themeIcon');
-
     const button = this.querySelector('button') || this;
     button.addEventListener('click', e => this.handleToggle(e));
-
     this.mediaQuery.addEventListener('change', this.boundHandleSystemChange);
 
     const savedTheme = this.getSavedTheme();
@@ -36,11 +34,9 @@ class ThemeToggle extends HTMLElement {
   private getSavedTheme(): 'dark' | 'light' | null {
     try {
       const saved = localStorage.getItem(THEME_STORAGE_KEY);
-      if (saved === 'dark' || saved === 'light') {
-        return saved;
-      }
+      if (saved === 'dark' || saved === 'light') return saved;
     } catch {
-      // localStorage no disponible
+      /* localStorage no disponible */
     }
     return null;
   }
@@ -49,7 +45,7 @@ class ThemeToggle extends HTMLElement {
     try {
       localStorage.setItem(THEME_STORAGE_KEY, theme);
     } catch {
-      // localStorage no disponible
+      /* localStorage no disponible */
     }
   }
 
@@ -93,18 +89,13 @@ class ThemeToggle extends HTMLElement {
     this.html.setAttribute('data-theme', theme);
     this.updateBrowserChrome(theme);
     this.updateThemeIcon(animate);
-
     window.dispatchEvent(
       new CustomEvent('theme-changed', { detail: { theme } })
     );
   }
 
-  /**
-   * Toggle de tema - usa las transiciones CSS existentes
-   */
   private handleToggle(e: Event): void {
     e.preventDefault();
-
     this.userHasOverridden = true;
 
     const currentTheme = this.html.getAttribute('data-theme') || 'light';
@@ -113,7 +104,6 @@ class ThemeToggle extends HTMLElement {
     this.saveTheme(newTheme);
     this.applyTheme(newTheme, true);
 
-    // Animación del botón
     const button = this.querySelector('button');
     if (button) {
       button.classList.add('animate');

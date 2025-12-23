@@ -1,7 +1,4 @@
-/**
- * Console Easter Egg - Developer Console ASCII Art
- * Muestra un mensaje ASCII art estilizado cuando alguien abre DevTools
- */
+/** console-easter-egg.ts - ASCII art en consola para desarrolladores curiosos */
 
 const ASCII_LOGO = `
    █████╗ ██╗     
@@ -19,7 +16,6 @@ const STYLES = {
 };
 
 export function initConsoleEasterEgg(): void {
-  // Solo ejecutar en navegador
   if (typeof window === 'undefined') return;
 
   console.log('%c' + ASCII_LOGO, STYLES.logo);
@@ -31,5 +27,4 @@ export function initConsoleEasterEgg(): void {
   console.log('%c📧 Contacto → alvaro@lostal.dev', STYLES.link);
 }
 
-// Auto-inicializar
 initConsoleEasterEgg();

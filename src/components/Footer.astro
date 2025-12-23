@@ -321,7 +321,7 @@ const currentYear = new Date().getFullYear();
     }
   }
 
-  /* Respect reduced motion */
+  /* Respetar movimiento reducido */
   @media (prefers-reduced-motion: reduce) {
     .footer-name {
       animation: none;
@@ -366,7 +366,7 @@ const currentYear = new Date().getFullYear();
         m2: minutes[1],
       };
 
-      // Update each digit with flip animation if changed
+      // Actualizar cada dígito con animación flip si cambió
       Object.keys(newValues).forEach(key => {
         const digit = document.querySelector(`[data-digit="${key}"]`);
         const inner = digit?.querySelector('.flip-digit__inner') as HTMLElement;
@@ -387,7 +387,7 @@ const currentYear = new Date().getFullYear();
 
       this.lastValues = newValues;
 
-      // Update timezone
+      // Actualizar zona horaria
       const timezoneElement = document.querySelector('.footer-timezone');
       if (timezoneElement) {
         const madridTime = new Date().toLocaleString('en-US', {

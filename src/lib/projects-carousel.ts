@@ -1,3 +1,5 @@
+/** projects-carousel.ts - Carrusel de proyectos con Swiper */
+
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
@@ -146,8 +148,6 @@ function initProjectsCarousel(): Swiper | null {
   const updateCarouselHeight = () => {
     if (!carousel || !swiper) return;
 
-    // Reset min-height to allow natural recalculation if needed (though we usually grow)
-    // We modify the slides directly.
     const slides = carousel.querySelectorAll<HTMLElement>(
       '.projects-carousel__slide'
     );
@@ -156,21 +156,16 @@ function initProjectsCarousel(): Swiper | null {
     let maxRequiredHeight = 0;
 
     slides.forEach(slide => {
-      // Find the inner card content parts
+      // Encontrar las partes del contenido de la card
       const image = slide.querySelector<HTMLElement>('.carousel-item__image');
       const content = slide.querySelector<HTMLElement>(
         '.carousel-item__content'
       );
 
-      // We look for the "inner" parts that always have natural height
-      // The structure is: .carousel-item__header > .carousel-item__header-inner
-      // .carousel-item__footer > .carousel-item__actions (or just the footer inner content)
-
-      // Note: In the HTML, .carousel-item__actions is direct child of .carousel-item__footer?
-      // Let's verify structure from Projects.astro:
-      // <div class="carousel-item__header"><div class="carousel-item__header-inner">...</div></div>
-      // <div class="carousel-item__info">...</div>
-      // <div class="carousel-item__footer"><div class="carousel-item__actions">...</div></div>
+      // Estructura del HTML:
+      // .carousel-item__header > .carousel-item__header-inner
+      // .carousel-item__info
+      // .carousel-item__footer > .carousel-item__actions
 
       const headerInner = slide.querySelector<HTMLElement>(
         '.carousel-item__header-inner'
@@ -181,17 +176,17 @@ function initProjectsCarousel(): Swiper | null {
       );
 
       if (image && content && headerInner && info && footerActions) {
-        // Measure heights
-        const imgH = image.offsetHeight; // Aspect ratio ensures this is correct even if loading
+        // Medir alturas
+        const imgH = image.offsetHeight;
 
-        // Measure content spacing
+        // Medir espaciado del contenido
         const contentStyle = window.getComputedStyle(content);
         const paddingAndGap =
           parseFloat(contentStyle.paddingTop || '0') +
           parseFloat(contentStyle.paddingBottom || '0') +
-          parseFloat(contentStyle.rowGap || '0') * 2; // 2 gaps for 3 items
+          parseFloat(contentStyle.rowGap || '0') * 2; // 2 gaps para 3 items
 
-        // Sum execution
+        // Sumar todo
         const totalH =
           imgH +
           paddingAndGap +
@@ -206,32 +201,24 @@ function initProjectsCarousel(): Swiper | null {
     });
 
     if (maxRequiredHeight > 0) {
-      // Add a small safety buffer (e.g. border width usually 2px top/bottom = 4px)
+      // Añadir buffer de seguridad (ej: borde 2px top/bottom = 4px)
       const buffer = 4;
       const finalHeight = maxRequiredHeight + buffer;
 
       slides.forEach(slide => {
         slide.style.minHeight = `${finalHeight}px`;
       });
-
-      // Also update the wrapper/container if needed?
-      // Swiper usually handles wrapper height if slides are sized.
-      // But the container .projects-carousel has a min-height too.
-      // We should probably let that be handled by CSS or update it too.
-      // Usually setting slide height is enough.
     }
   };
 
-  // Run initial calculation
-  // We use requestAnimationFrame to ensure styles (computed values) are ready
+  // Ejecutar cálculo inicial
   requestAnimationFrame(() => {
     updateCarouselHeight();
-    // Re-run after a short delay in case of font loading layout shifts,
-    // although standard fonts usually don't shift height much.
+    // Re-ejecutar después de un delay por si hay cambios de layout por carga de fuentes
     setTimeout(updateCarouselHeight, 500);
   });
 
-  // Listener for resize
+  // Listener para resize
   const debouncedResize = debounce(updateCarouselHeight, 200);
   window.addEventListener('resize', debouncedResize);
 

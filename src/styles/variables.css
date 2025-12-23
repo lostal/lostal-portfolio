@@ -1,46 +1,46 @@
-/* src/styles/variables.css */
+/* ════════════════════════════════════════
+   DESIGN TOKENS - Variables globales
+   ════════════════════════════════════════ */
+
 :root {
+  /* Colores accent */
   --accent-primary: #d5bd37;
   --accent-primary-rgb: 213, 189, 55;
   --accent-dark: #c4ab2f;
-  /* Light mode: warm off-white with improved visual depth */
+
+  /* Fondos modo claro */
   --bg-primary: #fafaf9;
   --bg-primary-rgb: 250, 250, 249;
   --bg-secondary: #f0efee;
   --bg-secondary-rgb: 240, 239, 238;
   --bg-tertiary: #e8e7e6;
+
+  /* Texto */
   --text-primary: #1a1a1a;
   --text-secondary: #5c5c5c;
   --text-tertiary: #8a8a8a;
   --text-tertiary-rgb: 138, 138, 138;
+  --text-on-accent: #000000;
+
+  /* Bordes */
   --border: #e0dfdd;
   --border-rgb: 224, 223, 221;
 
-  /* Shadow System - Complete box-shadow values for consistency */
-  /* xs: Subtle elevation for tags, badges */
+  /* Sombras (xs → xl) */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
-  /* sm: Light elevation for buttons, small cards */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-  /* md: Medium elevation for cards, panels */
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-  /* lg: Strong elevation for modals, popovers, active cards */
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
-  /* xl: Maximum elevation for floating elements */
   --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12);
-  /* Inset shadow for pressed states */
   --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.06);
 
-  /* Color de texto sobre fondo accent (botones amarillos) */
-  --text-on-accent: #000000;
-
-  /* Fuentes */
+  /* Tipografía */
   --font-primary:
     'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     'Helvetica Neue', Arial, sans-serif;
   --font-mono:
     'Geist Mono', 'SF Mono', 'Consolas', 'Liberation Mono', 'Menlo', monospace;
 
-  /* Escala tipográfica */
   --font-size-xs: 12px;
   --font-size-sm: 14px;
   --font-size-base: 16px;
@@ -51,75 +51,65 @@
   --font-size-4xl: 42px;
   --font-size-5xl: 64px;
 
-  /* Pesos de fuente */
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Duración de animaciones unificada */
+  /* Animaciones */
   --animation-duration: 0.3s;
   --animation-duration-slow: 0.8s;
-  /* Para animaciones de entrada más lentas */
-
-  /* Border radius scale */
-  --radius-xs: 2px;
-  /* Líneas, elementos mínimos */
-  --radius-sm: 4px;
-  /* Píldoras pequeñas, flags */
-  --radius-md: 8px;
-  /* Botones, tags, items interactivos */
-  --radius-lg: 12px;
-  /* Cards, modales, contenedores */
-  --radius-xl: 16px;
-  /* Cards grandes, avatares */
-  --radius-full: 9999px;
-  /* Círculos perfectos */
-
-  /* Optimización: usar transform en lugar de multiple color changes donde sea posible */
   --theme-transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Z-index hierarchy - Sistema unificado */
+  /* Border radius (xs → full) */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Z-index (1 → 10000) */
   --z-background: 1;
   --z-content: 2;
   --z-hero-image: 3;
   --z-profile-indicator: 4;
   --z-mobile-buttons: 5;
   --z-carousel-navigation: 10;
-  /* Botones del carrusel - debe estar debajo de todo lo fijo */
   --z-nav-popover: 60;
-  /* Popovers dentro de la navbar */
   --z-navigation: 100;
-  /* Navbar fija */
   --z-card-overlay: 999;
   --z-floating-contact: 1000;
   --z-modal: 2000;
-  /* Modal de proyectos */
   --z-skip-link: 10000;
-  /* Skip link para accesibilidad - siempre en la cima */
 
-  /* Altura de la navbar para cálculos de espaciado */
+  /* Layout */
   --nav-height: 72px;
 }
 
-/* Tema oscuro (Delta inheritance) - Solo lo que cambia */
+/* ════════════════════════════════════════
+   DARK THEME
+   ════════════════════════════════════════ */
+
 [data-theme='dark'] {
   --accent-primary: #e8d159;
   --accent-primary-rgb: 232, 209, 89;
   --accent-dark: #d5bd37;
+
   --bg-primary: #000000;
   --bg-primary-rgb: 0, 0, 0;
   --bg-secondary: #1d1d1f;
   --bg-secondary-rgb: 29, 29, 31;
   --bg-tertiary: #2d2d2f;
+
   --text-primary: #f5f5f7;
   --text-secondary: #a1a1a6;
   --text-tertiary: #86868b;
   --text-tertiary-rgb: 134, 134, 139;
+
   --border: #424245;
   --border-rgb: 66, 66, 69;
 
-  /* Dark mode shadows - more prominent to show depth on dark backgrounds */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);

@@ -180,7 +180,7 @@ const t = useTranslations(lang);
   </script>
 </section>
 <style>
-  /* src/styles/hero.css content moved here */
+  /* Contenido de src/styles/hero.css movido aquí */
 
   /* Typing Animation Effect - Específico de Hero */
   .typing-effect {
@@ -188,7 +188,7 @@ const t = useTranslations(lang);
     display: inline-block;
   }
 
-  /* Industrial dot pattern background - Technical grid aesthetic */
+  /* Patrón de puntos industrial - Estética de cuadrícula técnica */
   .bg-dots {
     position: relative;
     isolation: isolate;
@@ -208,7 +208,7 @@ const t = useTranslations(lang);
     opacity: 0.28;
     pointer-events: none;
     z-index: 0;
-    /* Fade mask for subtle edges - elipse más pequeña para fade más visible */
+    /* Máscara de fade para bordes sutiles - elipse más pequeña para fade más visible */
     mask-image: radial-gradient(
       ellipse 80% 60% at 50% 50%,
       black 40%,
@@ -278,7 +278,7 @@ const t = useTranslations(lang);
     animation: fadeInUp 0.8s ease-out 0.1s both;
   }
 
-  /* Ambient glow behind profile image */
+  /* Resplandor ambiental detrás de la imagen de perfil */
   .hero-image-wrapper::before {
     content: '';
     position: absolute;
@@ -311,7 +311,7 @@ const t = useTranslations(lang);
     }
   }
 
-  /* Reduced glow on mobile for performance */
+  /* Resplandor reducido en móvil por rendimiento */
   @media (max-width: 768px) {
     .hero-image-wrapper::before {
       width: 200px;
@@ -320,7 +320,7 @@ const t = useTranslations(lang);
     }
   }
 
-  /* Dark mode: more visible glow */
+  /* Modo oscuro: resplandor más visible */
   [data-theme='dark'] .hero-image-wrapper::before {
     background: radial-gradient(
       circle,
@@ -330,7 +330,7 @@ const t = useTranslations(lang);
     );
   }
 
-  /* Respect reduced motion preference */
+  /* Respetar preferencia de movimiento reducido */
   @media (prefers-reduced-motion: reduce) {
     .hero-image-wrapper::before {
       animation: none;
@@ -453,7 +453,7 @@ const t = useTranslations(lang);
     outline-offset: 4px;
   }
 
-  /* Profile indicator - Original top-right position with breathing animation */
+  /* Indicador de perfil - Posición original arriba-derecha con animación de respiración */
   .profile-indicator {
     position: absolute;
     top: -8px;
@@ -511,7 +511,7 @@ const t = useTranslations(lang);
     background: var(--accent-primary);
     color: var(--text-on-accent);
     border-color: var(--accent-primary);
-    /* No rotation, only subtle scale */
+    /* Sin rotación, solo escala sutil */
     transform: scale(1.05) rotate(0deg);
     animation: none;
   }
@@ -528,7 +528,7 @@ const t = useTranslations(lang);
     transform: scale(0.9);
   }
 
-  /* Responsive adjustments */
+  /* Ajustes responsivos */
   @media (max-width: 480px) {
     .profile-indicator {
       font-size: 10px;
@@ -594,7 +594,7 @@ const t = useTranslations(lang);
     font-weight: var(--font-weight-bold);
     line-height: 1;
     min-height: 64px;
-    /* Prevent layout shift during typing animation */
+    /* Prevenir cambio de layout durante animación de escritura */
     margin-bottom: 16px;
     letter-spacing: -2px;
     animation: fadeInUp 0.8s ease-out 0.3s both;

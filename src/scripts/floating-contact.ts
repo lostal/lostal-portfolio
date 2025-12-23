@@ -1,4 +1,5 @@
-// Widget flotante de contacto con efecto dock
+/** floating-contact.ts - Widget flotante de contacto con efecto dock */
+
 import { canTouch } from '../utils/dom';
 import { TIMING, FLOATING_CONTACT } from '../utils/constants';
 

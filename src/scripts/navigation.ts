@@ -1,7 +1,5 @@
-/**
- * Script de Navegación
- * Gestiona: scroll de navbar, menú móvil, cambio de idioma, scroll suave
- */
+/** navigation.ts - Scroll navbar, menú móvil, idioma y scroll suave */
+
 import { canTouch } from '../utils/dom';
 import { SCROLL } from '../utils/constants';
 import { onReady } from '../utils/init';
@@ -18,7 +16,7 @@ class NavigationManager {
   private langIcon: HTMLElement | null;
   private langAnimTimeout: number | undefined;
 
-  // Scroll direction tracking
+  // Seguimiento de dirección de scroll
   private lastScrollY: number = 0;
   private scrollDirection: 'down' | 'up' = 'down';
   private logo: HTMLElement | null;
@@ -71,7 +69,7 @@ class NavigationManager {
   private handleScroll(): void {
     const scrollPosition = window.scrollY;
 
-    // Track scroll direction
+    // Rastrear dirección de scroll
     if (scrollPosition > this.lastScrollY) {
       this.scrollDirection = 'down';
     } else if (scrollPosition < this.lastScrollY) {
@@ -95,7 +93,7 @@ class NavigationManager {
   }
 
   private initActiveSection(): void {
-    // Only apply on desktop (>= 768px)
+    // Solo aplicar en desktop (>= 768px)
     if (window.innerWidth < 768) return;
 
     const sections = ['hero', 'projects', 'journey', 'technologies', 'contact'];
@@ -105,13 +103,13 @@ class NavigationManager {
 
     if (sectionElements.length === 0) return;
 
-    // Set initial active state based on scroll position
-    // If at the top, hero should be active
+    // Establecer estado activo inicial basado en posición de scroll
+    // Si está arriba, hero debería estar activo
     if (window.scrollY < 100) {
       this.setActiveSection('hero');
     }
 
-    // Create IntersectionObserver to detect which section is in view
+    // Crear IntersectionObserver para detectar qué sección está visible
     this.sectionObserver = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
@@ -121,7 +119,7 @@ class NavigationManager {
         });
       },
       {
-        rootMargin: '-40% 0px -55% 0px', // Trigger when section is in the middle 45% of viewport
+        rootMargin: '-40% 0px -55% 0px', // Activar cuando la sección esté en el 45% central del viewport
         threshold: 0,
       }
     );
@@ -130,7 +128,7 @@ class NavigationManager {
       this.sectionObserver?.observe(section);
     });
 
-    // Handle window resize to disable on mobile
+    // Manejar resize para desactivar en móvil
     window.addEventListener('resize', () => {
       this.handleResize();
     });
@@ -140,24 +138,24 @@ class NavigationManager {
     const isMobile = window.innerWidth < 768;
 
     if (isMobile) {
-      // Remove all active states on mobile
+      // Remover todos los estados activos en móvil
       this.clearActiveStates();
     }
   }
 
   private setActiveSection(sectionId: string): void {
-    // Only apply on desktop
+    // Solo aplicar en desktop
     if (window.innerWidth < 768) return;
 
     this.currentActiveSection = sectionId;
 
-    // Determine scroll direction class
+    // Determinar clase de dirección de scroll
     const directionClass =
       this.scrollDirection === 'down' ? 'scroll-down' : 'scroll-up';
     const oppositeDirectionClass =
       this.scrollDirection === 'down' ? 'scroll-up' : 'scroll-down';
 
-    // Handle logo active state (for hero section)
+    // Manejar estado activo del logo (para sección hero)
     if (this.logo) {
       this.logo.classList.remove('scroll-down', 'scroll-up');
       this.logo.classList.add(directionClass);
@@ -169,12 +167,12 @@ class NavigationManager {
       }
     }
 
-    // Handle nav links active states
+    // Manejar estados activos de enlaces de navegación
     this.navLinks.forEach(link => {
       const href = link.getAttribute('href');
       const linkSection = href?.replace('#', '') || '';
 
-      // Remove opposite direction class, add current direction
+      // Remover clase de dirección opuesta, añadir dirección actual
       link.classList.remove(oppositeDirectionClass);
       link.classList.add(directionClass);
 

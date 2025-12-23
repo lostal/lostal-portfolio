@@ -1,4 +1,5 @@
-// Gestor del card flotante "About" en el Hero
+/** hero-card.ts - Card flotante "Sobre mí" en la sección Hero */
+
 export class HeroCardManager {
   private heroImage = document.getElementById('heroImage');
   private heroImageWrapper = document.querySelector('.hero-image-wrapper');

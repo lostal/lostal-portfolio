@@ -1,33 +1,20 @@
-/* =============================================================================
- * effects.css - Premium Visual Effects & Animations
- * 
- * This file contains CSS utilities for:
- * - 3D Tilt Cards
- * - Magnetic Buttons
- * - Flip Clock
- * =============================================================================
- */
+/* ════════════════════════════════════════
+   EFFECTS - Efectos visuales premium
+   ════════════════════════════════════════ */
 
-/* -----------------------------------------------------------------------------
- * CSS Custom Properties for Effects
- * ----------------------------------------------------------------------------- */
 :root {
-  /* Spring timing functions - more natural, bouncy feel */
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
-
-  /* Animation durations for effects */
   --effect-duration-fast: 0.15s;
   --effect-duration: 0.3s;
   --effect-duration-slow: 0.6s;
 }
 
-/* -----------------------------------------------------------------------------
- * Magnetic Button Effect
- * Button that attracts to cursor
- * Applied via JavaScript
- * ----------------------------------------------------------------------------- */
+/* ════════════════════════════════════════
+   MAGNETIC BUTTON
+   ════════════════════════════════════════ */
+
 .magnetic-btn {
   transition: transform var(--effect-duration) var(--ease-out-expo);
   will-change: transform;
@@ -63,11 +50,10 @@
   opacity: 0;
 }
 
-/* -----------------------------------------------------------------------------
- * Flip Clock Animation
- * For animated number changes
- * Used for: Footer clock
- * ----------------------------------------------------------------------------- */
+/* ════════════════════════════════════════
+   FLIP CLOCK
+   ════════════════════════════════════════ */
+
 .flip-clock {
   display: inline-flex;
   gap: 1px;
@@ -106,10 +92,10 @@
   }
 }
 
-/* -----------------------------------------------------------------------------
- * Reduced Motion
- * Respect user preferences
- * ----------------------------------------------------------------------------- */
+/* ════════════════════════════════════════
+   ACCESIBILIDAD
+   ════════════════════════════════════════ */
+
 @media (prefers-reduced-motion: reduce) {
   .flip-digit.is-flipping .flip-digit__inner {
     animation: none !important;
