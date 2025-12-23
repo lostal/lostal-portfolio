@@ -7,6 +7,8 @@ import astroParser from 'astro-eslint-parser';
 export default [
   js.configs.recommended,
   ...astroPlugin.configs.recommended,
+
+  // TypeScript & JavaScript
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     languageOptions: {
@@ -30,7 +32,8 @@ export default [
       '@typescript-eslint': tsPlugin,
     },
     rules: {
-      'no-unused-vars': 'off', // TypeScript handles this
+      'no-unused-vars': 'off',
+      'no-undef': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
         { argsIgnorePattern: '^_' },
@@ -38,9 +41,10 @@ export default [
       '@typescript-eslint/no-explicit-any': 'warn',
       'prefer-const': 'error',
       'no-var': 'error',
-      'no-undef': 'off', // TypeScript handles this
     },
   },
+
+  // Astro
   {
     files: ['**/*.astro'],
     languageOptions: {
@@ -50,16 +54,10 @@ export default [
         extraFileExtensions: ['.astro'],
       },
     },
-    rules: {
-      // Add any specific Astro rules here if needed
-    },
   },
+
+  // Ignore patterns
   {
-    ignores: [
-      'dist/',
-      'node_modules/',
-      '.astro/',
-      'public/scripts/**', // Archivos generados/minificados por build-scripts
-    ],
+    ignores: ['dist/', 'node_modules/', '.astro/', 'public/scripts/**'],
   },
 ];

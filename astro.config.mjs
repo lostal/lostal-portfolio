@@ -5,13 +5,13 @@ import AstroPWA from '@vite-pwa/astro';
 export default defineConfig({
   site: 'https://lostal.dev',
   output: 'static',
+
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],
-    routing: {
-      prefixDefaultLocale: false,
-    },
+    routing: { prefixDefaultLocale: false },
   },
+
   integrations: [
     sitemap(),
     AstroPWA({
@@ -45,30 +45,29 @@ export default defineConfig({
       workbox: {
         navigateFallback: '/404',
         globPatterns: ['**/*.{css,js,html,svg,png,ico,txt}'],
-        maximumFileSizeToCacheInBytes: 5000000,
+        maximumFileSizeToCacheInBytes: 5_000_000,
       },
-      devOptions: {
-        enabled: true,
-      },
+      devOptions: { enabled: false },
     }),
   ],
+
   image: {
     service: {
       entrypoint: 'astro/assets/services/sharp',
-      config: {
-        limitInputPixels: 268402689,
-      },
+      config: { limitInputPixels: 268_402_689 },
     },
   },
+
   build: {
-    inlineStylesheets: 'auto', // Permite que Astro decida la mejor estrategia
+    inlineStylesheets: 'auto',
     assets: '_astro',
   },
+
   vite: {
     build: {
-      cssCodeSplit: true, // Split CSS por página
-      output: {
-        assetFileNames: 'assets/[name]-[hash][extname]',
+      cssCodeSplit: true,
+      rollupOptions: {
+        output: { assetFileNames: 'assets/[name]-[hash][extname]' },
       },
     },
   },

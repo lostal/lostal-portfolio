@@ -2,7 +2,6 @@
   <style>
     path {
       fill: #d5bd37;
-      transition: fill 0.3s ease;
     }
     @media (prefers-color-scheme: dark) {
       path {
