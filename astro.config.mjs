@@ -21,7 +21,7 @@ export default defineConfig({
         short_name: 'Lostal',
         description: 'Portafolio profesional de Álvaro Lostal',
         theme_color: '#000000',
-        background_color: '#ffffff',
+        background_color: '#000000',
         display: 'standalone',
         icons: [
           {
