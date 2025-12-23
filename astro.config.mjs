@@ -2,16 +2,23 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import AstroPWA from '@vite-pwa/astro';
 
+/**
+ * Configuración principal de Astro
+ * @see https://docs.astro.build/es/reference/configuration-reference/
+ */
 export default defineConfig({
+  // URL del sitio en producción
   site: 'https://lostal.dev',
   output: 'static',
 
+  // Configuración de internacionalización
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],
     routing: { prefixDefaultLocale: false },
   },
 
+  // Integraciones
   integrations: [
     sitemap(),
     AstroPWA({
@@ -51,6 +58,7 @@ export default defineConfig({
     }),
   ],
 
+  // Configuración de imágenes
   image: {
     service: {
       entrypoint: 'astro/assets/services/sharp',
@@ -58,11 +66,13 @@ export default defineConfig({
     },
   },
 
+  // Configuración de build
   build: {
     inlineStylesheets: 'auto',
     assets: '_astro',
   },
 
+  // Configuración de Vite
   vite: {
     build: {
       cssCodeSplit: true,

@@ -4,11 +4,15 @@ import tsParser from '@typescript-eslint/parser';
 import astroPlugin from 'eslint-plugin-astro';
 import astroParser from 'astro-eslint-parser';
 
+/**
+ * Configuración ESLint con flat config format (ESLint 9+)
+ * @see https://eslint.org/docs/latest/use/configure/configuration-files-new
+ */
 export default [
   js.configs.recommended,
   ...astroPlugin.configs.recommended,
 
-  // TypeScript & JavaScript
+  // Archivos TypeScript y JavaScript
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     languageOptions: {
@@ -16,6 +20,7 @@ export default [
       ecmaVersion: 'latest',
       sourceType: 'module',
       globals: {
+        // Browser APIs
         window: 'readonly',
         document: 'readonly',
         navigator: 'readonly',
@@ -25,6 +30,19 @@ export default [
         setInterval: 'readonly',
         clearInterval: 'readonly',
         requestAnimationFrame: 'readonly',
+        cancelAnimationFrame: 'readonly',
+        IntersectionObserver: 'readonly',
+        ResizeObserver: 'readonly',
+        MutationObserver: 'readonly',
+        fetch: 'readonly',
+        URL: 'readonly',
+        URLSearchParams: 'readonly',
+        localStorage: 'readonly',
+        sessionStorage: 'readonly',
+        CustomEvent: 'readonly',
+        Event: 'readonly',
+        HTMLElement: 'readonly',
+        // Node.js
         process: 'readonly',
       },
     },
@@ -44,7 +62,7 @@ export default [
     },
   },
 
-  // Astro
+  // Archivos Astro
   {
     files: ['**/*.astro'],
     languageOptions: {
@@ -56,7 +74,7 @@ export default [
     },
   },
 
-  // Ignore patterns
+  // Patrones ignorados
   {
     ignores: ['dist/', 'node_modules/', '.astro/', 'public/scripts/**'],
   },

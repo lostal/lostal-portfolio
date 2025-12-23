@@ -1,5 +1,7 @@
 /** animations.ts - Fade-in con IntersectionObserver y efecto stagger */
 
+import { onReady } from '../utils/init';
+
 const observerOptions = {
   threshold: 0.1,
   rootMargin: '0px 0px -50px 0px',
@@ -25,4 +27,6 @@ const observer = new IntersectionObserver(entries => {
   });
 }, observerOptions);
 
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+onReady(() => {
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+});

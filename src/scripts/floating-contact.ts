@@ -1,6 +1,7 @@
 /** floating-contact.ts - Widget flotante de contacto con efecto dock */
 
 import { canTouch } from '../utils/dom';
+import { onReady } from '../utils/init';
 import { TIMING, FLOATING_CONTACT } from '../utils/constants';
 
 type WidgetState = 'hidden' | 'floating' | 'docked';
@@ -202,17 +203,4 @@ class FloatingContactWidget {
   }
 }
 
-// Inicialización simple
-(function initFloatingContact() {
-  function bootstrap() {
-    new FloatingContactWidget();
-  }
-  if (
-    document.readyState === 'complete' ||
-    document.readyState === 'interactive'
-  ) {
-    bootstrap();
-  } else {
-    document.addEventListener('DOMContentLoaded', bootstrap, { once: true });
-  }
-})();
+onReady(() => new FloatingContactWidget());

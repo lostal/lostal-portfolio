@@ -1,5 +1,12 @@
+# Build output
 dist/
-node_modules/
 .astro/
+
+# Dependencies
+node_modules/
+
+# Lock files
 pnpm-lock.yaml
+
+# Static assets
 public/

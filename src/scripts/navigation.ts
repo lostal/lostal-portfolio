@@ -4,6 +4,10 @@ import { canTouch } from '../utils/dom';
 import { SCROLL } from '../utils/constants';
 import { onReady } from '../utils/init';
 
+/**
+ * Gestiona la navegación del sitio: scroll del navbar, menú móvil,
+ * selector de idioma y scroll suave hacia secciones.
+ */
 class NavigationManager {
   private navbar: HTMLElement | null;
   private scrollDown: HTMLElement | null;
@@ -21,7 +25,6 @@ class NavigationManager {
   private scrollDirection: 'down' | 'up' = 'down';
   private logo: HTMLElement | null;
   private navLinks: NodeListOf<HTMLAnchorElement>;
-  private currentActiveSection: string | null = null;
   private sectionObserver: IntersectionObserver | null = null;
 
   constructor() {
@@ -147,8 +150,6 @@ class NavigationManager {
     // Solo aplicar en desktop
     if (window.innerWidth < 768) return;
 
-    this.currentActiveSection = sectionId;
-
     // Determinar clase de dirección de scroll
     const directionClass =
       this.scrollDirection === 'down' ? 'scroll-down' : 'scroll-up';
@@ -189,7 +190,6 @@ class NavigationManager {
     this.navLinks.forEach(link => {
       link.classList.remove('active', 'scroll-down', 'scroll-up');
     });
-    this.currentActiveSection = null;
   }
 
   private initMobileMenu(): void {

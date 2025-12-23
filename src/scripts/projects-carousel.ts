@@ -4,6 +4,8 @@ import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { debounce } from '../utils/debounce';
+import { onReady } from '../utils/init';
 
 interface CarouselElement extends HTMLElement {
   swiperInstance?: Swiper | null;
@@ -133,18 +135,6 @@ function initProjectsCarousel(): Swiper | null {
     carousel.setAttribute('tabindex', '0');
   }
 
-  // Utilidad debounce con tipado genérico
-  const debounce = <T extends (...args: Parameters<T>) => void>(
-    fn: T,
-    ms: number
-  ): ((...args: Parameters<T>) => void) => {
-    let timeoutId: number;
-    return (...args: Parameters<T>) => {
-      clearTimeout(timeoutId);
-      timeoutId = window.setTimeout(() => fn(...args), ms);
-    };
-  };
-
   const updateCarouselHeight = () => {
     if (!carousel || !swiper) return;
 
@@ -237,10 +227,4 @@ function initProjectsCarousel(): Swiper | null {
   return swiper;
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    initProjectsCarousel();
-  });
-} else {
-  initProjectsCarousel();
-}
+onReady(initProjectsCarousel);

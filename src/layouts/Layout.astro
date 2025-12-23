@@ -133,6 +133,7 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
 
     <!-- JSON-LD Structured Data -->
     <script
+      is:inline
       type="application/ld+json"
       set:html={JSON.stringify({
         '@context': 'https://schema.org',
@@ -217,11 +218,14 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
       crossorigin
     />
     <link
-      rel="preload"
+      id="fontawesome-css"
+      rel="stylesheet"
       href="/assets/fontawesome/fa-subset.css"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
+      media="print"
     />
+    <script is:inline>
+      document.getElementById('fontawesome-css').media = 'all';
+    </script>
     <noscript>
       <link rel="stylesheet" href="/assets/fontawesome/fa-subset.css" />
     </noscript>

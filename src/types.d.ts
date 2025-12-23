@@ -1,26 +1,21 @@
+/**
+ * Declaraciones de tipos globales para el proyecto.
+ * Extiende las interfaces nativas del navegador con funcionalidades custom.
+ */
 export {};
 
+import type Lenis from 'lenis';
+
 declare global {
+  /** Propiedades custom añadidas al objeto Window */
   interface Window {
     setManualNavigation?: (isManual: boolean) => void;
     resetAutoScroll?: () => void;
     orientation?: number | string;
+    lenis: Lenis | null;
   }
 
-  interface Navigator {
-    platform: string;
-    msMaxTouchPoints?: number;
-  }
-
-  interface MediaQueryList {
-    addListener(
-      _listener: (this: MediaQueryList, _ev: MediaQueryListEvent) => void
-    ): void;
-    removeListener(
-      _listener: (this: MediaQueryList, _ev: MediaQueryListEvent) => void
-    ): void;
-  }
-
+  /** Tipo para View Transitions API (experimental) */
   interface ViewTransition {
     ready: Promise<void>;
     finished: Promise<void>;

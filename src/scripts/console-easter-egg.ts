@@ -1,5 +1,7 @@
 /** console-easter-egg.ts - ASCII art en consola para desarrolladores curiosos */
 
+import { onReady } from '../utils/init';
+
 const ASCII_LOGO = `
    █████╗ ██╗     
   ██╔══██╗██║     
@@ -27,4 +29,4 @@ export function initConsoleEasterEgg(): void {
   console.log('%c📧 Contacto → alvaro@lostal.dev', STYLES.link);
 }
 
-initConsoleEasterEgg();
+onReady(initConsoleEasterEgg);

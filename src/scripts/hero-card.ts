@@ -6,7 +6,6 @@ export class HeroCardManager {
   private aboutCard = document.getElementById('aboutCard');
   private closeButton = document.getElementById('closeCard');
   private overlay = document.getElementById('cardOverlay');
-  private profileIndicator = document.querySelector('.profile-indicator');
   private isCardOpen = false;
   private isMobile = window.innerWidth <= 768;
   private cachedHeaderHeight: number | null = null;

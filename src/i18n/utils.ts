@@ -13,7 +13,7 @@ export const ui = {
   en,
 } as const;
 
-export function getLangFromUrl(url: URL) {
+export function getLangFromUrl(url: URL): keyof typeof ui {
   const [, lang] = url.pathname.split('/');
   if (lang in ui) return lang as keyof typeof ui;
   return defaultLang;
@@ -25,7 +25,7 @@ export function useTranslations(lang: keyof typeof ui) {
   };
 }
 
-export function getLocalizedPath(path: string, lang: keyof typeof ui) {
+export function getLocalizedPath(path: string, lang: keyof typeof ui): string {
   if (lang === defaultLang) {
     return path;
   }

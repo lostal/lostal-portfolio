@@ -1,5 +1,7 @@
 /** magnetic.ts - Efecto magnético para botones con atracción hacia el cursor */
 
+import { onReady } from '../utils/init';
+
 interface MagneticConfig {
   strength: number;
   threshold: number;
@@ -16,7 +18,7 @@ class MagneticButton {
   private element: HTMLElement;
   private config: MagneticConfig;
   private isHovering = false;
-  private animationId: number | null = null;
+  private rafId: number | null = null;
   private targetX = 0;
   private targetY = 0;
   private currentX = 0;
@@ -80,7 +82,7 @@ class MagneticButton {
   }
 
   private startAnimation(): void {
-    if (this.animationId !== null) return;
+    if (this.rafId !== null) return;
     this.animate();
   }
 
@@ -98,9 +100,9 @@ class MagneticButton {
       Math.abs(this.currentY - this.targetY) > 0.1;
 
     if (this.isHovering || isStillMoving) {
-      this.animationId = requestAnimationFrame(this.animate);
+      this.rafId = requestAnimationFrame(this.animate);
     } else {
-      this.animationId = null;
+      this.rafId = null;
     }
   };
 
@@ -109,7 +111,7 @@ class MagneticButton {
     this.element.removeEventListener('mousemove', this.handleMouseMove);
     this.element.removeEventListener('mouseleave', this.handleMouseLeave);
     this.element.removeEventListener('click', this.handleClick);
-    if (this.animationId !== null) cancelAnimationFrame(this.animationId);
+    if (this.rafId !== null) cancelAnimationFrame(this.rafId);
   }
 }
 
@@ -132,7 +134,6 @@ function initMagneticButtons(): void {
   });
 }
 
-document.addEventListener('DOMContentLoaded', initMagneticButtons);
-document.addEventListener('astro:page-load', initMagneticButtons);
+onReady(initMagneticButtons);
 
 export { MagneticButton, initMagneticButtons };

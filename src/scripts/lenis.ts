@@ -2,6 +2,7 @@
 
 import Lenis from 'lenis';
 import { isPrimaryInputTouch } from '../utils/dom';
+import { onReady } from '../utils/init';
 
 const prefersReducedMotion = window.matchMedia(
   '(prefers-reduced-motion: reduce)'
@@ -51,8 +52,4 @@ export function destroyLenis(): void {
   }
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initLenis);
-} else {
-  initLenis();
-}
+onReady(initLenis);
