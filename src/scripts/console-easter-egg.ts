@@ -28,7 +28,7 @@ export function initConsoleEasterEgg(): void {
     '%c🔗 Código fuente → https://github.com/lostal/lostal-portfolio',
     STYLES.link
   );
-  console.log('%c📧 Contacto → alvarolostal04@gmail.com', STYLES.link);
+  console.log('%c📧 Contacto → alvaro@lostal.dev', STYLES.link);
 }
 
 // Auto-inicializar
