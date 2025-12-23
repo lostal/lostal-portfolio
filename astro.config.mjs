@@ -17,8 +17,8 @@ export default defineConfig({
     AstroPWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'Álvaro Lostal',
-        short_name: 'Lostal',
+        name: 'Portafolio | Álvaro Lostal',
+        short_name: 'AL Portfolio',
         description: 'Portafolio profesional de Álvaro Lostal',
         theme_color: '#fafaf9',
         background_color: '#fafaf9',
