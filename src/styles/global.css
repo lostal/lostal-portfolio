@@ -81,7 +81,7 @@
   z-index: var(--z-skip-link);
   transition: top var(--animation-duration) ease;
   border: 2px solid var(--accent-dark);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-md);
   /* Oculto por defecto */
   opacity: 0;
   visibility: hidden;
@@ -148,6 +148,7 @@ body,
 
 /* Respeto por preferencias de accesibilidad y optimización móvil */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -383,8 +384,7 @@ section {
   transition: filter var(--animation-duration) ease;
   flex-shrink: 0;
   /* Filtros para colores de iconos */
-  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%)
-    hue-rotate(202deg) brightness(92%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(20%) sepia(8%) saturate(378%) hue-rotate(202deg) brightness(92%) contrast(92%);
 }
 
 @media (max-width: 480px) {
@@ -401,8 +401,7 @@ section {
 }
 
 [data-theme='dark'] .tech-mini-icon {
-  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%)
-    hue-rotate(0deg) brightness(110%) contrast(90%);
+  filter: brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(110%) contrast(90%);
 }
 
 /* Notificación de cambio de tema */

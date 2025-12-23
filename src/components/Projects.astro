@@ -582,19 +582,19 @@ const t = useTranslations(lang);
     width: 100%;
     max-width: 100%;
     background: var(--bg-secondary);
-    /* Modo oscuro: contenido gris siempre */
     border-radius: var(--border-radius);
     position: relative;
     overflow: hidden;
-    /* Punchy transitions with blur and depth */
+    /* Snappy transitions synced with Swiper */
     transition:
-      transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
       border-color 0.3s ease;
     opacity: 0.5;
-    transform: scale(0.88) perspective(1000px) translateZ(-40px);
-    filter: blur(1.5px);
+    transform: scale(0.92) perspective(1000px) translateZ(-30px);
+    filter: blur(1px);
     border: 1px solid var(--border);
   }
 
@@ -603,11 +603,12 @@ const t = useTranslations(lang);
     transform: scale(1) perspective(1000px) translateZ(0);
     filter: blur(0);
     border-color: var(--accent-primary);
+    box-shadow: var(--shadow-md);
   }
 
   @media screen and (min-width: 769px) and (max-width: 1024px) {
     .carousel-item {
-      transform: scale(0.9) perspective(1000px) translateZ(-30px);
+      transform: scale(0.94) perspective(1000px) translateZ(-20px);
     }
 
     .swiper-slide-active .carousel-item {
@@ -617,8 +618,8 @@ const t = useTranslations(lang);
 
   @media screen and (min-width: 481px) and (max-width: 768px) {
     .carousel-item {
-      transform: scale(0.92) perspective(1000px) translateZ(-25px);
-      filter: blur(1.5px);
+      transform: scale(0.94) perspective(1000px) translateZ(-20px);
+      filter: blur(1px);
     }
 
     .swiper-slide-active .carousel-item {

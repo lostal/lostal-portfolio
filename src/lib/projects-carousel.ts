@@ -42,7 +42,7 @@ function initProjectsCarousel(): Swiper | null {
     modules: [Navigation],
     slidesPerView: 1.3,
     spaceBetween: 24,
-    speed: 500,
+    speed: 400,
     centeredSlides: true,
     initialSlide: 0,
     loop: false,

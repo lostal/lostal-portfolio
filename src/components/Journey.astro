@@ -260,7 +260,6 @@ const t = useTranslations(lang);
 
   .card {
     background: var(--bg-secondary);
-    /* Modo oscuro: contenido gris siempre */
     padding: 20px 22px;
     border-radius: var(--radius-lg);
     border: 1px solid var(--border);
@@ -276,6 +275,7 @@ const t = useTranslations(lang);
   @media (hover: hover) {
     .card:hover {
       border-color: var(--accent-primary);
+      box-shadow: var(--shadow-sm);
     }
   }
 
