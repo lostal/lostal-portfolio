@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import AstroPWA from '@vite-pwa/astro';
 
 export default defineConfig({
   site: 'https://lostal.dev',
@@ -11,7 +12,40 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap(),
+    AstroPWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'Álvaro Lostal',
+        short_name: 'Lostal',
+        description: 'Portafolio profesional de Álvaro Lostal',
+        theme_color: '#000000',
+        background_color: '#ffffff',
+        display: 'standalone',
+        icons: [
+          {
+            src: '/android-chrome-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: '/android-chrome-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+        ],
+      },
+      workbox: {
+        navigateFallback: '/404',
+        globPatterns: ['**/*.{css,js,html,svg,png,ico,txt}'],
+        maximumFileSizeToCacheInBytes: 5000000,
+      },
+      devOptions: {
+        enabled: true,
+      },
+    }),
+  ],
   image: {
     service: {
       entrypoint: 'astro/assets/services/sharp',
