@@ -20,8 +20,8 @@ export default defineConfig({
         name: 'Álvaro Lostal',
         short_name: 'Lostal',
         description: 'Portafolio profesional de Álvaro Lostal',
-        theme_color: '#000000',
-        background_color: '#000000',
+        theme_color: '#fafaf9',
+        background_color: '#fafaf9',
         display: 'standalone',
         icons: [
           {
@@ -33,6 +33,12 @@ export default defineConfig({
             src: '/android-chrome-512x512.png',
             sizes: '512x512',
             type: 'image/png',
+          },
+          {
+            src: '/android-chrome-maskable-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
           },
         ],
       },
