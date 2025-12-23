@@ -239,27 +239,26 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
         // no-op
       }
     </script>
-    <!-- Favicons: configuración equilibrada y común en sitios de portafolio -->
-    <!-- Raíz .ico (soporte legacy y fallback) -->
-    <link rel="icon" href="/favicon.ico" />
-    <!-- SVG fuente (alta calidad, navegadores que lo soportan) -->
-    <link rel="icon" type="image/svg+xml" href="/assets/favicons/favicon.svg" />
-    <!-- PNGs para navegadores/servicios que prefieren bitmap, tamaños comunes -->
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Android/PWA (opcional para futuro) -->
     <link
       rel="icon"
       type="image/png"
-      sizes="32x32"
-      href="/assets/favicons/favicon-32x32.png"
+      sizes="192x192"
+      href="/android-chrome-192x192.png"
     />
     <link
       rel="icon"
       type="image/png"
-      sizes="16x16"
-      href="/assets/favicons/favicon-16x16.png"
+      sizes="512x512"
+      href="/android-chrome-512x512.png"
     />
-    <!-- iOS touch icon -->
-    <link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png" />
-    <!-- Theme color for mobile browsers - follows system preference -->
+
+    <!-- Theme color for mobile browsers -->
     <meta
       name="theme-color"
       media="(prefers-color-scheme: light)"

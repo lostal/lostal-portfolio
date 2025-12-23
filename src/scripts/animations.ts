@@ -31,4 +31,3 @@ const observer = new IntersectionObserver(entries => {
 }, observerOptions);
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
