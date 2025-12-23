@@ -227,7 +227,7 @@ export class HeroCardManager {
     const statNumbers = this.aboutCard?.querySelectorAll('.stat-number');
     if (!statNumbers) return;
 
-    statNumbers.forEach((stat) => {
+    statNumbers.forEach(stat => {
       const element = stat as HTMLElement;
 
       // Usar data attribute para guardar el valor original (evita bugs con animaciones repetidas)
@@ -250,7 +250,10 @@ export class HeroCardManager {
             const progress = Math.min(elapsed / duration, 1);
 
             // Calcular qué nivel mostrar basado en el progreso
-            const levelIndex = Math.min(Math.floor(progress * levels.length), levels.length - 1);
+            const levelIndex = Math.min(
+              Math.floor(progress * levels.length),
+              levels.length - 1
+            );
             element.textContent = levels[levelIndex];
 
             if (progress < 1) {
@@ -276,7 +279,9 @@ export class HeroCardManager {
 
         // Ease-out curve
         const easeOut = 1 - Math.pow(1 - progress, 3);
-        const currentValue = Math.round(startValue + (numericValue - startValue) * easeOut);
+        const currentValue = Math.round(
+          startValue + (numericValue - startValue) * easeOut
+        );
 
         element.textContent = currentValue.toString();
 

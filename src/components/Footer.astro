@@ -12,11 +12,25 @@ const currentYear = new Date().getFullYear();
 
 <footer>
   <div class="footer-main">
-    <!-- Ubicación + Hora local -->
+    <!-- Ubicación + Hora local con flip clock animation -->
     <div class="footer-location-time">
       <span class="footer-location">Santander, ES</span>
       <span class="footer-time-separator">·</span>
-      <span class="footer-time" id="footer-local-time">--:--</span>
+      <span class="footer-time flip-clock" id="footer-local-time">
+        <span class="flip-digit" data-digit="h1"
+          ><span class="flip-digit__inner">-</span></span
+        >
+        <span class="flip-digit" data-digit="h2"
+          ><span class="flip-digit__inner">-</span></span
+        >
+        <span class="flip-colon">:</span>
+        <span class="flip-digit" data-digit="m1"
+          ><span class="flip-digit__inner">-</span></span
+        >
+        <span class="flip-digit" data-digit="m2"
+          ><span class="flip-digit__inner">-</span></span
+        >
+      </span>
       <span class="footer-timezone">CET</span>
     </div>
 
@@ -105,6 +119,56 @@ const currentYear = new Date().getFullYear();
   .footer-time {
     font-variant-numeric: tabular-nums;
     min-width: 40px;
+    display: inline-flex;
+    gap: 1px;
+  }
+
+  .flip-digit {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    height: 1.3em;
+    min-width: 0.7em;
+    text-align: center;
+  }
+
+  .flip-digit__inner {
+    display: block;
+    transition: transform 0.1s ease;
+  }
+
+  .flip-digit.is-flipping .flip-digit__inner {
+    animation: flip-down 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes flip-down {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    30% {
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .flip-colon {
+    opacity: 0.6;
+    animation: blink-colon 1s step-end infinite;
+  }
+
+  @keyframes blink-colon {
+    0%,
+    50% {
+      opacity: 0.6;
+    }
+    51%,
+    100% {
+      opacity: 0.2;
+    }
   }
 
   .footer-timezone {
@@ -274,36 +338,67 @@ const currentYear = new Date().getFullYear();
 </style>
 
 <script>
-  // Reloj en tiempo real - Hora local de Santander (Europe/Madrid)
-  function updateFooterClock(): void {
-    const timeElement = document.getElementById('footer-local-time');
-    const timezoneElement = document.querySelector('.footer-timezone');
-    if (!timeElement) return;
+  // Flip Clock - Hora local de Santander con flip animation
+  const flipClock = {
+    lastValues: { h1: '', h2: '', m1: '', m2: '' },
 
-    const now = new Date();
-    const options: Intl.DateTimeFormatOptions = {
-      timeZone: 'Europe/Madrid',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    };
+    init() {
+      this.update();
+      setInterval(() => this.update(), 1000);
+    },
 
-    const timeString = now.toLocaleTimeString('es-ES', options);
-    timeElement.textContent = timeString;
-
-    // Detectar CET o CEST (horario de verano)
-    if (timezoneElement) {
-      const madridTime = new Date().toLocaleString('en-US', {
+    update() {
+      const now = new Date();
+      const options: Intl.DateTimeFormatOptions = {
         timeZone: 'Europe/Madrid',
-        timeZoneName: 'short',
-      });
-      // En verano incluye "+2" o "CEST", en invierno "+1" o "CET"
-      const isCEST = madridTime.includes('+2') || madridTime.includes('CEST');
-      timezoneElement.textContent = isCEST ? 'CEST' : 'CET';
-    }
-  }
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      };
 
-  // Actualizar inmediatamente y cada segundo
-  updateFooterClock();
-  setInterval(updateFooterClock, 1000);
+      const timeString = now.toLocaleTimeString('es-ES', options);
+      const [hours, minutes] = timeString.split(':');
+
+      const newValues = {
+        h1: hours[0],
+        h2: hours[1],
+        m1: minutes[0],
+        m2: minutes[1],
+      };
+
+      // Update each digit with flip animation if changed
+      Object.keys(newValues).forEach(key => {
+        const digit = document.querySelector(`[data-digit="${key}"]`);
+        const inner = digit?.querySelector('.flip-digit__inner') as HTMLElement;
+
+        if (
+          inner &&
+          this.lastValues[key as keyof typeof this.lastValues] !==
+            newValues[key as keyof typeof newValues]
+        ) {
+          digit?.classList.add('is-flipping');
+          inner.textContent = newValues[key as keyof typeof newValues];
+
+          setTimeout(() => {
+            digit?.classList.remove('is-flipping');
+          }, 400);
+        }
+      });
+
+      this.lastValues = newValues;
+
+      // Update timezone
+      const timezoneElement = document.querySelector('.footer-timezone');
+      if (timezoneElement) {
+        const madridTime = new Date().toLocaleString('en-US', {
+          timeZone: 'Europe/Madrid',
+          timeZoneName: 'short',
+        });
+        const isCEST = madridTime.includes('+2') || madridTime.includes('CEST');
+        timezoneElement.textContent = isCEST ? 'CEST' : 'CET';
+      }
+    },
+  };
+
+  document.addEventListener('DOMContentLoaded', () => flipClock.init());
 </script>

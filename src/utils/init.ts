@@ -8,11 +8,11 @@
  * Soporta tanto carga inicial como scripts diferidos
  */
 export function onReady(fn: () => void): void {
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', fn, { once: true });
-    } else {
-        fn();
-    }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fn, { once: true });
+  } else {
+    fn();
+  }
 }
 
 /**
@@ -20,9 +20,9 @@ export function onReady(fn: () => void): void {
  * (incluidos estilos, imágenes, etc.)
  */
 export function onLoad(fn: () => void): void {
-    if (document.readyState === 'complete') {
-        fn();
-    } else {
-        window.addEventListener('load', fn, { once: true });
-    }
+  if (document.readyState === 'complete') {
+    fn();
+  } else {
+    window.addEventListener('load', fn, { once: true });
+  }
 }

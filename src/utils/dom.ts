@@ -42,4 +42,3 @@ export function isPrimaryInputTouch(): boolean {
   }
   return _cache.isPrimaryTouch;
 }
-

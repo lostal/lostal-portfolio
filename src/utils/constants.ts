@@ -5,44 +5,44 @@
 
 // Thresholds de scroll (en píxeles)
 export const SCROLL = {
-    /** Distancia para activar estado "scrolled" en navbar */
-    NAVBAR_THRESHOLD: 50,
-    /** Distancia para ocultar flecha de scroll-down */
-    SCROLL_DOWN_HIDE_THRESHOLD: 100,
-    /** Offset para scroll suave hacia secciones (navbar ~72px + margen) */
-    SMOOTH_SCROLL_OFFSET: 72,
+  /** Distancia para activar estado "scrolled" en navbar */
+  NAVBAR_THRESHOLD: 50,
+  /** Distancia para ocultar flecha de scroll-down */
+  SCROLL_DOWN_HIDE_THRESHOLD: 100,
+  /** Offset para scroll suave hacia secciones (navbar ~72px + margen) */
+  SMOOTH_SCROLL_OFFSET: 72,
 } as const;
 
 // Dimensiones del card About en Hero
 export const HERO_CARD = {
-    /** Ancho del card en móvil */
-    MOBILE_WIDTH: 360,
-    /** Alto del card en móvil */
-    MOBILE_HEIGHT: 400,
-    /** Ancho del card en desktop */
-    DESKTOP_WIDTH: 400,
-    /** Margen de seguridad */
-    MARGIN: 20,
-    /** Margen superior mínimo (debajo de header) */
-    MIN_TOP_MARGIN_OFFSET: 20,
+  /** Ancho del card en móvil */
+  MOBILE_WIDTH: 360,
+  /** Alto del card en móvil */
+  MOBILE_HEIGHT: 400,
+  /** Ancho del card en desktop */
+  DESKTOP_WIDTH: 400,
+  /** Margen de seguridad */
+  MARGIN: 20,
+  /** Margen superior mínimo (debajo de header) */
+  MIN_TOP_MARGIN_OFFSET: 20,
 } as const;
 
 // Tiempos de animación (en milisegundos)
 export const TIMING = {
-    /** Debounce de resize */
-    RESIZE_DEBOUNCE: 150,
-    /** Delay para animaciones de iconos */
-    ICON_ANIMATION_DURATION: 580,
-    /** Cache de posiciones expira en ms */
-    CACHE_EXPIRY: 5000,
+  /** Debounce de resize */
+  RESIZE_DEBOUNCE: 150,
+  /** Delay para animaciones de iconos */
+  ICON_ANIMATION_DURATION: 580,
+  /** Cache de posiciones expira en ms */
+  CACHE_EXPIRY: 5000,
 } as const;
 
 // Widget flotante de contacto
 export const FLOATING_CONTACT = {
-    /** Altura aproximada del widget */
-    WIDGET_HEIGHT: 72,
-    /** Distancia entre el fondo del widget y el borde de la ventana cuando está visible */
-    WIDGET_BOTTOM_OFFSET: 37,
-    /** Offset para mostrar widget después de proyectos */
-    PROJECTS_TRIGGER_OFFSET: 200,
+  /** Altura aproximada del widget */
+  WIDGET_HEIGHT: 72,
+  /** Distancia entre el fondo del widget y el borde de la ventana cuando está visible */
+  WIDGET_BOTTOM_OFFSET: 37,
+  /** Offset para mostrar widget después de proyectos */
+  PROJECTS_TRIGGER_OFFSET: 200,
 } as const;

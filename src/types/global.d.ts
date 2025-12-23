@@ -6,10 +6,10 @@
 import type Lenis from 'lenis';
 
 declare global {
-    interface Window {
-        // Lenis smooth scroll
-        lenis: Lenis | null;
-    }
+  interface Window {
+    // Lenis smooth scroll
+    lenis: Lenis | null;
+  }
 }
 
-export { };
+export {};

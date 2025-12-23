@@ -81,13 +81,15 @@ class NavigationManager {
 
     // Estado de navbar al hacer scroll
     if (this.navbar) {
-      if (scrollPosition > SCROLL.NAVBAR_THRESHOLD) this.navbar.classList.add('scrolled');
+      if (scrollPosition > SCROLL.NAVBAR_THRESHOLD)
+        this.navbar.classList.add('scrolled');
       else this.navbar.classList.remove('scrolled');
     }
 
     // Ocultar flecha de scroll
     if (this.scrollDown) {
-      if (scrollPosition > SCROLL.SCROLL_DOWN_HIDE_THRESHOLD) this.scrollDown.classList.add('hidden');
+      if (scrollPosition > SCROLL.SCROLL_DOWN_HIDE_THRESHOLD)
+        this.scrollDown.classList.add('hidden');
       else this.scrollDown.classList.remove('hidden');
     }
   }
@@ -111,7 +113,7 @@ class NavigationManager {
 
     // Create IntersectionObserver to detect which section is in view
     this.sectionObserver = new IntersectionObserver(
-      (entries) => {
+      entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             this.setActiveSection(entry.target.id);
@@ -120,7 +122,7 @@ class NavigationManager {
       },
       {
         rootMargin: '-40% 0px -55% 0px', // Trigger when section is in the middle 45% of viewport
-        threshold: 0
+        threshold: 0,
       }
     );
 
@@ -150,8 +152,10 @@ class NavigationManager {
     this.currentActiveSection = sectionId;
 
     // Determine scroll direction class
-    const directionClass = this.scrollDirection === 'down' ? 'scroll-down' : 'scroll-up';
-    const oppositeDirectionClass = this.scrollDirection === 'down' ? 'scroll-up' : 'scroll-down';
+    const directionClass =
+      this.scrollDirection === 'down' ? 'scroll-down' : 'scroll-up';
+    const oppositeDirectionClass =
+      this.scrollDirection === 'down' ? 'scroll-up' : 'scroll-down';
 
     // Handle logo active state (for hero section)
     if (this.logo) {
@@ -213,7 +217,7 @@ class NavigationManager {
     });
 
     // Cerrar menú al hacer clic fuera de él
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', e => {
       if (!this.mobileMenu?.classList.contains('active')) return;
 
       const target = e.target as HTMLElement;
@@ -423,7 +427,8 @@ class NavigationManager {
         if (href) {
           const target = document.querySelector(href) as HTMLElement;
           if (target) {
-            const targetPosition = target.offsetTop - SCROLL.SMOOTH_SCROLL_OFFSET;
+            const targetPosition =
+              target.offsetTop - SCROLL.SMOOTH_SCROLL_OFFSET;
             // Usar Lenis si está disponible para evitar conflictos de scroll
             if (window.lenis) {
               window.lenis.scrollTo(targetPosition, { duration: 1.2 });

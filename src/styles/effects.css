@@ -1,0 +1,121 @@
+/* =============================================================================
+ * effects.css - Premium Visual Effects & Animations
+ * 
+ * This file contains CSS utilities for:
+ * - 3D Tilt Cards
+ * - Magnetic Buttons
+ * - Flip Clock
+ * =============================================================================
+ */
+
+/* -----------------------------------------------------------------------------
+ * CSS Custom Properties for Effects
+ * ----------------------------------------------------------------------------- */
+:root {
+  /* Spring timing functions - more natural, bouncy feel */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Animation durations for effects */
+  --effect-duration-fast: 0.15s;
+  --effect-duration: 0.3s;
+  --effect-duration-slow: 0.6s;
+}
+
+/* -----------------------------------------------------------------------------
+ * Magnetic Button Effect
+ * Button that attracts to cursor
+ * Applied via JavaScript
+ * ----------------------------------------------------------------------------- */
+.magnetic-btn {
+  transition: transform var(--effect-duration) var(--ease-out-expo);
+  will-change: transform;
+}
+
+.magnetic-btn__ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.magnetic-btn__ripple::after {
+  content: '';
+  position: absolute;
+  top: var(--ripple-y, 50%);
+  left: var(--ripple-x, 50%);
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.6s ease,
+    height 0.6s ease,
+    opacity 0.6s ease;
+  opacity: 0;
+}
+
+.magnetic-btn.ripple-active .magnetic-btn__ripple::after {
+  width: 400px;
+  height: 400px;
+  opacity: 0;
+}
+
+/* -----------------------------------------------------------------------------
+ * Flip Clock Animation
+ * For animated number changes
+ * Used for: Footer clock
+ * ----------------------------------------------------------------------------- */
+.flip-clock {
+  display: inline-flex;
+  gap: 1px;
+  font-variant-numeric: tabular-nums;
+}
+
+.flip-digit {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  height: 1.2em;
+}
+
+.flip-digit__inner {
+  display: block;
+  transition: transform 0.4s var(--ease-out-back);
+}
+
+.flip-digit.is-flipping .flip-digit__inner {
+  animation: flip-down 0.4s var(--ease-out-back);
+}
+
+@keyframes flip-down {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+ * Reduced Motion
+ * Respect user preferences
+ * ----------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .flip-digit.is-flipping .flip-digit__inner {
+    animation: none !important;
+  }
+
+  .magnetic-btn {
+    transition-duration: 0.01ms !important;
+  }
+}
