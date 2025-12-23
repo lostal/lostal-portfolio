@@ -2,16 +2,8 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "skipLibCheck": true,
-    "types": [
-      "astro/client"
-    ]
+    "types": ["astro/client"]
   },
-  "include": [
-    "src/**/*",
-    ".astro/types.d.ts"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules"
-  ]
+  "include": ["src/**/*", ".astro/types.d.ts"],
+  "exclude": ["dist", "node_modules"]
 }
