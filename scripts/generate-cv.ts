@@ -12,8 +12,12 @@ import path from 'node:path';
 import handler from 'serve-handler';
 import puppeteer from 'puppeteer';
 
-// Idiomas soportados
+// Idiomas soportados y nombres de archivo
 const LANGUAGES = ['es', 'en'] as const;
+const FILE_NAMES: Record<(typeof LANGUAGES)[number], string> = {
+  es: 'AlvaroLostal_CV.pdf',
+  en: 'AlvaroLostal_Resume.pdf',
+};
 
 // Configuración
 const CONFIG = {
@@ -84,7 +88,7 @@ async function generatePDFs(): Promise<void> {
     // Generar PDF para cada idioma
     for (const lang of LANGUAGES) {
       const cvUrl = `http://localhost:${port}${CONFIG.cvRouteBase}/${lang}`;
-      const outputPath = path.join(CONFIG.buildDir, `cv-${lang}.pdf`);
+      const outputPath = path.join(CONFIG.buildDir, FILE_NAMES[lang]);
 
       console.log(`📄 Generando CV (${lang}): ${cvUrl}...`);
 

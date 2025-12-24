@@ -45,7 +45,13 @@ const t = useTranslations(lang);
       <br /><span>{t('hero.description2')}</span>
     </p>
     <div class="hero-cta">
-      <a href={`/cv-${lang}.pdf`} download class="btn btn-primary">
+      <a
+        href={lang === 'es'
+          ? '/AlvaroLostal_CV.pdf'
+          : '/AlvaroLostal_Resume.pdf'}
+        download
+        class="btn btn-primary"
+      >
         {t('cv.download')}
       </a>
       <a href="#contact" class="btn btn-secondary">{t('hero.cta.contact')}</a>
