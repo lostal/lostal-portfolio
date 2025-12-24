@@ -1,7 +1,7 @@
 {
   "name": "lostal-portafolio",
   "version": "1.0.0",
-  "description": "Plantilla de portafolio profesional con Astro",
+  "description": "Portafolio profesional con Astro",
   "author": "Álvaro Lostal",
   "license": "MIT",
   "repository": {
@@ -14,11 +14,11 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && npm run generate:cv",
+    "build": "pnpm run check && astro build && pnpm run generate:cv",
     "preview": "astro preview",
     "check": "astro check",
     "generate:cv": "tsx scripts/generate-cv.ts",
-    "clean": "rm -rf dist .astro",
+    "clean": "node -e \"const fs=require('fs');['dist','.astro'].forEach(d=>fs.rmSync(d,{recursive:true,force:true}))\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",

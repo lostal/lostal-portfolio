@@ -117,4 +117,3 @@ async function generatePDFs(): Promise<void> {
 
 // Ejecutar
 generatePDFs();
-
