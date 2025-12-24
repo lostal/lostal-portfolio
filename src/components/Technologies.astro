@@ -1,5 +1,6 @@
 ---
-import { useTranslations } from '../i18n/utils';
+import { useTranslations, type TranslationKey } from '../i18n/utils';
+import { technologies } from '../data';
 
 interface Props {
   lang: 'es' | 'en';
@@ -22,180 +23,31 @@ const t = useTranslations(lang);
     </div>
 
     <div class="technologies-grid">
-      <div class="technology-card fade-in">
-        <i class="fas fa-code technology-icon"></i>
-        <h3 class="technology-title">{t('technologies.languages')}</h3>
-        <div class="technology-tags">
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/javascript.svg"
-              alt="JavaScript"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            JavaScript
-          </span>
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/typescript.svg"
-              alt="TypeScript"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            TypeScript
-          </span>
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/html5.svg"
-              alt="HTML5"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            HTML5
-          </span>
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/css3.svg"
-              alt="CSS3"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            CSS3
-          </span>
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/tailwind.svg"
-              alt="Tailwind CSS"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            Tailwind CSS
-          </span>
-        </div>
-      </div>
-
-      <div class="technology-card fade-in">
-        <i class="fas fa-cubes technology-icon"></i>
-        <h3 class="technology-title">{t('technologies.frameworks')}</h3>
-        <div class="technology-tags">
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/react.svg"
-              alt="React"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            React.js
-          </span>
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/nextjs.svg"
-              alt="Next.js"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            Next.js
-          </span>
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/astro.svg"
-              alt="Astro"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            Astro
-          </span>
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/nodejs.svg"
-              alt="Node.js"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            Node.js
-          </span>
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/mongodb.svg"
-              alt="MongoDB"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            MongoDB
-          </span>
-        </div>
-      </div>
-
-      <div class="technology-card fade-in">
-        <i class="fas fa-tools technology-icon"></i>
-        <h3 class="technology-title">{t('technologies.tools')}</h3>
-        <div class="technology-tags">
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/vscode.svg"
-              alt="VS Code"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            VS Code
-          </span>
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/figma.svg"
-              alt="Figma"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            Figma
-          </span>
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/github.svg"
-              alt="GitHub"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            GitHub
-          </span>
-          <span class="tag">
-            <img
-              src="/assets/tech-icons/photoshop.svg"
-              alt="Photoshop"
-              class="tech-mini-icon"
-              width="14"
-              height="14"
-              loading="lazy"
-            />
-            Photoshop
-          </span>
-        </div>
-      </div>
+      {
+        technologies.map(category => (
+          <div class="technology-card fade-in">
+            <i class={`${category.iconClass} technology-icon`} />
+            <h3 class="technology-title">
+              {t(`technologies.${category.id}` as TranslationKey)}
+            </h3>
+            <div class="technology-tags">
+              {category.items.map(tech => (
+                <span class="tag">
+                  <img
+                    src={tech.icon}
+                    alt={tech.name}
+                    class="tech-mini-icon"
+                    width="14"
+                    height="14"
+                    loading="lazy"
+                  />
+                  {tech.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>

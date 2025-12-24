@@ -62,5 +62,6 @@
   "about.close.label": "Cerrar información",
   "scroll.label": "Ir a proyectos",
   "projects.carousel.nav": "Navegación de proyectos",
-  "projects.carousel.goto": "Ir al proyecto"
+  "projects.carousel.goto": "Ir al proyecto",
+  "cv.download": "Descargar CV"
 }

@@ -1,0 +1,458 @@
+---
+/**
+ * Página de CV optimizada para impresión y generación de PDF
+ * Soporta múltiples idiomas: /cv-print/es y /cv-print/en
+ * Orden de secciones igual que la web: Sobre mí → Proyectos → Experiencia/Educación → Tecnologías
+ */
+import { getCollection } from 'astro:content';
+import { experience, education, technologies, profile } from '../../data';
+import {
+  useTranslations,
+  languages,
+  type TranslationKey,
+} from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+type Lang = keyof typeof languages;
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+// Color de acento de la marca (amarillo)
+const accentColor = '#d5bd37';
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV - {profile.name}</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style define:vars={{ accentColor }}>
+      /* Reset & Base */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 10.5px;
+        line-height: 1.45;
+        color: #1a1a1a;
+        background: #fff;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      /* A4 Page Setup */
+      @page {
+        size: A4;
+        margin: 12mm 14mm;
+      }
+
+      /* Container */
+      .cv-container {
+        max-width: 182mm;
+        margin: 0 auto;
+        padding: 16px 0;
+      }
+
+      @media print {
+        .cv-container {
+          padding: 0;
+          width: 100%;
+          max-width: none;
+        }
+        body {
+          width: 100%;
+        }
+      }
+
+      /* Header */
+      header {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        margin-bottom: 14px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid var(--accentColor);
+      }
+
+      .header-photo {
+        width: 56px;
+        height: 56px;
+        border-radius: 6px;
+        object-fit: cover;
+        flex-shrink: 0;
+        border: 1.5px solid var(--accentColor);
+      }
+
+      .header-info {
+        flex: 1;
+      }
+
+      h1 {
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+        margin-bottom: 2px;
+        color: #111;
+      }
+
+      .role {
+        font-size: 12px;
+        font-weight: 500;
+        color: #4b5563;
+        margin-bottom: 6px;
+      }
+
+      .contact-info {
+        font-size: 9.5px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        color: #4b5563;
+      }
+
+      .contact-info a {
+        color: #4b5563;
+        text-decoration: none;
+      }
+
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+
+      /* Section Headers */
+      .section-title {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #111;
+        margin-bottom: 8px;
+        padding-bottom: 3px;
+        border-bottom: 1.5px solid var(--accentColor);
+      }
+
+      section {
+        margin-bottom: 12px;
+      }
+
+      /* Content */
+      h3 {
+        font-size: 10.5px;
+        font-weight: 600;
+        color: #111;
+      }
+
+      .date {
+        font-size: 9px;
+        font-weight: 500;
+        color: #6b7280;
+      }
+
+      .item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 1px;
+      }
+
+      .subtitle {
+        font-size: 9.5px;
+        font-weight: 500;
+        color: var(--accentColor);
+        margin-bottom: 2px;
+      }
+
+      p {
+        margin-bottom: 3px;
+        color: #374151;
+        text-align: justify;
+        hyphens: auto;
+      }
+
+      ul {
+        list-style: none;
+        margin: 4px 0 0 0;
+        padding: 0;
+      }
+
+      li {
+        position: relative;
+        padding-left: 10px;
+        margin-bottom: 1px;
+        color: #374151;
+      }
+
+      li::before {
+        content: '•';
+        position: absolute;
+        left: 0;
+        color: var(--accentColor);
+        font-weight: bold;
+      }
+
+      /* Skills Grid */
+      .skills-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .skill-category {
+        flex: 1;
+        min-width: 90px;
+      }
+
+      .skill-category h3 {
+        font-size: 9.5px;
+        color: #374151;
+        margin-bottom: 2px;
+        font-weight: 600;
+      }
+
+      .skill-list {
+        font-size: 9.5px;
+        color: #4b5563;
+        margin: 0;
+        padding: 0;
+      }
+
+      .skill-tag {
+        display: inline;
+      }
+
+      .skill-tag::after {
+        content: ', ';
+      }
+
+      .skill-tag:last-child::after {
+        content: '';
+      }
+
+      /* Projects */
+      .project-item {
+        margin-bottom: 7px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #f3f4f6;
+      }
+
+      .project-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .project-links {
+        font-size: 8.5px;
+      }
+
+      .project-links a {
+        color: var(--accentColor);
+        text-decoration: none;
+        margin-left: 6px;
+        font-weight: 500;
+      }
+
+      .project-tech {
+        font-size: 9px;
+        color: #6b7280;
+        margin-top: 2px;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* Two column layout */
+      .two-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      /* Experience/Education items */
+      .timeline-item {
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+        border-left: 2px solid #e5e7eb;
+        padding-left: 10px;
+      }
+
+      .timeline-item:last-child {
+        margin-bottom: 0;
+      }
+
+      @media print {
+        .two-columns {
+          gap: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cv-container">
+      <!-- Header con foto y datos -->
+      <header>
+        <img src="/assets/alvaro.jpg" alt={profile.name} class="header-photo" />
+        <div class="header-info">
+          <h1>{profile.name}</h1>
+          <div class="role">{t('hero.description')}</div>
+          <div class="contact-info">
+            <span>{profile.location}</span>
+            <span>·</span>
+            {
+              profile.email && (
+                <>
+                  <a href={`mailto:${profile.email}`}>{profile.email}</a>
+                  <span>·</span>
+                </>
+              )
+            }
+            <a href={`https://${profile.website}`}>{profile.website}</a>
+            {
+              profile.github && (
+                <>
+                  <span>·</span>
+                  <a href={`https://github.com/${profile.github}`}>GitHub</a>
+                </>
+              )
+            }
+            {
+              profile.linkedin && (
+                <>
+                  <span>·</span>
+                  <a href={`https://linkedin.com/in/${profile.linkedin}`}>
+                    LinkedIn
+                  </a>
+                </>
+              )
+            }
+          </div>
+        </div>
+      </header>
+
+      <!-- Sobre mí -->
+      <section>
+        <h2 class="section-title">{t('about.title')}</h2>
+        <p>{t('about.text')}</p>
+      </section>
+
+      <!-- Proyectos destacados -->
+      <section>
+        <h2 class="section-title">{t('projects.title')}</h2>
+        {
+          projects.slice(0, 3).map(project => {
+            const translation = project.data.translations[lang];
+            return (
+              <div class="project-item">
+                <div class="item-header">
+                  <h3>{translation.title}</h3>
+                  <div class="project-links">
+                    {project.data.liveUrl && (
+                      <a href={project.data.liveUrl}>[Demo]</a>
+                    )}
+                    {project.data.repoUrl && (
+                      <a href={project.data.repoUrl}>[GitHub]</a>
+                    )}
+                  </div>
+                </div>
+                <p>{translation.description}</p>
+                <div class="project-tech">
+                  {project.data.technologies.map(tech => tech.name).join(' · ')}
+                </div>
+              </div>
+            );
+          })
+        }
+      </section>
+
+      <!-- Experiencia y Educación en dos columnas -->
+      <div class="two-columns">
+        <section>
+          <h2 class="section-title">{t('journey.experience')}</h2>
+          {
+            experience.map(job => (
+              <div class="timeline-item">
+                <div class="item-header">
+                  <h3>{t(job.i18nKeys.title)}</h3>
+                  <span class="date">{t(job.i18nKeys.date)}</span>
+                </div>
+                <div class="subtitle">{t(job.i18nKeys.company)}</div>
+                <p>{t(job.i18nKeys.description)}</p>
+                {job.i18nKeys.tasks && (
+                  <ul>
+                    {job.i18nKeys.tasks.map(task => (
+                      <li>{t(task)}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))
+          }
+        </section>
+
+        <section>
+          <h2 class="section-title">{t('journey.education')}</h2>
+          {
+            education.map(edu => (
+              <div class="timeline-item">
+                <div class="item-header">
+                  <h3>{t(edu.i18nKeys.title)}</h3>
+                  <span class="date">{t(edu.i18nKeys.date)}</span>
+                </div>
+                <div class="subtitle">{t(edu.i18nKeys.institution)}</div>
+                <p>{t(edu.i18nKeys.description)}</p>
+                {edu.i18nKeys.subjects && (
+                  <ul>
+                    {edu.i18nKeys.subjects.map(subject => (
+                      <li>{t(subject)}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))
+          }
+        </section>
+      </div>
+
+      <!-- Tecnologías -->
+      <section>
+        <h2 class="section-title">{t('technologies.title')}</h2>
+        <div class="skills-grid">
+          {
+            technologies.map(cat => (
+              <div class="skill-category">
+                <h3>{t(`technologies.${cat.id}` as TranslationKey)}</h3>
+                <p class="skill-list">
+                  {cat.items.map(tech => (
+                    <span class="skill-tag">{tech.name}</span>
+                  ))}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

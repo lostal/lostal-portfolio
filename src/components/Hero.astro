@@ -45,12 +45,11 @@ const t = useTranslations(lang);
       <br /><span>{t('hero.description2')}</span>
     </p>
     <div class="hero-cta">
-      <a href="#contact" class="btn btn-primary">
-        <i class="fas fa-arrow-right"></i>
-        <span>{t('hero.cta.contact')}</span>
+      <a href={`/cv-${lang}.pdf`} download class="btn btn-primary">
+        <i class="fas fa-download"></i>
+        <span>{t('cv.download')}</span>
       </a>
-      <a href="#projects" class="btn btn-secondary">{t('hero.cta.portfolio')}</a
-      >
+      <a href="#contact" class="btn btn-secondary">{t('hero.cta.contact')}</a>
     </div>
   </div>
 

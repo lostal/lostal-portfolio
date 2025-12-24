@@ -1,5 +1,6 @@
 ---
 import { useTranslations } from '../i18n/utils';
+import { experience, education } from '../data';
 
 interface Props {
   lang: 'es' | 'en';
@@ -29,42 +30,45 @@ const t = useTranslations(lang);
         </div>
 
         <div class="timeline">
-          <article
-            class="timeline-item card fade-in"
-            aria-roledescription="entry"
-          >
-            <div class="card-inner">
-              <div class="timeline-logo" aria-hidden="true">
-                <img
-                  src="/assets/logos/eurocastalia.svg"
-                  alt="Logo de Eurocastalia, empresa donde realicé prácticas de desarrollo web"
-                  width="50"
-                  height="50"
-                />
-              </div>
+          {
+            experience.map(job => (
+              <article
+                class="timeline-item card fade-in"
+                aria-roledescription="entry"
+              >
+                <div class="card-inner">
+                  <div class="timeline-logo" aria-hidden="true">
+                    <img
+                      src={job.logo}
+                      alt={job.logoAlt}
+                      width="50"
+                      height="50"
+                    />
+                  </div>
 
-              <div class="timeline-body">
-                <div class="timeline-header">
-                  <h3 class="timeline-title">
-                    {t('journey.eurocastalia.title')}
-                  </h3>
-                  <span class="timeline-date"
-                    >{t('journey.eurocastalia.date')}</span
-                  >
+                  <div class="timeline-body">
+                    <div class="timeline-header">
+                      <h3 class="timeline-title">{t(job.i18nKeys.title)}</h3>
+                      <span class="timeline-date">{t(job.i18nKeys.date)}</span>
+                    </div>
+                    <div class="timeline-subtitle">
+                      {t(job.i18nKeys.company)}
+                    </div>
+                    <p class="timeline-description">
+                      {t(job.i18nKeys.description)}
+                    </p>
+                    {job.i18nKeys.tasks && (
+                      <ul class="timeline-list">
+                        {job.i18nKeys.tasks.map(taskKey => (
+                          <li>{t(taskKey)}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </div>
-                <div class="timeline-subtitle">
-                  {t('journey.eurocastalia.company')}
-                </div>
-                <p class="timeline-description">
-                  {t('journey.eurocastalia.description')}
-                </p>
-                <ul class="timeline-list">
-                  <li>{t('journey.eurocastalia.task1')}</li>
-                  <li>{t('journey.eurocastalia.task2')}</li>
-                </ul>
-              </div>
-            </div>
-          </article>
+              </article>
+            ))
+          }
         </div>
       </div>
 
@@ -77,74 +81,45 @@ const t = useTranslations(lang);
         </div>
 
         <div class="timeline">
-          <article
-            class="timeline-item card fade-in"
-            aria-roledescription="education"
-          >
-            <div class="card-inner">
-              <div class="timeline-logo" aria-hidden="true">
-                <img
-                  src="/assets/logos/uea.svg"
-                  alt="Logo de la Universidad Europea del Atlántico donde estudio Ingeniería Informática"
-                  width="50"
-                  height="50"
-                />
-              </div>
+          {
+            education.map(edu => (
+              <article
+                class="timeline-item card fade-in"
+                aria-roledescription="education"
+              >
+                <div class="card-inner">
+                  <div class="timeline-logo" aria-hidden="true">
+                    <img
+                      src={edu.logo}
+                      alt={edu.logoAlt}
+                      width="50"
+                      height="50"
+                    />
+                  </div>
 
-              <div class="timeline-body">
-                <div class="timeline-header">
-                  <h3 class="timeline-title">
-                    {t('journey.uea.title')}
-                  </h3>
-                  <span class="timeline-date">{t('journey.uea.date')}</span>
+                  <div class="timeline-body">
+                    <div class="timeline-header">
+                      <h3 class="timeline-title">{t(edu.i18nKeys.title)}</h3>
+                      <span class="timeline-date">{t(edu.i18nKeys.date)}</span>
+                    </div>
+                    <div class="timeline-subtitle">
+                      {t(edu.i18nKeys.institution)}
+                    </div>
+                    <p class="timeline-description">
+                      {t(edu.i18nKeys.description)}
+                    </p>
+                    {edu.i18nKeys.subjects && (
+                      <ul class="timeline-list">
+                        {edu.i18nKeys.subjects.map(subjectKey => (
+                          <li>{t(subjectKey)}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </div>
-                <div class="timeline-subtitle">
-                  {t('journey.uea.institution')}
-                </div>
-                <p class="timeline-description">
-                  {t('journey.uea.description')}
-                </p>
-                <ul class="timeline-list">
-                  <li>{t('journey.uea.subject1')}</li>
-                  <li>{t('journey.uea.subject2')}</li>
-                  <li>{t('journey.uea.subject3')}</li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="timeline-item card fade-in"
-            aria-roledescription="certification"
-          >
-            <div class="card-inner">
-              <div class="timeline-logo" aria-hidden="true">
-                <img
-                  src="/assets/logos/cambridge.svg"
-                  alt="Logo de Cambridge Assessment English donde obtuve mi certificación B2 First"
-                  width="50"
-                  height="50"
-                />
-              </div>
-
-              <div class="timeline-body">
-                <div class="timeline-header">
-                  <h3 class="timeline-title">
-                    {t('journey.cambridge.title')}
-                  </h3>
-                  <span class="timeline-date"
-                    >{t('journey.cambridge.date')}</span
-                  >
-                </div>
-                <div class="timeline-subtitle">
-                  {t('journey.cambridge.institution')}
-                </div>
-                <p class="timeline-description">
-                  {t('journey.cambridge.description')}
-                </p>
-              </div>
-            </div>
-          </article>
+              </article>
+            ))
+          }
         </div>
       </div>
     </div>
