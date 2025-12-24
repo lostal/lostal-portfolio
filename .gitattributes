@@ -1,0 +1,2 @@
+# Tratar PDFs como archivos binarios para evitar falsos cambios
+*.pdf binary
