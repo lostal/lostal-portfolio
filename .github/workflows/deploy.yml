@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Install Puppeteer dependencies
+        run: npx puppeteer browsers install chrome
+
       - name: Build (includes CV generation)
         run: pnpm build
 
