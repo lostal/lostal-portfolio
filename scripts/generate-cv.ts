@@ -18,6 +18,7 @@ const LANGUAGES = ['es', 'en'] as const;
 // Configuración
 const CONFIG = {
   buildDir: path.join(process.cwd(), 'dist'),
+  publicDir: path.join(process.cwd(), 'public'),
   cvRouteBase: '/cv-print',
   port: 8080,
   timeout: 60000,
@@ -103,9 +104,14 @@ async function generatePDFs(): Promise<void> {
       });
 
       console.log(`✅ CV generado: ${outputPath}`);
+
+      // Copiar a public/ para que Cloudflare los incluya sin Puppeteer
+      const publicPath = path.join(CONFIG.publicDir, `cv-${lang}.pdf`);
+      fs.copyFileSync(outputPath, publicPath);
+      console.log(`📋 Copiado a: ${publicPath}`);
     }
 
-    console.log(`\n🎉 Todos los CVs generados correctamente`);
+    console.log(`\n🎉 Todos los CVs generados y copiados a public/`);
   } catch (error) {
     console.error('❌ Error generando PDF:', error);
     process.exit(1);
