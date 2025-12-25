@@ -71,10 +71,11 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
 
-    <!-- Preload Geist fonts (WOFF2) - Most critical for LCP -->
+    <!-- Preload Geist fonts (WOFF2) - Critical for LCP -->
+    <!-- Regular: peso base del body, Bold: título hero -->
     <link
       rel="preload"
-      href="/assets/geist/Geist-Medium.woff2"
+      href="/assets/geist/Geist-Regular.woff2"
       as="font"
       type="font/woff2"
       crossorigin
@@ -140,8 +141,8 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
         '@graph': [
           {
             '@type': 'WebSite',
-            '@id': 'https://lostal.dev/#website',
-            url: 'https://lostal.dev',
+            '@id': `${siteBase}#website`,
+            url: siteBase,
             name:
               lang === 'es'
                 ? 'Álvaro Lostal - Portafolio'
@@ -154,9 +155,9 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
           },
           {
             '@type': 'Person',
-            '@id': 'https://lostal.dev/#person',
+            '@id': `${siteBase}#person`,
             name: 'Álvaro Lostal',
-            url: 'https://lostal.dev',
+            url: siteBase,
             jobTitle: lang === 'es' ? 'Desarrollador Web' : 'Web Developer',
             description:
               lang === 'es'
