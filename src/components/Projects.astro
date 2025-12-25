@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
 import { useTranslations } from '../i18n/utils';
 
 interface Props {
@@ -44,11 +45,13 @@ const totalProjects = projects.length;
                   aria-label={`${index + 1} / ${totalProjects}`}
                 >
                   <div class="carousel-item">
-                    <img
+                    <Picture
                       src={data.image}
                       alt={data.imageAlt}
-                      width="400"
-                      height="270"
+                      widths={[280, 350, 480, 640, 960]}
+                      sizes="(max-width: 480px) 70vw, (max-width: 768px) 45vw, (max-width: 1280px) 38vw, 480px"
+                      formats={['avif', 'webp']}
+                      quality={85}
                       loading="lazy"
                       decoding="async"
                       class="carousel-item__image"

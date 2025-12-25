@@ -1,7 +1,7 @@
 {
   "id": "parking",
   "order": 1,
-  "image": "/assets/projects/gruposiete-parking.png",
+  "image": "../../assets/projects/gruposiete-parking.png",
   "imageAlt": "Gruposiete Parking",
   "liveUrl": "https://gruposiete-parking.vercel.app/",
   "repoUrl": "https://github.com/lostal/gruposiete-parking",

@@ -280,6 +280,13 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
     <script src="../scripts/magnetic.ts"></script>
     <script src="../scripts/parallax.ts"></script>
     <script src="../scripts/copy-email.ts"></script>
-    <script src="../scripts/console-easter-egg.ts"></script>
+    <script>
+      // Easter egg cargado en idle time (no crítico para la experiencia)
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => import('../scripts/console-easter-egg.ts'));
+      } else {
+        setTimeout(() => import('../scripts/console-easter-egg.ts'), 2000);
+      }
+    </script>
   </body>
 </html>

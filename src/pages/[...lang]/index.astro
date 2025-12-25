@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Hero from '../../components/Hero.astro';
+import Journey from '../../components/Journey.astro';
+import Projects from '../../components/Projects.astro';
+import Technologies from '../../components/Technologies.astro';
+import Contact from '../../components/Contact.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingContact from '../../components/FloatingContact.astro';
+
+/**
+ * Genera rutas estáticas para cada idioma soportado.
+ * - undefined → / (español, idioma por defecto)
+ * - 'en' → /en/
+ */
+export function getStaticPaths() {
+  return [{ params: { lang: undefined } }, { params: { lang: 'en' } }];
+}
+
+type Lang = 'es' | 'en';
+const lang: Lang = (Astro.params.lang as Lang) || 'es';
+
+// Metadatos SEO por idioma
+const seoData = {
+  es: {
+    title: 'Álvaro Lostal · Desarrollador Web',
+    description:
+      'Ingeniero informático en Santander especializado en desarrollo web. Creo sitios funcionales y accesibles con código limpio y diseño cuidado. Explora mis proyectos.',
+  },
+  en: {
+    title: 'Álvaro Lostal | Web Developer Portfolio',
+    description:
+      "I'm Álvaro Lostal, a computer engineer from Santander. I design and develop minimalist, functional and accessible websites, with attention to detail and passion for user experience, using modern web frameworks and technologies. Discover my projects, technologies and journey.",
+  },
+};
+
+const { title, description } = seoData[lang];
+---
+
+<Layout lang={lang} title={title} description={description}>
+  <div id="top"></div>
+  <Navigation lang={lang} />
+  <main id="main">
+    <Hero lang={lang} />
+    <Projects lang={lang} />
+    <Journey lang={lang} />
+    <Technologies lang={lang} />
+    <Contact lang={lang} />
+  </main>
+  <Footer lang={lang} />
+  <FloatingContact />
+</Layout>

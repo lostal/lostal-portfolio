@@ -1,7 +1,7 @@
 {
   "id": "creative",
   "order": 2,
-  "image": "/assets/projects/creative-hands-preview.png",
+  "image": "../../assets/projects/creative-hands-preview.png",
   "imageAlt": "Creative Hands",
   "liveUrl": "https://creative-hands-cjzg.onrender.com",
   "repoUrl": "https://github.com/lostal/creative-hands",
