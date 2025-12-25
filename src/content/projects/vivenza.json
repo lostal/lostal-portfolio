@@ -7,20 +7,16 @@
   "repoUrl": "https://github.com/lostal/vivenza-redesign",
   "technologies": [
     {
-      "name": "JavaScript",
-      "icon": "/assets/tech-icons/javascript.svg"
+      "name": "TypeScript",
+      "icon": "/assets/tech-icons/typescript.svg"
     },
     {
       "name": "Next.js",
       "icon": "/assets/tech-icons/nextjs.svg"
     },
     {
-      "name": "HTML5",
-      "icon": "/assets/tech-icons/html5.svg"
-    },
-    {
-      "name": "CSS3",
-      "icon": "/assets/tech-icons/css3.svg"
+      "name": "Tailwind CSS",
+      "icon": "/assets/tech-icons/tailwind.svg"
     }
   ],
   "translations": {

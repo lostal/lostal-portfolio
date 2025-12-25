@@ -7,6 +7,10 @@
   "repoUrl": "https://github.com/lostal/creative-hands",
   "technologies": [
     {
+      "name": "TypeScript",
+      "icon": "/assets/tech-icons/typescript.svg"
+    },
+    {
       "name": "React.js",
       "icon": "/assets/tech-icons/react.svg"
     },
