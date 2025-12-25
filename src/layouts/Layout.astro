@@ -71,11 +71,25 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
 
-    <!-- Preload Geist fonts (WOFF2) - Critical for LCP -->
-    <!-- Regular: peso base del body, Bold: título hero -->
+    <!-- Preload Geist fonts (WOFF2) - All above-the-fold weights -->
+    <!-- Regular: body text, Medium: nav/indicators, SemiBold: nav links, Bold: hero title -->
     <link
       rel="preload"
       href="/assets/geist/Geist-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/geist/Geist-Medium.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/geist/Geist-SemiBold.woff2"
       as="font"
       type="font/woff2"
       crossorigin
