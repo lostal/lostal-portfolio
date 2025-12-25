@@ -26,12 +26,12 @@
   "translations": {
     "es": {
       "title": "Gruposiete Parking",
-      "description": "Sistema inteligente de gestión de reservas de parking corporativo con roles diferenciados, validaciones robustas y prevención de conflictos en tiempo real.",
+      "description": "Reservas de parking con control por roles y validación en tiempo real. Evita colisiones entre solicitudes.",
       "preview": "Visitar"
     },
     "en": {
       "title": "Gruposiete Parking",
-      "description": "Intelligent corporate parking reservation management system with differentiated roles, robust validations and real-time conflict prevention.",
+      "description": "Parking reservations with role-based control and real-time validation. Prevents request collisions.",
       "preview": "Visit"
     }
   }

@@ -26,12 +26,12 @@
   "translations": {
     "es": {
       "title": "Creative Hands",
-      "description": "Portal de productos artesanales con autenticación JWT, chat en tiempo real y roles de usuario.",
+      "description": "Tienda de productos artesanales con chat en vivo. E-commerce con gestión de roles y autenticación.",
       "preview": "Visitar"
     },
     "en": {
       "title": "Creative Hands",
-      "description": "Artisan products portal with JWT authentication, real-time chat and user roles.",
+      "description": "Artisan products store with live chat. E-commerce with role management and authentication.",
       "preview": "Visit"
     }
   }
