@@ -7,12 +7,12 @@
   "repoUrl": "https://github.com/lostal/gruposiete-parking",
   "technologies": [
     {
-      "name": "Next.js",
-      "icon": "/assets/tech-icons/nextjs.svg"
-    },
-    {
       "name": "TypeScript",
       "icon": "/assets/tech-icons/typescript.svg"
+    },
+    {
+      "name": "Next.js",
+      "icon": "/assets/tech-icons/nextjs.svg"
     },
     {
       "name": "MongoDB",
