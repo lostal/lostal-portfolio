@@ -16,7 +16,7 @@ export interface EducationItem {
 export const education: EducationItem[] = [
   {
     id: 'uea',
-    logo: '/assets/logos/uea.svg',
+    logo: '/assets/logos/uneatlantico.svg',
     logoAlt:
       'Logo de la Universidad Europea del Atlántico donde estudio Ingeniería Informática',
     i18nKeys: {
