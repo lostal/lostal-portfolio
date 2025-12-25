@@ -56,6 +56,10 @@
     --fa: "\f107"
 }
 
+.fa-check {
+    --fa: "\f00c"
+}
+
 .fa-envelope {
     --fa: "\f0e0"
 }

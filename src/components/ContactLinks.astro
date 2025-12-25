@@ -3,14 +3,15 @@
 ---
 
 <div class="contact-pill">
-  <a
-    href="mailto:alvaro@lostal.dev"
-    class="contact-link"
-    title="Email"
+  <button
+    type="button"
+    class="contact-link copy-email-btn"
+    title="Copiar email"
     data-contact="email"
+    data-email="alvaro@lostal.dev"
   >
     <i class="fas fa-envelope"></i>
-  </a>
+  </button>
 
   <a
     href="https://github.com/lostal"
@@ -87,5 +88,10 @@
       box-shadow: 0 12px 32px rgba(var(--accent-primary-rgb), 0.3);
       border-color: var(--accent-primary);
     }
+  }
+
+  /* Cursor pointer para el botón de email */
+  button.contact-link {
+    cursor: pointer;
   }
 </style>
