@@ -31,20 +31,22 @@ const FILE_NAMES: Record<Language, string> = {
   en: 'AlvaroLostal_Resume.pdf',
 };
 
-// Metadatos del PDF por idioma
+// Metadatos del PDF por idioma (PDF/UA compliant)
 const PDF_METADATA: Record<
   Language,
-  { title: string; subject: string; language: string }
+  { title: string; subject: string; language: string; keywords: string }
 > = {
   es: {
     title: 'CV - Álvaro Lostal',
     subject: 'Curriculum Vitae - Desarrollador Web',
     language: 'es-ES',
+    keywords: 'Desarrollador Web, CV, Curriculum Vitae, Álvaro Lostal',
   },
   en: {
     title: 'Resume - Álvaro Lostal',
     subject: 'Resume - Web Developer',
     language: 'en-US',
+    keywords: 'Web Developer, Resume, CV, Álvaro Lostal',
   },
 };
 
@@ -108,7 +110,7 @@ async function addPdfMetadata(pdfPath: string, lang: Language): Promise<void> {
   const metadata = PDF_METADATA[lang];
   const now = new Date().toISOString().replace(/[-:]/g, '').split('.')[0];
 
-  // Construir comando exiftool con metadatos
+  // Construir comando exiftool con metadatos (PDF/UA enhanced)
   // -overwrite_original evita crear archivos _original de backup
   const args = [
     `exiftool`,
@@ -116,6 +118,8 @@ async function addPdfMetadata(pdfPath: string, lang: Language): Promise<void> {
     `-Title="${metadata.title}"`,
     `-Author="${CONFIG.author}"`,
     `-Subject="${metadata.subject}"`,
+    `-Description="${metadata.subject}"`,
+    `-Keywords="${metadata.keywords}"`,
     `-Creator="${CONFIG.creator}"`,
     `-Producer="Puppeteer (Chrome)"`,
     `-CreateDate="${now}"`,
