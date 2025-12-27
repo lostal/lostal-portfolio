@@ -97,13 +97,29 @@ async function generatePDFs(): Promise<void> {
         timeout: CONFIG.timeout,
       });
 
-      // Generar PDF con formato A4
+      // Footer text según idioma
+      const footerText =
+        lang === 'es'
+          ? 'Generado automáticamente desde lostal.dev'
+          : 'Auto-generated from lostal.dev';
+
+      // Template del footer con estilos inline (requerido por Puppeteer)
+      const footerTemplate = `
+        <div style="width: 100%; font-size: 11px; font-family: 'Inter', system-ui, sans-serif; color: #9ca3af; padding: 0 14mm; display: flex; justify-content: space-between;">
+          <span>${footerText}</span>
+          <span><span class="pageNumber"></span></span>
+        </div>
+      `;
+
+      // Generar PDF con formato A4 y footer en cada página
       await page.pdf({
         path: outputPath,
         format: 'A4',
         printBackground: true,
-        displayHeaderFooter: false,
-        margin: { top: '0', right: '0', bottom: '0', left: '0' },
+        displayHeaderFooter: true,
+        headerTemplate: '<div></div>',
+        footerTemplate,
+        margin: { top: '12mm', right: '14mm', bottom: '16mm', left: '14mm' },
       });
 
       console.log(`✅ CV generado: ${outputPath}`);

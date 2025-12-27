@@ -90,14 +90,14 @@ const accentColor = '#d5bd37';
         display: flex;
         gap: 16px;
         align-items: center;
-        margin-bottom: 14px;
+        margin-bottom: 16px;
         padding-bottom: 12px;
         border-bottom: 2px solid var(--accentColor);
       }
 
       .header-photo {
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
         border-radius: 6px;
         object-fit: cover;
         flex-shrink: 0;
@@ -109,7 +109,7 @@ const accentColor = '#d5bd37';
       }
 
       h1 {
-        font-size: 22px;
+        font-size: 24px;
         font-weight: 700;
         letter-spacing: -0.3px;
         margin-bottom: 2px;
@@ -153,7 +153,8 @@ const accentColor = '#d5bd37';
       }
 
       section {
-        margin-bottom: 16px;
+        margin-bottom: 18px;
+        page-break-inside: avoid;
       }
 
       /* Content */
@@ -164,7 +165,7 @@ const accentColor = '#d5bd37';
       }
 
       .date {
-        font-size: 9.5pt;
+        font-size: 8.5pt;
         font-weight: 500;
         color: #4a4a4a;
       }
@@ -177,7 +178,7 @@ const accentColor = '#d5bd37';
       }
 
       .subtitle {
-        font-size: 9.5px;
+        font-size: 11px;
         font-weight: 500;
         color: var(--accentColor);
         margin-bottom: 2px;
@@ -186,8 +187,6 @@ const accentColor = '#d5bd37';
       p {
         margin-bottom: 3px;
         color: #1a1a1a;
-        text-align: justify;
-        hyphens: auto;
       }
 
       ul {
@@ -243,7 +242,7 @@ const accentColor = '#d5bd37';
       }
 
       .skill-tag::after {
-        content: ', ';
+        content: ' · ';
       }
 
       .skill-tag:last-child::after {
@@ -264,7 +263,7 @@ const accentColor = '#d5bd37';
       }
 
       .project-links {
-        font-size: 8.5px;
+        font-size: 11px;
       }
 
       .project-links a {
@@ -275,7 +274,7 @@ const accentColor = '#d5bd37';
       }
 
       .project-tech {
-        font-size: 9.5pt;
+        font-size: 9pt;
         color: #4a4a4a;
         margin-top: 2px;
       }
@@ -372,10 +371,10 @@ const accentColor = '#d5bd37';
                   <h3>{translation.title}</h3>
                   <div class="project-links">
                     {project.data.liveUrl && (
-                      <a href={project.data.liveUrl}>[Demo]</a>
+                      <a href={project.data.liveUrl}>Demo</a>
                     )}
                     {project.data.repoUrl && (
-                      <a href={project.data.repoUrl}>[GitHub]</a>
+                      <a href={project.data.repoUrl}>GitHub</a>
                     )}
                   </div>
                 </div>
