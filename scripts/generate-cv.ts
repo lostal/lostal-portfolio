@@ -1,17 +1,26 @@
 /**
  * Script de generación automática de CV en PDF (multi-idioma)
  * Ejecutado automáticamente después de cada build de producción
- * Genera cv-es.pdf y cv-en.pdf con metadatos y accesibilidad
+ * Genera cv-es.pdf y cv-en.pdf con metadatos vía exiftool
  *
  * Uso: npx tsx scripts/generate-cv.ts
+ *
+ * Requisitos:
+ * - exiftool instalado y disponible en PATH
+ *   Windows: choco install exiftool / scoop install exiftool
+ *   macOS: brew install exiftool
+ *   Linux: apt install libimage-exiftool-perl
  */
 
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
+import { exec } from 'node:child_process';
+import { promisify } from 'node:util';
 import handler from 'serve-handler';
 import puppeteer from 'puppeteer';
-import { PDFDocument } from 'pdf-lib';
+
+const execAsync = promisify(exec);
 
 // Idiomas soportados y nombres de archivo
 const LANGUAGES = ['es', 'en'] as const;
@@ -81,25 +90,41 @@ function startServer(port: number): http.Server {
 }
 
 /**
- * Añade metadatos al PDF usando pdf-lib
+ * Verifica que exiftool esté disponible en el sistema
  */
-async function addPdfMetadata(
-  pdfBuffer: Uint8Array,
-  lang: Language
-): Promise<Uint8Array> {
-  const pdfDoc = await PDFDocument.load(pdfBuffer);
+async function checkExiftool(): Promise<boolean> {
+  try {
+    await execAsync('exiftool -ver');
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Añade metadatos al PDF usando exiftool (preserva tags de accesibilidad)
+ */
+async function addPdfMetadata(pdfPath: string, lang: Language): Promise<void> {
   const metadata = PDF_METADATA[lang];
+  const now = new Date().toISOString().replace(/[-:]/g, '').split('.')[0];
 
-  pdfDoc.setTitle(metadata.title);
-  pdfDoc.setAuthor(CONFIG.author);
-  pdfDoc.setSubject(metadata.subject);
-  pdfDoc.setCreator(CONFIG.creator);
-  pdfDoc.setProducer('Puppeteer + pdf-lib');
-  pdfDoc.setCreationDate(new Date());
-  pdfDoc.setModificationDate(new Date());
-  pdfDoc.setLanguage(metadata.language);
+  // Construir comando exiftool con metadatos
+  // -overwrite_original evita crear archivos _original de backup
+  const args = [
+    `exiftool`,
+    `-overwrite_original`,
+    `-Title="${metadata.title}"`,
+    `-Author="${CONFIG.author}"`,
+    `-Subject="${metadata.subject}"`,
+    `-Creator="${CONFIG.creator}"`,
+    `-Producer="Puppeteer (Chrome)"`,
+    `-CreateDate="${now}"`,
+    `-ModifyDate="${now}"`,
+    `-Language="${metadata.language}"`,
+    `"${pdfPath}"`,
+  ].join(' ');
 
-  return pdfDoc.save();
+  await execAsync(args);
 }
 
 /**
@@ -111,6 +136,17 @@ async function generatePDFs(): Promise<void> {
     console.error(`❌ Error: No existe el directorio '${CONFIG.buildDir}'`);
     console.error('   Ejecuta primero: pnpm astro build');
     process.exit(1);
+  }
+
+  // Verificar que exiftool está disponible (opcional para desarrollo local)
+  const hasExiftool = await checkExiftool();
+  if (!hasExiftool) {
+    console.warn(
+      '⚠️  exiftool no encontrado - los PDFs se generarán sin metadatos personalizados'
+    );
+    console.warn(
+      '   En CI (GitHub Actions) exiftool se instala automáticamente'
+    );
   }
 
   const port = await findAvailablePort(CONFIG.port);
@@ -148,30 +184,34 @@ async function generatePDFs(): Promise<void> {
           : 'Auto-generated from lostal.dev';
 
       // Template del footer con estilos inline (requerido por Puppeteer)
+      // Color mejorado para contraste WCAG AA: #6b7280 (ratio ~4.8:1)
       const footerTemplate = `
-        <div style="width: 100%; font-size: 11px; font-family: 'Inter', system-ui, sans-serif; color: #9ca3af; padding: 0 14mm; display: flex; justify-content: space-between;">
+        <div style="width: 100%; font-size: 11px; font-family: 'Inter', system-ui, sans-serif; color: #6b7280; padding: 0 14mm; display: flex; justify-content: space-between;">
           <span>${footerText}</span>
           <span><span class="pageNumber"></span></span>
         </div>
       `;
 
-      // Generar PDF con formato A4, tagged para accesibilidad
+      // Generar PDF con formato A4, tagged para accesibilidad (PDF/UA)
+      // IMPORTANTE: Los tags se preservan porque NO usamos pdf-lib para post-procesar
       const pdfBuffer = await page.pdf({
         format: 'A4',
         printBackground: true,
-        tagged: true, // PDF estructurado para screen readers (WCAG 2.1)
+        tagged: true, // PDF estructurado para screen readers (WCAG 2.1 / PDF/UA)
         displayHeaderFooter: true,
         headerTemplate: '<div></div>',
         footerTemplate,
         margin: { top: '12mm', right: '14mm', bottom: '16mm', left: '14mm' },
       });
 
-      // Añadir metadatos con pdf-lib
-      console.log(`📝 Añadiendo metadatos...`);
-      const pdfWithMetadata = await addPdfMetadata(pdfBuffer, lang);
+      // Guardar PDF primero
+      fs.writeFileSync(outputPath, pdfBuffer);
 
-      // Guardar PDF final
-      fs.writeFileSync(outputPath, pdfWithMetadata);
+      // Añadir metadatos con exiftool si está disponible
+      if (hasExiftool) {
+        console.log(`📝 Añadiendo metadatos con exiftool...`);
+        await addPdfMetadata(outputPath, lang);
+      }
 
       console.log(`✅ CV generado: ${outputPath}`);
     }

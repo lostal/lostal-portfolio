@@ -83,14 +83,14 @@ El proyecto sigue una arquitectura **data-driven**: toda la información persona
 
 ## 💡 Decisiones de Desarrollo
 
-| Decisión | Justificación |
-|----------|---------------|
-| **Astro** | Output estático, zero JS por defecto y optimización de imágenes integrada |
-| **CSS puro** | Control total sobre el diseño sin dependencia de utilidades externas |
-| **Geist auto-hospedada** | Evita llamadas a Google Fonts y garantiza consistencia tipográfica |
-| **Content Collections** | Validación de esquema con Zod y optimización automática de imágenes |
-| **Puppeteer para CV** | Genera PDFs idénticos al diseño web sin duplicar plantillas |
-| **Font Awesome subset** | Solo los iconos necesarios, reduciendo el peso de ~1MB a ~15KB |
+| Decisión                 | Justificación                                                             |
+| ------------------------ | ------------------------------------------------------------------------- |
+| **Astro**                | Output estático, zero JS por defecto y optimización de imágenes integrada |
+| **CSS puro**             | Control total sobre el diseño sin dependencia de utilidades externas      |
+| **Geist auto-hospedada** | Evita llamadas a Google Fonts y garantiza consistencia tipográfica        |
+| **Content Collections**  | Validación de esquema con Zod y optimización automática de imágenes       |
+| **Puppeteer para CV**    | Genera PDFs idénticos al diseño web sin duplicar plantillas               |
+| **Font Awesome subset**  | Solo los iconos necesarios, reduciendo el peso de ~1MB a ~15KB            |
 
 ---
 

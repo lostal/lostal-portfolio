@@ -312,7 +312,7 @@ const accentColor = '#d5bd37';
     </style>
   </head>
   <body>
-    <div class="cv-container">
+    <main class="cv-container" role="main">
       <!-- Header con foto y datos -->
       <header>
         <img
@@ -358,14 +358,16 @@ const accentColor = '#d5bd37';
       </header>
 
       <!-- Sobre mí -->
-      <section>
-        <h2 class="section-title">{t('about.title')}</h2>
+      <section aria-labelledby="about-heading">
+        <h2 id="about-heading" class="section-title">{t('about.title')}</h2>
         <p>{t('about.text')}</p>
       </section>
 
       <!-- Proyectos destacados -->
-      <section>
-        <h2 class="section-title">{t('projects.title')}</h2>
+      <section aria-labelledby="projects-heading">
+        <h2 id="projects-heading" class="section-title">
+          {t('projects.title')}
+        </h2>
         {
           projects.slice(0, 3).map(project => {
             const translation = project.data.translations[lang];
@@ -404,8 +406,10 @@ const accentColor = '#d5bd37';
 
       <!-- Experiencia y Educación en dos columnas -->
       <div class="two-columns">
-        <section>
-          <h2 class="section-title">{t('journey.experience')}</h2>
+        <section aria-labelledby="experience-heading">
+          <h2 id="experience-heading" class="section-title">
+            {t('journey.experience')}
+          </h2>
           {
             experience.map(job => (
               <div class="timeline-item">
@@ -427,8 +431,10 @@ const accentColor = '#d5bd37';
           }
         </section>
 
-        <section>
-          <h2 class="section-title">{t('journey.education')}</h2>
+        <section aria-labelledby="education-heading">
+          <h2 id="education-heading" class="section-title">
+            {t('journey.education')}
+          </h2>
           {
             education.map(edu => (
               <div class="timeline-item">
@@ -452,8 +458,10 @@ const accentColor = '#d5bd37';
       </div>
 
       <!-- Tecnologías -->
-      <section>
-        <h2 class="section-title">{t('technologies.title')}</h2>
+      <section aria-labelledby="skills-heading">
+        <h2 id="skills-heading" class="section-title">
+          {t('technologies.title')}
+        </h2>
         <div class="skills-grid">
           {
             technologies.map(cat => (
@@ -469,6 +477,6 @@ const accentColor = '#d5bd37';
           }
         </div>
       </section>
-    </div>
+    </main>
   </body>
 </html>
