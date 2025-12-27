@@ -1,7 +1,7 @@
 /**
  * Script de generación automática de CV en PDF (multi-idioma)
  * Ejecutado automáticamente después de cada build de producción
- * Genera cv-es.pdf y cv-en.pdf
+ * Genera cv-es.pdf y cv-en.pdf con metadatos y accesibilidad
  *
  * Uso: npx tsx scripts/generate-cv.ts
  */
@@ -11,12 +11,32 @@ import http from 'node:http';
 import path from 'node:path';
 import handler from 'serve-handler';
 import puppeteer from 'puppeteer';
+import { PDFDocument } from 'pdf-lib';
 
 // Idiomas soportados y nombres de archivo
 const LANGUAGES = ['es', 'en'] as const;
-const FILE_NAMES: Record<(typeof LANGUAGES)[number], string> = {
+type Language = (typeof LANGUAGES)[number];
+
+const FILE_NAMES: Record<Language, string> = {
   es: 'AlvaroLostal_CV.pdf',
   en: 'AlvaroLostal_Resume.pdf',
+};
+
+// Metadatos del PDF por idioma
+const PDF_METADATA: Record<
+  Language,
+  { title: string; subject: string; language: string }
+> = {
+  es: {
+    title: 'CV - Álvaro Lostal',
+    subject: 'Curriculum Vitae - Desarrollador Web',
+    language: 'es-ES',
+  },
+  en: {
+    title: 'Resume - Álvaro Lostal',
+    subject: 'Resume - Web Developer',
+    language: 'en-US',
+  },
 };
 
 // Configuración
@@ -25,6 +45,8 @@ const CONFIG = {
   cvRouteBase: '/cv-print',
   port: 8080,
   timeout: 60000,
+  author: 'Álvaro Lostal',
+  creator: 'lostal.dev',
 } as const;
 
 /**
@@ -56,6 +78,28 @@ function startServer(port: number): http.Server {
 
   server.listen(port);
   return server;
+}
+
+/**
+ * Añade metadatos al PDF usando pdf-lib
+ */
+async function addPdfMetadata(
+  pdfBuffer: Uint8Array,
+  lang: Language
+): Promise<Uint8Array> {
+  const pdfDoc = await PDFDocument.load(pdfBuffer);
+  const metadata = PDF_METADATA[lang];
+
+  pdfDoc.setTitle(metadata.title);
+  pdfDoc.setAuthor(CONFIG.author);
+  pdfDoc.setSubject(metadata.subject);
+  pdfDoc.setCreator(CONFIG.creator);
+  pdfDoc.setProducer('Puppeteer + pdf-lib');
+  pdfDoc.setCreationDate(new Date());
+  pdfDoc.setModificationDate(new Date());
+  pdfDoc.setLanguage(metadata.language);
+
+  return pdfDoc.save();
 }
 
 /**
@@ -111,16 +155,23 @@ async function generatePDFs(): Promise<void> {
         </div>
       `;
 
-      // Generar PDF con formato A4 y footer en cada página
-      await page.pdf({
-        path: outputPath,
+      // Generar PDF con formato A4, tagged para accesibilidad
+      const pdfBuffer = await page.pdf({
         format: 'A4',
         printBackground: true,
+        tagged: true, // PDF estructurado para screen readers (WCAG 2.1)
         displayHeaderFooter: true,
         headerTemplate: '<div></div>',
         footerTemplate,
         margin: { top: '12mm', right: '14mm', bottom: '16mm', left: '14mm' },
       });
+
+      // Añadir metadatos con pdf-lib
+      console.log(`📝 Añadiendo metadatos...`);
+      const pdfWithMetadata = await addPdfMetadata(pdfBuffer, lang);
+
+      // Guardar PDF final
+      fs.writeFileSync(outputPath, pdfWithMetadata);
 
       console.log(`✅ CV generado: ${outputPath}`);
     }

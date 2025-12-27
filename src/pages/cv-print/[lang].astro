@@ -315,7 +315,11 @@ const accentColor = '#d5bd37';
     <div class="cv-container">
       <!-- Header con foto y datos -->
       <header>
-        <img src="/assets/alvaro.jpg" alt={profile.name} class="header-photo" />
+        <img
+          src="/assets/alvaro.jpg"
+          alt={`${lang === 'es' ? 'Foto profesional de' : 'Professional photo of'} ${profile.name}`}
+          class="header-photo"
+        />
         <div class="header-info">
           <h1>{profile.name}</h1>
           <div class="role">{t('hero.description')}</div>
@@ -371,10 +375,20 @@ const accentColor = '#d5bd37';
                   <h3>{translation.title}</h3>
                   <div class="project-links">
                     {project.data.liveUrl && (
-                      <a href={project.data.liveUrl}>Demo</a>
+                      <a
+                        href={project.data.liveUrl}
+                        aria-label={`Demo ${lang === 'es' ? 'de' : 'of'} ${translation.title}`}
+                      >
+                        Demo
+                      </a>
                     )}
                     {project.data.repoUrl && (
-                      <a href={project.data.repoUrl}>GitHub</a>
+                      <a
+                        href={project.data.repoUrl}
+                        aria-label={`GitHub ${lang === 'es' ? 'de' : 'of'} ${translation.title}`}
+                      >
+                        GitHub
+                      </a>
                     )}
                   </div>
                 </div>
