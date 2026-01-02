@@ -184,21 +184,11 @@ const t = useTranslations(lang);
       transform: scaleX(1);
     }
 
-    /* Direction-aware animations for logo */
-    .logo.scroll-down::after {
-      transform-origin: left center;
-    }
-
-    .logo.scroll-up::after {
+    /* Logo cuando NO está en hero: está a la izquierda, entra desde derecha */
+    .logo.left-of-active::after {
       transform-origin: right center;
     }
-
-    /* Exiting animation - opposite direction for logo */
-    .logo.scroll-down:not(.active)::after {
-      transform-origin: right center;
-    }
-
-    .logo.scroll-up:not(.active)::after {
+    .logo.left-of-active:not(:hover)::after {
       transform-origin: left center;
     }
   }
@@ -257,22 +247,20 @@ const t = useTranslations(lang);
       transform: scaleX(1);
     }
 
-    /* Direction-aware animations */
-    .nav-links a.scroll-down::after {
+    /* A la IZQUIERDA del activo: entra desde derecha, sale por izquierda */
+    .nav-links a.left-of-active::after {
+      transform-origin: right center;
+    }
+    .nav-links a.left-of-active:not(:hover):not(.active)::after {
       transform-origin: left center;
     }
 
-    .nav-links a.scroll-up::after {
-      transform-origin: right center;
-    }
-
-    /* Exiting animation - opposite direction */
-    .nav-links a.scroll-down:not(.active)::after {
-      transform-origin: right center;
-    }
-
-    .nav-links a.scroll-up:not(.active)::after {
+    /* A la DERECHA del activo: entra desde izquierda, sale por derecha */
+    .nav-links a.right-of-active::after {
       transform-origin: left center;
+    }
+    .nav-links a.right-of-active:not(:hover):not(.active)::after {
+      transform-origin: right center;
     }
   }
 

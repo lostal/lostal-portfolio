@@ -150,45 +150,45 @@ class NavigationManager {
     // Solo aplicar en desktop
     if (window.innerWidth < 768) return;
 
-    // Determinar clase de dirección de scroll
-    const directionClass =
-      this.scrollDirection === 'down' ? 'scroll-down' : 'scroll-up';
-    const oppositeDirectionClass =
-      this.scrollDirection === 'down' ? 'scroll-up' : 'scroll-down';
+    // Encontrar índice del enlace activo
+    let activeIndex = -1;
+    this.navLinks.forEach((link, i) => {
+      const section = link.getAttribute('href')?.replace('#', '') || '';
+      if (section === sectionId) activeIndex = i;
+    });
 
-    // Manejar estado activo del logo (para sección hero)
+    // Manejar logo
     if (this.logo) {
-      this.logo.classList.remove('scroll-down', 'scroll-up');
-      this.logo.classList.add(directionClass);
-
+      this.logo.classList.remove('active', 'left-of-active');
       if (sectionId === 'hero') {
         this.logo.classList.add('active');
       } else {
-        this.logo.classList.remove('active');
+        // Logo está a la IZQUIERDA de cualquier sección → raya desde derecha
+        this.logo.classList.add('left-of-active');
       }
     }
 
-    // Manejar estados activos de enlaces de navegación
-    this.navLinks.forEach(link => {
-      const href = link.getAttribute('href');
-      const linkSection = href?.replace('#', '') || '';
+    // Manejar nav-links
+    this.navLinks.forEach((link, i) => {
+      const section = link.getAttribute('href')?.replace('#', '') || '';
+      link.classList.remove('active', 'left-of-active', 'right-of-active');
 
-      // Remover clase de dirección opuesta, añadir dirección actual
-      link.classList.remove(oppositeDirectionClass);
-      link.classList.add(directionClass);
-
-      if (linkSection === sectionId) {
+      if (section === sectionId) {
         link.classList.add('active');
+      } else if (i < activeIndex) {
+        // A la izquierda del activo → raya desde derecha
+        link.classList.add('left-of-active');
       } else {
-        link.classList.remove('active');
+        // A la derecha del activo → raya desde izquierda
+        link.classList.add('right-of-active');
       }
     });
   }
 
   private clearActiveStates(): void {
-    this.logo?.classList.remove('active', 'scroll-down', 'scroll-up');
+    this.logo?.classList.remove('active', 'left-of-active');
     this.navLinks.forEach(link => {
-      link.classList.remove('active', 'scroll-down', 'scroll-up');
+      link.classList.remove('active', 'left-of-active', 'right-of-active');
     });
   }
 
