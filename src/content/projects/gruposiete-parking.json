@@ -26,12 +26,12 @@
   "translations": {
     "es": {
       "title": "Gruposiete Parking",
-      "description": "Reservas de parking con control por roles y validación en tiempo real. Evita colisiones entre solicitudes.",
+      "description": "Sistema de reservas de parking con autenticación, control de roles y transacciones ACID.",
       "preview": "Visitar"
     },
     "en": {
       "title": "Gruposiete Parking",
-      "description": "Parking reservations with role-based control and real-time validation. Prevents request collisions.",
+      "description": "Parking reservation system with authentication, role-based access control and ACID transactions.",
       "preview": "Visit"
     }
   }

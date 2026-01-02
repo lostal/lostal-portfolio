@@ -30,12 +30,12 @@
   "translations": {
     "es": {
       "title": "Creative Hands",
-      "description": "Tienda de productos artesanales con chat en vivo. E-commerce con gestión de roles y autenticación.",
+      "description": "E-commerce full-stack de productos artesanales con chat en tiempo real. Desarrollado con stack MERN, Socket.IO, autenticación JWT y PWA.",
       "preview": "Visitar"
     },
     "en": {
       "title": "Creative Hands",
-      "description": "Artisan products store with live chat. E-commerce with role management and authentication.",
+      "description": "Full-stack artisan products e-commerce with real-time chat. Built with MERN stack, Socket.IO, JWT authentication and PWA.",
       "preview": "Visit"
     }
   }
