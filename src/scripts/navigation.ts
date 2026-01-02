@@ -20,9 +20,8 @@ class NavigationManager {
   private langIcon: HTMLElement | null;
   private langAnimTimeout: number | undefined;
 
-  // Seguimiento de dirección de scroll
+  // Seguimiento de scroll
   private lastScrollY: number = 0;
-  private scrollDirection: 'down' | 'up' = 'down';
   private logo: HTMLElement | null;
   private navLinks: NodeListOf<HTMLAnchorElement>;
   private sectionObserver: IntersectionObserver | null = null;
@@ -71,13 +70,6 @@ class NavigationManager {
 
   private handleScroll(): void {
     const scrollPosition = window.scrollY;
-
-    // Rastrear dirección de scroll
-    if (scrollPosition > this.lastScrollY) {
-      this.scrollDirection = 'down';
-    } else if (scrollPosition < this.lastScrollY) {
-      this.scrollDirection = 'up';
-    }
     this.lastScrollY = scrollPosition;
 
     // Estado de navbar al hacer scroll
