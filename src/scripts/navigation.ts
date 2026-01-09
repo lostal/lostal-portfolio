@@ -70,6 +70,16 @@ class NavigationManager {
 
   private handleScroll(): void {
     const scrollPosition = window.scrollY;
+
+    // Detectar dirección de scroll para animación de underline
+    if (this.navbar) {
+      if (scrollPosition < this.lastScrollY) {
+        this.navbar.classList.add('scroll-up');
+      } else {
+        this.navbar.classList.remove('scroll-up');
+      }
+    }
+
     this.lastScrollY = scrollPosition;
 
     // Estado de navbar al hacer scroll
@@ -142,46 +152,21 @@ class NavigationManager {
     // Solo aplicar en desktop
     if (window.innerWidth < 768) return;
 
-    // Encontrar índice del enlace activo
-    let activeIndex = -1;
-    this.navLinks.forEach((link, i) => {
-      const section = link.getAttribute('href')?.replace('#', '') || '';
-      if (section === sectionId) activeIndex = i;
-    });
-
     // Manejar logo
     if (this.logo) {
-      this.logo.classList.remove('active', 'left-of-active');
-      if (sectionId === 'hero') {
-        this.logo.classList.add('active');
-      } else {
-        // Logo está a la IZQUIERDA de cualquier sección → raya desde derecha
-        this.logo.classList.add('left-of-active');
-      }
+      this.logo.classList.toggle('active', sectionId === 'hero');
     }
 
     // Manejar nav-links
-    this.navLinks.forEach((link, i) => {
+    this.navLinks.forEach(link => {
       const section = link.getAttribute('href')?.replace('#', '') || '';
-      link.classList.remove('active', 'left-of-active', 'right-of-active');
-
-      if (section === sectionId) {
-        link.classList.add('active');
-      } else if (i < activeIndex) {
-        // A la izquierda del activo → raya desde derecha
-        link.classList.add('left-of-active');
-      } else {
-        // A la derecha del activo → raya desde izquierda
-        link.classList.add('right-of-active');
-      }
+      link.classList.toggle('active', section === sectionId);
     });
   }
 
   private clearActiveStates(): void {
-    this.logo?.classList.remove('active', 'left-of-active');
-    this.navLinks.forEach(link => {
-      link.classList.remove('active', 'left-of-active', 'right-of-active');
-    });
+    this.logo?.classList.remove('active');
+    this.navLinks.forEach(link => link.classList.remove('active'));
   }
 
   private initMobileMenu(): void {

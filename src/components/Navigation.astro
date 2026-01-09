@@ -170,27 +170,28 @@ const t = useTranslations(lang);
     background: var(--accent-primary);
     transition: transform var(--animation-duration) cubic-bezier(0.4, 0, 0.2, 1);
     transform: scaleX(0);
+    transform-origin: right center;
+  }
+
+  /* Hover: siempre izquierda → derecha */
+  .logo:hover::after {
+    transform: scaleX(1);
     transform-origin: left center;
   }
 
-  /* Hover siempre activo (incluido móvil) */
-  .logo:hover::after {
+  /* Active por defecto (scroll down): izquierda → derecha */
+  .logo.active::after {
     transform: scaleX(1);
+    transform-origin: left center;
   }
 
-  /* Active state for logo (hero section) - desktop only */
-  @media (min-width: 768px) {
-    .logo.active::after {
-      transform: scaleX(1);
-    }
-
-    /* Logo cuando NO está en hero: está a la izquierda, entra desde derecha */
-    .logo.left-of-active::after {
-      transform-origin: right center;
-    }
-    .logo.left-of-active:not(:hover)::after {
-      transform-origin: left center;
-    }
+  /* Active con scroll up: derecha → izquierda */
+  nav.scroll-up .logo::after {
+    transform-origin: left center;
+  }
+  nav.scroll-up .logo.active::after {
+    transform: scaleX(1);
+    transform-origin: right center;
   }
 
   .nav-links {
@@ -218,12 +219,9 @@ const t = useTranslations(lang);
     .nav-links a:hover {
       color: var(--text-primary);
     }
-
-    .nav-links a:hover::after {
-      transform: scaleX(1);
-    }
   }
 
+  /* Underline animado para nav links */
   .nav-links a::after {
     content: '';
     position: absolute;
@@ -233,34 +231,34 @@ const t = useTranslations(lang);
     height: 2px;
     background: currentColor;
     transform: scaleX(0);
+    transform-origin: right center;
     transition: transform var(--animation-duration) cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Hover: siempre izquierda → derecha */
+  .nav-links a:hover::after {
+    transform: scaleX(1);
     transform-origin: left center;
   }
 
-  /* Active state for nav links - desktop only */
+  /* Active por defecto (scroll down): izquierda → derecha */
+  .nav-links a.active::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  /* Active con scroll up: derecha → izquierda */
+  nav.scroll-up .nav-links a::after {
+    transform-origin: left center;
+  }
+  nav.scroll-up .nav-links a.active::after {
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+
   @media (min-width: 768px) {
     .nav-links a.active {
       color: var(--text-primary);
-    }
-
-    .nav-links a.active::after {
-      transform: scaleX(1);
-    }
-
-    /* A la IZQUIERDA del activo: entra desde derecha, sale por izquierda */
-    .nav-links a.left-of-active::after {
-      transform-origin: right center;
-    }
-    .nav-links a.left-of-active:not(:hover):not(.active)::after {
-      transform-origin: left center;
-    }
-
-    /* A la DERECHA del activo: entra desde izquierda, sale por derecha */
-    .nav-links a.right-of-active::after {
-      transform-origin: left center;
-    }
-    .nav-links a.right-of-active:not(:hover):not(.active)::after {
-      transform-origin: right center;
     }
   }
 
@@ -351,19 +349,6 @@ const t = useTranslations(lang);
   .lang-btn i.clicked {
     animation: lang-click-bounce-icon 650ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
-
-  /* Efecto visual adicional para el botón durante la transición */
-  .lang-btn.transitioning {
-    pointer-events: none;
-  }
-
-  .lang-btn.transitioning i {
-    color: var(--accent-primary);
-  }
-
-  /* Visual hint according to selected language (subtle) */
-  /* Remove permanent language-based coloring — keep neutral color and only
-   accent on hover/focus so the icon doesn't look "selected" all the time. */
 
   .lang-popover {
     position: absolute;
