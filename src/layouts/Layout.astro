@@ -68,8 +68,22 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-    <!-- DNS Prefetch for external resources -->
-    <link rel="dns-prefetch" href="//static.cloudflareinsights.com" />
+    <!-- Google Analytics 4 (solo en producción) -->
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-QS0G54Q1YJ"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-QS0G54Q1YJ', {
+        anonymize_ip: true,
+        cookie_flags: 'SameSite=None;Secure',
+      });
+    </script>
 
     <!-- Preload Geist fonts (WOFF2) - All above-the-fold weights -->
     <!-- Regular: body text, Medium: nav/indicators, SemiBold: nav links, Bold: hero title -->
@@ -145,6 +159,10 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content={title} />
+
+    <!-- Author Attribution (Google Authorship) -->
+    <meta name="author" content="Álvaro Lostal" />
+    <link rel="author" href="https://linkedin.com/in/alvarolostal" />
 
     <!-- JSON-LD Structured Data -->
     <script

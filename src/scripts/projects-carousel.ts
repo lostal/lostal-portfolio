@@ -14,16 +14,27 @@ interface CarouselElement extends HTMLElement {
 }
 
 /**
- * Actualiza las líneas táctiles del carrusel
+ * Actualiza las líneas táctiles del carrusel y el anuncio de screen reader
  */
 function updateLines(carousel: HTMLElement, activeIndex: number): void {
   const lines = carousel.querySelectorAll('.carousel-line');
+  const totalSlides = lines.length;
 
   lines.forEach((line, index) => {
     const isActive = index === activeIndex;
     line.classList.toggle('is-active', isActive);
     line.setAttribute('aria-current', isActive ? 'true' : 'false');
   });
+
+  // Update aria-live region for screen readers
+  const liveRegion = document.getElementById('carousel-live-region');
+  if (liveRegion && totalSlides > 0) {
+    // Detectar idioma actual
+    const isEnglish = window.location.pathname.startsWith('/en');
+    const viewing = isEnglish ? 'Viewing project' : 'Viendo proyecto';
+    const of = isEnglish ? 'of' : 'de';
+    liveRegion.textContent = `${viewing} ${activeIndex + 1} ${of} ${totalSlides}`;
+  }
 }
 
 /**
