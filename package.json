@@ -12,6 +12,13 @@
   "engines": {
     "node": ">=18.17.0"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "puppeteer",
+      "sharp"
+    ]
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "pnpm run check && astro build && pnpm run generate:cv",
