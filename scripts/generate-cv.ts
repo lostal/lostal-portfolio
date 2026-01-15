@@ -167,58 +167,68 @@ async function generatePDFs(): Promise<void> {
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
-    const page = await browser.newPage();
+    // Generar PDF para cada idioma en paralelo
+    await Promise.all(
+      LANGUAGES.map(async lang => {
+        const page = await browser!.newPage();
 
-    // Generar PDF para cada idioma
-    for (const lang of LANGUAGES) {
-      const cvUrl = `http://localhost:${port}${CONFIG.cvRouteBase}/${lang}`;
-      const outputPath = path.join(CONFIG.buildDir, FILE_NAMES[lang]);
+        try {
+          const cvUrl = `http://localhost:${port}${CONFIG.cvRouteBase}/${lang}`;
+          const outputPath = path.join(CONFIG.buildDir, FILE_NAMES[lang]);
 
-      console.log(`📄 Generando CV (${lang}): ${cvUrl}...`);
+          console.log(`📄 Generando CV (${lang}): ${cvUrl}...`);
 
-      await page.goto(cvUrl, {
-        waitUntil: 'networkidle0',
-        timeout: CONFIG.timeout,
-      });
+          await page.goto(cvUrl, {
+            waitUntil: 'networkidle0',
+            timeout: CONFIG.timeout,
+          });
 
-      // Footer text según idioma
-      const footerText =
-        lang === 'es'
-          ? 'Generado automáticamente desde lostal.dev'
-          : 'Auto-generated from lostal.dev';
+          // Footer text según idioma
+          const footerText =
+            lang === 'es'
+              ? 'Generado automáticamente desde lostal.dev'
+              : 'Auto-generated from lostal.dev';
 
-      // Template del footer con estilos inline (requerido por Puppeteer)
-      // Color mejorado para contraste WCAG AA: #6b7280 (ratio ~4.8:1)
-      const footerTemplate = `
+          // Template del footer con estilos inline (requerido por Puppeteer)
+          // Color mejorado para contraste WCAG AA: #6b7280 (ratio ~4.8:1)
+          const footerTemplate = `
         <div style="width: 100%; font-size: 11px; font-family: 'Inter', system-ui, sans-serif; color: #6b7280; padding: 0 14mm; display: flex; justify-content: space-between;">
           <span>${footerText}</span>
           <span><span class="pageNumber"></span></span>
         </div>
       `;
 
-      // Generar PDF con formato A4, tagged para accesibilidad (PDF/UA)
-      // IMPORTANTE: Los tags se preservan porque NO usamos pdf-lib para post-procesar
-      const pdfBuffer = await page.pdf({
-        format: 'A4',
-        printBackground: true,
-        tagged: true, // PDF estructurado para screen readers (WCAG 2.1 / PDF/UA)
-        displayHeaderFooter: true,
-        headerTemplate: '<div></div>',
-        footerTemplate,
-        margin: { top: '12mm', right: '14mm', bottom: '16mm', left: '14mm' },
-      });
+          // Generar PDF con formato A4, tagged para accesibilidad (PDF/UA)
+          const pdfBuffer = await page.pdf({
+            format: 'A4',
+            printBackground: true,
+            tagged: true,
+            displayHeaderFooter: true,
+            headerTemplate: '<div></div>',
+            footerTemplate,
+            margin: {
+              top: '12mm',
+              right: '14mm',
+              bottom: '16mm',
+              left: '14mm',
+            },
+          });
 
-      // Guardar PDF primero
-      fs.writeFileSync(outputPath, pdfBuffer);
+          // Guardar PDF primero
+          fs.writeFileSync(outputPath, pdfBuffer);
 
-      // Añadir metadatos con exiftool si está disponible
-      if (hasExiftool) {
-        console.log(`📝 Añadiendo metadatos con exiftool...`);
-        await addPdfMetadata(outputPath, lang);
-      }
+          // Añadir metadatos con exiftool si está disponible
+          if (hasExiftool) {
+            console.log(`📝 Añadiendo metadatos (${lang})...`);
+            await addPdfMetadata(outputPath, lang);
+          }
 
-      console.log(`✅ CV generado: ${outputPath}`);
-    }
+          console.log(`✅ CV generado: ${outputPath}`);
+        } finally {
+          await page.close();
+        }
+      })
+    );
 
     console.log(`\n🎉 Todos los CVs generados correctamente`);
   } catch (error) {

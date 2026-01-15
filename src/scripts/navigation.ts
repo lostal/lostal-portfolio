@@ -420,4 +420,10 @@ class NavigationManager {
 }
 
 // Inicializar con helper estandarizado
+// Inicializar con helper estandarizado (soporta carga inicial)
 onReady(() => new NavigationManager());
+
+// Re-inicializar en navegaciones SPA (View Transitions)
+document.addEventListener('astro:after-swap', () => {
+  new NavigationManager();
+});

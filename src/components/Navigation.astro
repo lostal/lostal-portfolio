@@ -7,6 +7,10 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+
+import { Image } from 'astro:assets';
+import esFlag from '../assets/flags/es.svg';
+import usFlag from '../assets/flags/us.svg';
 ---
 
 <nav id="navbar">
@@ -46,13 +50,13 @@ const t = useTranslations(lang);
           >
             <li class="lang-item" role="menuitem">
               <a href="/" class="lang-action" data-lang="es">
-                <img src="/assets/flags/es.svg" alt="" width="26" height="26" />
+                <Image src={esFlag} alt="" width={26} height={26} />
                 <span class="lang-label">Español</span>
               </a>
             </li>
             <li class="lang-item" role="menuitem">
               <a href="/en/" class="lang-action" data-lang="en">
-                <img src="/assets/flags/us.svg" alt="" width="26" height="26" />
+                <Image src={usFlag} alt="" width={26} height={26} />
                 <span class="lang-label">English</span>
               </a>
             </li>
