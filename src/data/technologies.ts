@@ -36,6 +36,7 @@ export const technologies: TechCategory[] = [
       { name: 'Next.js', icon: '/assets/tech-icons/nextjs.svg' },
       { name: 'Astro', icon: '/assets/tech-icons/astro.svg' },
       { name: 'Node.js', icon: '/assets/tech-icons/nodejs.svg' },
+      { name: 'Supabase', icon: '/assets/tech-icons/supabase.svg' },
       { name: 'MongoDB', icon: '/assets/tech-icons/mongodb.svg' },
     ],
   },
