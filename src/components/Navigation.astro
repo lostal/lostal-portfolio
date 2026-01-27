@@ -177,22 +177,19 @@ import usFlag from '../assets/flags/us.svg';
     transform-origin: right center;
   }
 
-  /* Hover: siempre izquierda → derecha */
+  /* Hover: entra desde la izquierda, sale hacia la derecha */
   .logo:hover::after {
     transform: scaleX(1);
     transform-origin: left center;
   }
 
-  /* Active por defecto (scroll down): izquierda → derecha */
+  /* Active (scroll down): entra desde la izquierda */
   .logo.active::after {
     transform: scaleX(1);
     transform-origin: left center;
   }
 
-  /* Active con scroll up: derecha → izquierda */
-  nav.scroll-up .logo::after {
-    transform-origin: left center;
-  }
+  /* Active (scroll up): entra desde la derecha */
   nav.scroll-up .logo.active::after {
     transform: scaleX(1);
     transform-origin: right center;
@@ -239,22 +236,19 @@ import usFlag from '../assets/flags/us.svg';
     transition: transform var(--animation-duration) cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Hover: siempre izquierda → derecha */
+  /* Hover: entra desde la izquierda, sale hacia la derecha */
   .nav-links a:hover::after {
     transform: scaleX(1);
     transform-origin: left center;
   }
 
-  /* Active por defecto (scroll down): izquierda → derecha */
+  /* Active (scroll down): entra desde la izquierda */
   .nav-links a.active::after {
     transform: scaleX(1);
     transform-origin: left center;
   }
 
-  /* Active con scroll up: derecha → izquierda */
-  nav.scroll-up .nav-links a::after {
-    transform-origin: left center;
-  }
+  /* Active (scroll up): entra desde la derecha */
   nav.scroll-up .nav-links a.active::after {
     transform: scaleX(1);
     transform-origin: right center;

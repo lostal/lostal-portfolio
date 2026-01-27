@@ -6,11 +6,11 @@
   <button
     type="button"
     class="contact-link copy-email-btn"
-    title="Copiar email"
     data-contact="email"
     data-email="alvaro@lostal.dev"
   >
-    <i class="fas fa-envelope"></i>
+    <i class="fas fa-envelope" aria-hidden="true"></i>
+    <span class="sr-only">Email</span>
   </button>
 
   <a
@@ -18,10 +18,10 @@
     target="_blank"
     rel="noopener noreferrer"
     class="contact-link"
-    title="GitHub"
     data-contact="github"
   >
-    <i class="fab fa-github"></i>
+    <i class="fab fa-github" aria-hidden="true"></i>
+    <span class="sr-only">GitHub</span>
   </a>
 
   <a
@@ -29,10 +29,10 @@
     target="_blank"
     rel="noopener noreferrer"
     class="contact-link"
-    title="LinkedIn"
     data-contact="linkedin"
   >
-    <i class="fab fa-linkedin"></i>
+    <i class="fab fa-linkedin" aria-hidden="true"></i>
+    <span class="sr-only">LinkedIn</span>
   </a>
 </div>
 
@@ -93,5 +93,18 @@
   /* Cursor pointer para el botón de email */
   button.contact-link {
     cursor: pointer;
+  }
+
+  /* Screen reader only - texto accesible oculto visualmente */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 </style>

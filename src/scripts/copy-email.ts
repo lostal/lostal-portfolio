@@ -5,6 +5,21 @@ import { canTouch } from '../utils/dom';
 
 const EMAIL = 'alvaro@lostal.dev';
 
+// Traducciones inline para el toast (evita dependencia de i18n en runtime)
+const TOAST_I18N = {
+  es: {
+    success: 'Copiado',
+    send: 'Enviar',
+    sendTitle: 'Abrir cliente de correo',
+  },
+  en: { success: 'Copied', send: 'Send', sendTitle: 'Open email client' },
+} as const;
+
+/** Detecta el idioma actual de la página */
+function getCurrentLang(): 'es' | 'en' {
+  return window.location.pathname.startsWith('/en') ? 'en' : 'es';
+}
+
 let toast: HTMLElement | null = null;
 let isToastVisible = false;
 let rafId: number | null = null;
@@ -70,18 +85,21 @@ function stopPositionUpdate() {
 function createToast(): HTMLElement {
   if (toast) return toast;
 
+  const lang = getCurrentLang();
+  const t = TOAST_I18N[lang];
+
   toast = document.createElement('div');
   toast.id = 'email-toast';
   toast.className = 'email-toast';
   toast.setAttribute('aria-live', 'polite');
   toast.innerHTML = `
     <span class="toast-text">
-      <i class="fas fa-check"></i>
-      Copiado
+      <i class="fas fa-check" aria-hidden="true"></i>
+      ${t.success}
     </span>
-    <a href="mailto:${EMAIL}" class="toast-action" title="Abrir cliente de correo">
-      Enviar
-      <i class="fas fa-arrow-right"></i>
+    <a href="mailto:${EMAIL}" class="toast-action" title="${t.sendTitle}">
+      ${t.send}
+      <i class="fas fa-arrow-right" aria-hidden="true"></i>
     </a>
   `;
   document.body.appendChild(toast);
@@ -122,10 +140,17 @@ function initEmailCopy() {
   createToast();
   let hideTimeout: ReturnType<typeof setTimeout>;
 
+  // Título traducido para el botón
+  const lang = getCurrentLang();
+  const copyTitle = lang === 'es' ? 'Copiar email' : 'Copy email';
+
   buttons.forEach(btn => {
     // Evitar duplicar listeners
     if (btn.dataset.copyInitialized) return;
     btn.dataset.copyInitialized = 'true';
+
+    // Añadir title traducido
+    btn.title = copyTitle;
 
     btn.addEventListener('click', async () => {
       const email = btn.dataset.email;

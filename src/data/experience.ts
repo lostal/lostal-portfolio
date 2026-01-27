@@ -17,8 +17,7 @@ export const experience: ExperienceItem[] = [
   {
     id: 'eurocastalia',
     logo: '/assets/logos/eurocastalia.svg',
-    logoAlt:
-      'Logo de Eurocastalia, empresa donde realicé prácticas de desarrollo web',
+    logoAlt: 'Logo de Eurocastalia',
     i18nKeys: {
       title: 'journey.eurocastalia.title',
       date: 'journey.eurocastalia.date',

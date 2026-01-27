@@ -1,6 +1,6 @@
 /**
  * Utilidades para detección de capacidades del dispositivo
- * Con caché para evitar re-evaluación en cada llamada
+ * Con caché que se invalida en cambios de orientación/resize
  */
 
 // Caché de resultados
@@ -11,6 +11,22 @@ const _cache: {
   canTouch: null,
   isPrimaryTouch: null,
 };
+
+// Invalidar caché en cambios que pueden afectar el modo de entrada
+if (typeof window !== 'undefined') {
+  const invalidateCache = () => {
+    _cache.canTouch = null;
+    _cache.isPrimaryTouch = null;
+  };
+
+  // Detectar cambios en media queries de pointer/hover
+  window
+    .matchMedia('(pointer: coarse)')
+    .addEventListener('change', invalidateCache);
+  window
+    .matchMedia('(hover: none)')
+    .addEventListener('change', invalidateCache);
+}
 
 /**
  * Detecta si el dispositivo PUEDE usar entrada táctil.

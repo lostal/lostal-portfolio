@@ -17,8 +17,7 @@ export const education: EducationItem[] = [
   {
     id: 'uea',
     logo: '/assets/logos/uneatlantico.svg',
-    logoAlt:
-      'Logo de la Universidad Europea del Atlántico donde estudio Ingeniería Informática',
+    logoAlt: 'Logo de la Universidad Europea del Atlántico',
     i18nKeys: {
       title: 'journey.uea.title',
       date: 'journey.uea.date',
@@ -34,8 +33,7 @@ export const education: EducationItem[] = [
   {
     id: 'cambridge',
     logo: '/assets/logos/cambridge.svg',
-    logoAlt:
-      'Logo de Cambridge Assessment English donde obtuve mi certificación B2 First',
+    logoAlt: 'Logo de Cambridge Assessment English',
     i18nKeys: {
       title: 'journey.cambridge.title',
       date: 'journey.cambridge.date',

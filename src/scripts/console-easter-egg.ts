@@ -1,12 +1,10 @@
 /** console-easter-egg.ts - ASCII art en consola para desarrolladores curiosos */
 
-import { onReady } from '../utils/init';
-
 const ASCII_LOGO = `
-   █████╗ ██╗     
-  ██╔══██╗██║     
-  ███████║██║     
-  ██╔══██║██║     
+   █████╗ ██╗
+  ██╔══██╗██║
+  ███████║██║
+  ██╔══██║██║
   ██║  ██║███████╗
   ╚═╝  ╚═╝╚══════╝
 `;
@@ -17,9 +15,8 @@ const STYLES = {
   link: 'font-size:12px; font-family:system-ui;',
 };
 
-export function initConsoleEasterEgg(): void {
-  if (typeof window === 'undefined') return;
-
+// Se ejecuta inmediatamente al importarse (importado con requestIdleCallback)
+if (typeof window !== 'undefined') {
   console.log('%c' + ASCII_LOGO, STYLES.logo);
   console.log('%c👋 ¡Hola, dev curioso!', STYLES.greeting);
   console.log(
@@ -28,5 +25,3 @@ export function initConsoleEasterEgg(): void {
   );
   console.log('%c📧 Contacto → alvaro@lostal.dev', STYLES.link);
 }
-
-onReady(initConsoleEasterEgg);

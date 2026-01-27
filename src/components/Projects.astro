@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import { Picture } from 'astro:assets';
 import { useTranslations } from '../i18n/utils';
 
@@ -11,8 +11,9 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 // Obtener proyectos ordenados por el campo 'order'
+type Project = CollectionEntry<'projects'>;
 const projects = (await getCollection('projects')).sort(
-  (a, b) => a.data.order - b.data.order
+  (a: Project, b: Project) => a.data.order - b.data.order
 );
 const totalProjects = projects.length;
 ---
@@ -33,7 +34,7 @@ const totalProjects = projects.length;
       <div class="projects-carousel__slider swiper">
         <div class="projects-carousel__wrapper swiper-wrapper">
           {
-            projects.map((project, index) => {
+            projects.map((project: Project, index: number) => {
               const { data } = project;
               const translation = data.translations[lang];
 
@@ -62,19 +63,21 @@ const totalProjects = projects.length;
                         <div class="carousel-item__header-inner">
                           <div class="carousel-item__price">
                             <div class="carousel-item__tech">
-                              {data.technologies.map(tech => (
-                                <span class="tag">
-                                  <img
-                                    src={tech.icon}
-                                    alt={tech.name}
-                                    class="tech-mini-icon"
-                                    width="14"
-                                    height="14"
-                                    loading="lazy"
-                                  />
-                                  {tech.name}
-                                </span>
-                              ))}
+                              {data.technologies.map(
+                                (tech: { name: string; icon: string }) => (
+                                  <span class="tag">
+                                    <img
+                                      src={tech.icon}
+                                      alt={tech.name}
+                                      class="tech-mini-icon"
+                                      width="14"
+                                      height="14"
+                                      loading="lazy"
+                                    />
+                                    {tech.name}
+                                  </span>
+                                )
+                              )}
                             </div>
                           </div>
                         </div>
@@ -126,7 +129,7 @@ const totalProjects = projects.length;
       <!-- Líneas táctiles de navegación (generadas dinámicamente) -->
       <nav class="carousel-lines" aria-label={t('projects.carousel.nav')}>
         {
-          projects.map((_, index) => (
+          projects.map((_: Project, index: number) => (
             <button
               class:list={['carousel-line', { 'is-active': index === 0 }]}
               data-slide={index}
