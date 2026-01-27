@@ -16,10 +16,10 @@
   --bg-tertiary: #e8e7e6;
 
   /* Texto */
-  --text-primary: #1a1a1a;
-  --text-secondary: #5c5c5c;
-  --text-tertiary: #8a8a8a;
-  --text-tertiary-rgb: 138, 138, 138;
+  --text-primary: #0a0a0a;
+  --text-secondary: #3a3a3a;
+  --text-tertiary: #5a5a5a;
+  --text-tertiary-rgb: 90, 90, 90;
   --text-on-accent: #000000;
 
   /* Bordes */

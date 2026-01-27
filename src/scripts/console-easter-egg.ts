@@ -25,3 +25,5 @@ if (typeof window !== 'undefined') {
   );
   console.log('%c📧 Contacto → alvaro@lostal.dev', STYLES.link);
 }
+
+export {};
