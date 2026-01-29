@@ -23,7 +23,11 @@ export const experience: ExperienceItem[] = [
       date: 'journey.eurocastalia.date',
       company: 'journey.eurocastalia.company',
       description: 'journey.eurocastalia.description',
-      tasks: ['journey.eurocastalia.task1', 'journey.eurocastalia.task2'],
+      tasks: [
+        'journey.eurocastalia.task1',
+        'journey.eurocastalia.task2',
+        'journey.eurocastalia.task3',
+      ],
     },
   },
 ];
