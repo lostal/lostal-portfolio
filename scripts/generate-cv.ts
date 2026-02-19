@@ -1,26 +1,16 @@
 /**
  * Script de generación automática de CV en PDF (multi-idioma)
  * Ejecutado automáticamente después de cada build de producción
- * Genera cv-es.pdf y cv-en.pdf con metadatos vía exiftool
+ * Genera AlvaroLostal_CV.pdf y AlvaroLostal_Resume.pdf
  *
  * Uso: npx tsx scripts/generate-cv.ts
- *
- * Requisitos:
- * - exiftool instalado y disponible en PATH
- *   Windows: choco install exiftool / scoop install exiftool
- *   macOS: brew install exiftool
- *   Linux: apt install libimage-exiftool-perl
  */
 
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
-import { exec } from 'node:child_process';
-import { promisify } from 'node:util';
 import handler from 'serve-handler';
 import puppeteer from 'puppeteer';
-
-const execAsync = promisify(exec);
 
 // Idiomas soportados y nombres de archivo
 const LANGUAGES = ['es', 'en'] as const;
@@ -31,33 +21,12 @@ const FILE_NAMES: Record<Language, string> = {
   en: 'AlvaroLostal_Resume.pdf',
 };
 
-// Metadatos del PDF por idioma (PDF/UA compliant)
-const PDF_METADATA: Record<
-  Language,
-  { title: string; subject: string; language: string; keywords: string }
-> = {
-  es: {
-    title: 'CV - Álvaro Lostal',
-    subject: 'Curriculum Vitae - Desarrollador Web',
-    language: 'es-ES',
-    keywords: 'Desarrollador Web, CV, Curriculum Vitae, Álvaro Lostal',
-  },
-  en: {
-    title: 'Resume - Álvaro Lostal',
-    subject: 'Resume - Web Developer',
-    language: 'en-US',
-    keywords: 'Web Developer, Resume, CV, Álvaro Lostal',
-  },
-};
-
 // Configuración
 const CONFIG = {
   buildDir: path.join(process.cwd(), 'dist'),
   cvRouteBase: '/cv-print',
   port: 8080,
   timeout: 60000,
-  author: 'Álvaro Lostal',
-  creator: 'lostal.dev',
 } as const;
 
 /**
@@ -92,46 +61,6 @@ function startServer(port: number): http.Server {
 }
 
 /**
- * Verifica que exiftool esté disponible en el sistema
- */
-async function checkExiftool(): Promise<boolean> {
-  try {
-    await execAsync('exiftool -ver');
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/**
- * Añade metadatos al PDF usando exiftool (preserva tags de accesibilidad)
- */
-async function addPdfMetadata(pdfPath: string, lang: Language): Promise<void> {
-  const metadata = PDF_METADATA[lang];
-  const now = new Date().toISOString().replace(/[-:]/g, '').split('.')[0];
-
-  // Construir comando exiftool con metadatos (PDF/UA enhanced)
-  // -overwrite_original evita crear archivos _original de backup
-  const args = [
-    `exiftool`,
-    `-overwrite_original`,
-    `-Title="${metadata.title}"`,
-    `-Author="${CONFIG.author}"`,
-    `-Subject="${metadata.subject}"`,
-    `-Description="${metadata.subject}"`,
-    `-Keywords="${metadata.keywords}"`,
-    `-Creator="${CONFIG.creator}"`,
-    `-Producer="Puppeteer (Chrome)"`,
-    `-CreateDate="${now}"`,
-    `-ModifyDate="${now}"`,
-    `-Language="${metadata.language}"`,
-    `"${pdfPath}"`,
-  ].join(' ');
-
-  await execAsync(args);
-}
-
-/**
  * Genera los PDFs del CV en todos los idiomas usando Puppeteer
  */
 async function generatePDFs(): Promise<void> {
@@ -140,17 +69,6 @@ async function generatePDFs(): Promise<void> {
     console.error(`❌ Error: No existe el directorio '${CONFIG.buildDir}'`);
     console.error('   Ejecuta primero: pnpm astro build');
     process.exit(1);
-  }
-
-  // Verificar que exiftool está disponible (opcional para desarrollo local)
-  const hasExiftool = await checkExiftool();
-  if (!hasExiftool) {
-    console.warn(
-      '⚠️  exiftool no encontrado - los PDFs se generarán sin metadatos personalizados'
-    );
-    console.warn(
-      '   En CI (GitHub Actions) exiftool se instala automáticamente'
-    );
   }
 
   const port = await findAvailablePort(CONFIG.port);
@@ -213,14 +131,8 @@ async function generatePDFs(): Promise<void> {
             },
           });
 
-          // Guardar PDF primero
+          // Guardar PDF
           fs.writeFileSync(outputPath, pdfBuffer);
-
-          // Añadir metadatos con exiftool si está disponible
-          if (hasExiftool) {
-            console.log(`📝 Añadiendo metadatos (${lang})...`);
-            await addPdfMetadata(outputPath, lang);
-          }
 
           console.log(`✅ CV generado: ${outputPath}`);
         } finally {

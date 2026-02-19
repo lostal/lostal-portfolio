@@ -35,9 +35,6 @@ jobs:
       - name: Install Puppeteer dependencies
         run: npx puppeteer browsers install chrome
 
-      - name: Install exiftool
-        run: sudo apt-get update && sudo apt-get install -y libimage-exiftool-perl
-
       - name: Build (includes CV generation)
         run: pnpm build
 

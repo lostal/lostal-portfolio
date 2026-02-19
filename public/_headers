@@ -1,6 +1,6 @@
 /*.pdf
   Content-Type: application/pdf
-  Content-Disposition: attachment
+  Cache-Control: no-cache
 
 /*
   X-Content-Type-Options: nosniff
