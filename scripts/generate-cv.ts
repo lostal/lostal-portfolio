@@ -24,6 +24,7 @@ const FILE_NAMES: Record<Language, string> = {
 // Configuración
 const CONFIG = {
   buildDir: path.join(process.cwd(), 'dist'),
+  publicDir: path.join(process.cwd(), 'public'),
   cvRouteBase: '/cv-print',
   port: 8080,
   timeout: 60000,
@@ -131,10 +132,20 @@ async function generatePDFs(): Promise<void> {
             },
           });
 
-          // Guardar PDF
+          // Guardar PDF en dist/ (deploy actual) y en public/ (próximos builds)
+          const publicPath = path.join(CONFIG.publicDir, FILE_NAMES[lang]);
           fs.writeFileSync(outputPath, pdfBuffer);
+          fs.writeFileSync(publicPath, pdfBuffer);
 
-          console.log(`✅ CV generado: ${outputPath}`);
+          // Validar que el PDF es válido (debe empezar con %PDF)
+          const header = fs.readFileSync(outputPath).slice(0, 4).toString();
+          if (header !== '%PDF') {
+            throw new Error(`PDF inválido para ${lang}: header='${header}'`);
+          }
+
+          console.log(
+            `✅ CV generado: ${outputPath} (${(pdfBuffer.length / 1024).toFixed(1)} KB)`
+          );
         } finally {
           await page.close();
         }

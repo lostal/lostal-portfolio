@@ -11,6 +11,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     environment:
       name: production
       url: https://lostal.dev
@@ -18,6 +20,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -40,16 +44,31 @@ jobs:
 
       - name: Verify PDFs were generated
         run: |
-          if [ ! -f dist/AlvaroLostal_CV.pdf ]; then
-            echo "❌ Error: dist/AlvaroLostal_CV.pdf no encontrado"
-            exit 1
+          for pdf in dist/AlvaroLostal_CV.pdf dist/AlvaroLostal_Resume.pdf; do
+            if [ ! -f "$pdf" ]; then
+              echo "❌ Error: $pdf no encontrado"
+              exit 1
+            fi
+            header=$(head -c 4 "$pdf")
+            if [ "$header" != "%PDF" ]; then
+              echo "❌ Error: $pdf no es un PDF válido (header: $header)"
+              exit 1
+            fi
+            echo "✅ $pdf - $(du -h $pdf | cut -f1)"
+          done
+
+      - name: Commit generated PDFs to public/
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/AlvaroLostal_CV.pdf public/AlvaroLostal_Resume.pdf
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: update CV PDFs [skip ci]"
+            git push
+            echo "✅ PDFs actualizados en public/"
+          else
+            echo "ℹ️ PDFs sin cambios, no se requiere commit"
           fi
-          if [ ! -f dist/AlvaroLostal_Resume.pdf ]; then
-            echo "❌ Error: dist/AlvaroLostal_Resume.pdf no encontrado"
-            exit 1
-          fi
-          echo "✅ PDFs verificados correctamente"
-          ls -lh dist/*.pdf
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
