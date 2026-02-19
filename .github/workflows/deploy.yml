@@ -41,6 +41,19 @@ jobs:
       - name: Build (includes CV generation)
         run: pnpm build
 
+      - name: Verify PDFs were generated
+        run: |
+          if [ ! -f dist/AlvaroLostal_CV.pdf ]; then
+            echo "❌ Error: dist/AlvaroLostal_CV.pdf no encontrado"
+            exit 1
+          fi
+          if [ ! -f dist/AlvaroLostal_Resume.pdf ]; then
+            echo "❌ Error: dist/AlvaroLostal_Resume.pdf no encontrado"
+            exit 1
+          fi
+          echo "✅ PDFs verificados correctamente"
+          ls -lh dist/*.pdf
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
