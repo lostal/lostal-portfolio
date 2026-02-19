@@ -198,11 +198,10 @@ async function generatePDFs(): Promise<void> {
         </div>
       `;
 
-          // Generar PDF con formato A4, tagged para accesibilidad (PDF/UA)
+          // Generar PDF con formato A4
           const pdfBuffer = await page.pdf({
             format: 'A4',
             printBackground: true,
-            tagged: true,
             displayHeaderFooter: true,
             headerTemplate: '<div></div>',
             footerTemplate,
