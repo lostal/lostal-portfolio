@@ -43,11 +43,50 @@ class NavigationManager {
   }
 
   private init(): void {
+    this.initGlass();
     this.initNavbarScroll();
     this.initMobileMenu();
     this.initLanguageSwitcher();
     this.initSmoothScroll();
     this.initActiveSection();
+  }
+
+  /**
+   * Detecta el nivel real de soporte para backdrop-filter y escribe
+   * data-glass en el <nav> para que el CSS lo use como hook:
+   *
+   *   (sin atributo)       – blur estándar + opacidad segura (Safari / Firefox / todos)
+   *   data-glass="enhanced" – SVG displacement map (Chromium únicamente)
+   *   data-glass="none"    – fondo sólido, sin blur (navegadores muy antiguos)
+   *
+   * Se usa navigator.userAgentData para identificar Chromium sin user-agent
+   * sniffing frágil; dicho API solo existe en navegadores Blink.
+   */
+  private initGlass(): void {
+    if (!this.navbar) return;
+
+    const supportsBackdropFilter =
+      CSS.supports('backdrop-filter', 'blur(1px)') ||
+      CSS.supports('-webkit-backdrop-filter', 'blur(1px)');
+
+    if (!supportsBackdropFilter) {
+      // Navegador muy antiguo → fondo sólido para que sea legible
+      this.navbar.dataset.glass = 'none';
+      return;
+    }
+
+    // SVG url() en backdrop-filter es una extensión no estándar de Chromium.
+    // navigator.userAgentData solo existe en navegadores basados en Blink/Chromium;
+    // Safari e Firefox devuelven undefined → no se aplica el efecto mejorado.
+    const isChromium =
+      typeof (navigator as unknown as { userAgentData?: unknown })
+        .userAgentData !== 'undefined';
+    const cssSupportsUrl = CSS.supports('backdrop-filter', 'url(#x)');
+
+    if (isChromium && cssSupportsUrl) {
+      this.navbar.dataset.glass = 'enhanced';
+    }
+    // En cualquier otro caso no se toca data-glass → estilo base (blur seguro)
   }
 
   private initNavbarScroll(): void {
@@ -172,7 +211,7 @@ class NavigationManager {
   private initMobileMenu(): void {
     if (this.mobileMenuBtn && this.mobileMenu) {
       this.mobileMenuBtn.addEventListener('click', () => {
-        const isOpening = !this.mobileMenu?.classList.contains('active');
+        const isOpening = !this.navbar?.classList.contains('menu-open');
 
         if (isOpening) {
           this.openMobileMenu();
@@ -191,30 +230,31 @@ class NavigationManager {
       });
     });
 
-    // Cerrar menú al hacer clic fuera de él
+    // Cerrar menú al hacer clic fuera de la pill
     document.addEventListener('click', e => {
-      if (!this.mobileMenu?.classList.contains('active')) return;
+      if (!this.navbar?.classList.contains('menu-open')) return;
 
       const target = e.target as HTMLElement;
-      const isClickInsideMenu = this.mobileMenu?.contains(target);
-      const isClickOnButton = this.mobileMenuBtn?.contains(target);
+      const isClickInsideNav = this.navbar?.contains(target);
 
-      if (!isClickInsideMenu && !isClickOnButton) {
+      if (!isClickInsideNav) {
         this.closeMobileMenu();
       }
     });
   }
 
   private openMobileMenu(): void {
+    this.navbar?.classList.add('menu-open');
     this.mobileMenu?.classList.add('active');
     this.mobileMenuBtn?.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    this.mobileMenu?.removeAttribute('inert');
   }
 
   private closeMobileMenu(): void {
+    this.navbar?.classList.remove('menu-open');
     if (this.mobileMenu) this.mobileMenu.classList.remove('active');
     if (this.mobileMenuBtn) this.mobileMenuBtn.classList.remove('active');
-    document.body.style.overflow = '';
+    this.mobileMenu?.setAttribute('inert', '');
   }
 
   private initLanguageSwitcher(): void {

@@ -13,8 +13,37 @@ import esFlag from '../assets/flags/es.svg';
 import usFlag from '../assets/flags/us.svg';
 ---
 
-<nav id="navbar">
-  <div class="container">
+<header class="nav-wrapper">
+  <!-- Hidden SVG definitions for the liquid glass backdrop filter (Chromium-only) -->
+  <svg class="nav-glass-svg" aria-hidden="true" focusable="false">
+    <defs>
+      <filter
+        id="nav-lg-dist"
+        x="-5%"
+        y="-5%"
+        width="110%"
+        height="110%"
+        color-interpolation-filters="sRGB"
+      >
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.0052 0.004"
+          numOctaves="2"
+          seed="71"
+          result="noise"></feTurbulence>
+        <feGaussianBlur in="noise" stdDeviation="3.5" result="blurred"
+        ></feGaussianBlur>
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="blurred"
+          scale="35"
+          xChannelSelector="R"
+          yChannelSelector="G"></feDisplacementMap>
+      </filter>
+    </defs>
+  </svg>
+
+  <nav id="navbar">
     <div class="nav-content">
       <a href="#top" class="logo" aria-label={t('nav.home')}>AL</a>
 
@@ -77,55 +106,223 @@ import usFlag from '../assets/flags/us.svg';
           id="mobileMenuBtn"
           aria-label={t('nav.menu')}
         >
-          <div class="hamburger-icon">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-          </div>
+          <svg
+            class="hamburger-icon"
+            width="22"
+            height="15"
+            viewBox="0 0 22 15"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <rect
+              class="hamburger-line"
+              x="0"
+              y="0"
+              width="22"
+              height="3"
+              rx="1.5"></rect>
+            <rect
+              class="hamburger-line"
+              x="0"
+              y="6"
+              width="22"
+              height="3"
+              rx="1.5"></rect>
+            <rect
+              class="hamburger-line"
+              x="0"
+              y="12"
+              width="22"
+              height="3"
+              rx="1.5"></rect>
+          </svg>
         </button>
       </div>
     </div>
-  </div>
 
-  <div class="mobile-menu" id="mobileMenu">
-    <ul class="mobile-menu-links">
-      <li>
-        <a href="#projects" class="mobile-link">{t('nav.projects')}</a>
-      </li>
-      <li>
-        <a href="#journey" class="mobile-link">{t('nav.journey')}</a>
-      </li>
-      <li>
-        <a href="#technologies" class="mobile-link">{t('nav.technologies')}</a>
-      </li>
-      <li>
-        <a href="#contact" class="mobile-link">{t('nav.contact')}</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+    <div class="mobile-menu" id="mobileMenu" inert>
+      <div class="mobile-menu-inner">
+        <ul class="mobile-menu-links">
+          <li>
+            <a href="#projects" class="mobile-link">{t('nav.projects')}</a>
+          </li>
+          <li>
+            <a href="#journey" class="mobile-link">{t('nav.journey')}</a>
+          </li>
+          <li>
+            <a href="#technologies" class="mobile-link"
+              >{t('nav.technologies')}</a
+            >
+          </li>
+          <li>
+            <a href="#contact" class="mobile-link">{t('nav.contact')}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
 
 <style>
-  /* Navigation */
-  nav {
+  /* ── Wrapper: full-width fixed ghost layer that centers the pill ── */
+  .nav-wrapper {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 14px 1rem 0;
     z-index: var(--z-navigation);
-    background: rgba(var(--bg-primary-rgb), 0.5);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    transition: all var(--animation-duration) ease;
+    pointer-events: none; /* clicks pass through the empty space around the pill */
   }
 
-  :global([data-theme='dark']) nav {
-    background: rgba(var(--bg-primary-rgb), 0.5);
+  /* SVG filter defs – zero dimensions, only defines the filter */
+  .nav-glass-svg {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
   }
 
+  /* ── Pill nav ── */
+  nav {
+    width: 100%;
+    max-width: 860px;
+    /* calc(var(--nav-height) / 2) = exact pill at 72px height.
+       Never changes — the shape morphs pill↔panel purely via height. */
+    border-radius: calc(var(--nav-height) / 2);
+    pointer-events: auto; /* re-enable clicks on the pill itself */
+
+    /* ── Hero / at-top default: fully transparent, items float freely ──
+       The glass pill is invisible; only the logo and links are visible.
+       backdrop-filter uses the same function list as the scrolled state
+       so browsers can interpolate smoothly (none → blur would not interpolate). */
+    background: rgba(var(--bg-primary-rgb), 0);
+    backdrop-filter: blur(0px) saturate(100%) brightness(1);
+    -webkit-backdrop-filter: blur(0px) saturate(100%) brightness(1);
+    border-style: solid;
+    border-width: 1px;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    box-shadow: none;
+    /* Slight upward offset so the pill "settles" into place with a spring bounce */
+    transform: translateY(-4px);
+
+    /* ── Glass materialization transitions ──
+       cubic-bezier(0.22, 1, 0.36, 1) = fast ease-out for bg/shadow
+       cubic-bezier(0.34, 1.56, 0.64, 1) = spring overshoot for transform */
+    transition:
+      background 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+      backdrop-filter 0.52s ease,
+      -webkit-backdrop-filter 0.52s ease,
+      border-top-color 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+      border-left-color 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+      border-right-color 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+      border-bottom-color 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* ── Glass pill: materializes when scrolled or mobile menu opens ──
+     Both scrolled and menu-open need the glass background so the pill
+     is always visible when content is shown inside it. */
+  nav.scrolled,
+  nav.menu-open {
+    background: rgba(var(--bg-primary-rgb), 0.38);
+    backdrop-filter: blur(18px) saturate(190%) brightness(1.05);
+    -webkit-backdrop-filter: blur(18px) saturate(190%) brightness(1.05);
+    border-top-color: rgba(255, 255, 255, 0.22);
+    border-left-color: rgba(255, 255, 255, 0.1);
+    border-right-color: rgba(255, 255, 255, 0.1);
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.15),
+      0 1px 3px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transform: translateY(0);
+  }
+
+  /* ── Fallback: navegadores sin backdrop-filter ──
+     Always show a solid background so text stays legible (no blur = no glass). */
+  nav[data-glass='none'] {
+    background: rgba(var(--bg-primary-rgb), 0.92);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-top-color: rgba(255, 255, 255, 0.22);
+    border-left-color: rgba(255, 255, 255, 0.1);
+    border-right-color: rgba(255, 255, 255, 0.1);
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.15),
+      0 1px 3px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transform: translateY(0);
+  }
+
+  /* ── Chromium only: SVG displacement liquid glass ──
+     data-glass="enhanced" is written by JS only on Blink browsers.
+     Only applied when scrolled/menu-open — at-top the nav is transparent. */
+  nav[data-glass='enhanced'].scrolled,
+  nav[data-glass='enhanced'].menu-open {
+    backdrop-filter: url(#nav-lg-dist) blur(12px) saturate(210%)
+      brightness(1.07);
+    -webkit-backdrop-filter: url(#nav-lg-dist) blur(12px) saturate(210%)
+      brightness(1.07);
+    background: rgba(var(--bg-primary-rgb), 0.24);
+    border-top-color: rgba(255, 255, 255, 0.28);
+  }
+
+  /* Dark mode glass: only when scrolled or menu-open (transparent at top) */
+  :global([data-theme='dark']) nav.scrolled,
+  :global([data-theme='dark']) nav.menu-open {
+    /* White-based glass: lifts the pill above the dark background like frosted glass */
+    background: rgba(255, 255, 255, 0.07);
+    border-top-color: rgba(255, 255, 255, 0.3);
+    border-left-color: rgba(255, 255, 255, 0.14);
+    border-right-color: rgba(255, 255, 255, 0.14);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+    box-shadow:
+      0 4px 32px rgba(0, 0, 0, 0.6),
+      0 1px 3px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      0 0 0 0.5px rgba(255, 255, 255, 0.08);
+  }
+
+  :global([data-theme='dark']) nav[data-glass='none'] {
+    background: rgba(var(--bg-primary-rgb), 0.96);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  :global([data-theme='dark']) nav[data-glass='enhanced'].scrolled,
+  :global([data-theme='dark']) nav[data-glass='enhanced'].menu-open {
+    background: rgba(255, 255, 255, 0.05);
+    border-top-color: rgba(255, 255, 255, 0.32);
+    backdrop-filter: url(#nav-lg-dist) blur(12px) saturate(210%)
+      brightness(1.14);
+    -webkit-backdrop-filter: url(#nav-lg-dist) blur(12px) saturate(210%)
+      brightness(1.14);
+  }
+
+  /* Scrolled gets a deeper shadow than the menu-open state */
   nav.scrolled {
-    box-shadow: var(--shadow-sm);
+    box-shadow:
+      0 8px 40px rgba(0, 0, 0, 0.2),
+      0 2px 8px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+
+  :global([data-theme='dark']) nav.scrolled {
+    box-shadow:
+      0 8px 48px rgba(0, 0, 0, 0.7),
+      0 2px 8px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.24),
+      0 0 0 0.5px rgba(255, 255, 255, 0.1);
   }
 
   .nav-content {
@@ -133,12 +330,15 @@ import usFlag from '../assets/flags/us.svg';
     justify-content: space-between;
     align-items: center;
     height: var(--nav-height);
+    padding: 0 1.5rem;
     position: relative;
+    z-index: 1;
   }
 
   .logo {
     font-size: var(--font-size-2xl);
     font-weight: 800;
+    line-height: 1; /* fixes flex-centering: removes descender whitespace that shifts underline visually */
     color: var(--accent-primary);
     text-decoration: none;
     transition: all var(--animation-duration) ease;
@@ -167,7 +367,7 @@ import usFlag from '../assets/flags/us.svg';
   .logo::after {
     content: '';
     position: absolute;
-    bottom: 2px;
+    bottom: -5px; /* below the text, not inside it */
     left: 0;
     width: 100%;
     height: 4px;
@@ -175,6 +375,17 @@ import usFlag from '../assets/flags/us.svg';
     transition: transform var(--animation-duration) cubic-bezier(0.4, 0, 0.2, 1);
     transform: scaleX(0);
     transform-origin: right center;
+  }
+
+  /* Slide AL up slightly so text+underline composite stays visually centred */
+  @media (hover: hover) {
+    .logo:hover {
+      transform: translateY(-3px);
+    }
+  }
+
+  .logo.active {
+    transform: translateY(-3px);
   }
 
   /* Hover: entra desde la izquierda, sale hacia la derecha */
@@ -281,7 +492,7 @@ import usFlag from '../assets/flags/us.svg';
     color: var(--text-secondary);
     font-size: 22px;
     transition: all var(--animation-duration) ease;
-    border-radius: var(--radius-md);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -352,14 +563,26 @@ import usFlag from '../assets/flags/us.svg';
     position: absolute;
     /* keep normal visual spacing; we'll provide an invisible bridge to capture pointer
      so slow mouse moves between button and popover don't close it */
-    top: calc(100% + 8px);
+    /* 100% = button height (48px); +20px pushes it clearly below the nav pill's bottom border */
+    top: calc(100% + 20px);
     right: 0;
     min-width: 168px;
-    background: var(--bg-primary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 8px;
-    box-shadow: var(--shadow-lg);
+    /* Glass matching the nav pill — more opaque than the pill for readability */
+    background: rgba(var(--bg-primary-rgb), 0.88);
+    backdrop-filter: blur(18px) saturate(190%) brightness(1.05);
+    -webkit-backdrop-filter: blur(18px) saturate(190%) brightness(1.05);
+    /* Asymmetric glass borders: brighter top simulates light from above */
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-xl);
+    padding: 6px;
+    /* Elevation shadow + inset specular catch-light */
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.15),
+      0 1px 3px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
     list-style: none;
     margin: 0;
     opacity: 0;
@@ -371,8 +594,21 @@ import usFlag from '../assets/flags/us.svg';
     z-index: var(--z-nav-popover);
   }
 
+  :global([data-theme='dark']) .lang-popover {
+    background: rgba(255, 255, 255, 0.13);
+    border-top-color: rgba(255, 255, 255, 0.3);
+    border-left-color: rgba(255, 255, 255, 0.14);
+    border-right-color: rgba(255, 255, 255, 0.14);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+    box-shadow:
+      0 4px 32px rgba(0, 0, 0, 0.6),
+      0 1px 3px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      0 0 0 0.5px rgba(255, 255, 255, 0.08);
+  }
+
   .lang-item {
-    padding: 8px 10px;
+    /* no extra padding: the inner <a> handles its own spacing */
   }
 
   .lang-item > a {
@@ -382,12 +618,13 @@ import usFlag from '../assets/flags/us.svg';
     align-items: center;
     background: transparent;
     border: none;
-    padding: 8px 10px;
-    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    border-radius: var(--radius-lg);
     cursor: pointer;
     color: var(--text-primary);
     font-size: 16px;
     text-decoration: none;
+    transition: background var(--animation-duration) ease;
   }
 
   .lang-item > a img {
@@ -397,13 +634,13 @@ import usFlag from '../assets/flags/us.svg';
   }
 
   .lang-item > a:focus {
-    background: var(--bg-secondary);
+    background: rgba(var(--bg-secondary-rgb), 0.7);
     outline: none;
   }
 
   @media (hover: hover) {
     .lang-item > a:hover {
-      background: var(--bg-secondary);
+      background: rgba(var(--bg-secondary-rgb), 0.7);
     }
   }
 
@@ -445,9 +682,9 @@ import usFlag from '../assets/flags/us.svg';
     position: absolute;
     left: 0;
     right: 0;
-    top: -12px;
-    /* span the gap between button and popover */
-    height: 12px;
+    top: -22px;
+    /* span the full gap between button and popover (20px offset + 2px safety) */
+    height: 22px;
     pointer-events: none;
   }
 
@@ -473,11 +710,15 @@ import usFlag from '../assets/flags/us.svg';
   }
 
   @media (prefers-reduced-motion: reduce) {
+    nav,
     .lang-btn,
     .lang-popover,
     .logo,
-    .nav-links a::after {
+    .nav-links a::after,
+    .mobile-menu-links li {
       transition: none !important;
+      /* Disable the at-top offset: nav sits in place from the start */
+      transform: translateY(0) !important;
     }
   }
 
@@ -489,7 +730,7 @@ import usFlag from '../assets/flags/us.svg';
     color: var(--text-secondary);
     font-size: 22px;
     transition: all var(--animation-duration) ease;
-    border-radius: var(--radius-md);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -533,7 +774,8 @@ import usFlag from '../assets/flags/us.svg';
     align-items: center;
     justify-content: center;
     transition: all var(--animation-duration) ease;
-    border-radius: var(--radius-md);
+    border-radius: 50%;
+    -webkit-tap-highlight-color: transparent;
   }
 
   @media (hover: hover) {
@@ -543,47 +785,49 @@ import usFlag from '../assets/flags/us.svg';
     }
 
     .mobile-menu-btn:hover .hamburger-line {
-      background: var(--accent-primary);
+      fill: var(--accent-primary);
     }
 
     .mobile-menu-btn.active:hover .hamburger-line {
-      background: var(--accent-primary);
+      fill: var(--accent-primary);
     }
+  }
+
+  .mobile-menu-btn:focus {
+    outline: none;
+  }
+
+  .mobile-menu-btn:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
   }
 
   .mobile-menu-btn:active {
     transform: scale(0.95);
+    outline: none;
   }
 
   .mobile-menu-btn.active {
     background: var(--bg-secondary);
-    border-bottom: 2px solid var(--accent-primary);
-    border-radius: 8px 8px 0 0;
   }
 
   /* Hamburger Icon Animation */
   .hamburger-icon {
-    width: 24px;
-    height: 20px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: block;
+    overflow: visible;
   }
 
   .hamburger-line {
-    width: 100%;
-    height: 2px;
-    background: var(--text-secondary);
-    border-radius: var(--radius-xs);
+    fill: currentColor;
+    transform-box: fill-box;
+    transform-origin: center;
     transition: all var(--animation-duration)
       cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transform-origin: center;
   }
 
   /* Animation when menu is active */
   .mobile-menu-btn.active .hamburger-line:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
+    transform: translateY(6px) rotate(45deg);
   }
 
   .mobile-menu-btn.active .hamburger-line:nth-child(2) {
@@ -592,7 +836,7 @@ import usFlag from '../assets/flags/us.svg';
   }
 
   .mobile-menu-btn.active .hamburger-line:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
+    transform: translateY(-6px) rotate(-45deg);
   }
 
   @media (min-width: 768px) {
@@ -601,88 +845,83 @@ import usFlag from '../assets/flags/us.svg';
     }
   }
 
+  /* ── Mobile menu: expands from within the pill ── */
   .mobile-menu {
-    position: fixed;
-    top: var(--nav-height);
-    left: 0;
-    right: 0;
-    background: var(--bg-primary);
-    border-bottom: 1px solid var(--border);
-    padding: 0 20px;
-    transform-origin: top center;
-    transform: scaleY(0);
-    opacity: 0;
-    visibility: hidden;
-    transition: all var(--animation-duration)
-      cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    max-height: calc(100vh - var(--nav-height));
+    display: grid;
+    grid-template-rows: 0fr; /* collapsed */
+    transition: grid-template-rows 0.35s ease;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-menu {
+      display: none;
+    }
+  }
+
+  /* Inner wrapper: overflow:hidden required for the 0fr→1fr grid trick */
+  .mobile-menu-inner {
     overflow: hidden;
-    box-shadow: var(--shadow-md);
   }
 
-  .mobile-menu::before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    right: 20px;
-    width: 40px;
-    height: 1px;
-    background: var(--accent-primary);
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform var(--animation-duration)
-      cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
-  }
-
-  .mobile-menu.active {
-    transform: scaleY(1);
-    opacity: 1;
-    visibility: visible;
-    padding: 20px;
-    overflow-y: auto;
-  }
-
-  .mobile-menu.active::before {
-    transform: scaleX(1);
+  nav.menu-open .mobile-menu {
+    grid-template-rows: 1fr;
   }
 
   .mobile-menu-links {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 4px;
+    padding: 8px 1.5rem 1.25rem;
   }
 
+  /* Items: ocultos y desplazados hacia abajo */
   .mobile-menu-links li {
-    transform: translateY(-20px);
     opacity: 0;
-    transition: all var(--animation-duration)
-      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateY(16px);
+    transition:
+      opacity 0.25s ease,
+      transform 0.38s cubic-bezier(0.34, 1.4, 0.64, 1);
   }
 
-  .mobile-menu.active .mobile-menu-links li {
-    transform: translateY(0);
+  /* Stagger de cierre: de abajo hacia arriba (el último desaparece primero) */
+  .mobile-menu-links li:nth-child(1) {
+    transition-delay: 0.09s;
+  }
+  .mobile-menu-links li:nth-child(2) {
+    transition-delay: 0.06s;
+  }
+  .mobile-menu-links li:nth-child(3) {
+    transition-delay: 0.03s;
+  }
+  .mobile-menu-links li:nth-child(4) {
+    transition-delay: 0s;
+  }
+  .mobile-menu-links li:nth-child(5) {
+    transition-delay: 0s;
+  }
+
+  /* Items visibles cuando el menú está abierto */
+  nav.menu-open .mobile-menu-links li {
     opacity: 1;
+    transform: translateY(0);
   }
 
-  .mobile-menu.active .mobile-menu-links li:nth-child(1) {
-    transition-delay: 0.1s;
+  /* Stagger de apertura: de arriba hacia abajo */
+  nav.menu-open .mobile-menu-links li:nth-child(1) {
+    transition-delay: 0.14s;
   }
-
-  .mobile-menu.active .mobile-menu-links li:nth-child(2) {
-    transition-delay: 0.15s;
-  }
-
-  .mobile-menu.active .mobile-menu-links li:nth-child(3) {
+  nav.menu-open .mobile-menu-links li:nth-child(2) {
     transition-delay: 0.2s;
   }
-
-  .mobile-menu.active .mobile-menu-links li:nth-child(4) {
-    transition-delay: 0.25s;
+  nav.menu-open .mobile-menu-links li:nth-child(3) {
+    transition-delay: 0.26s;
   }
-
-  .mobile-menu.active .mobile-menu-links li:nth-child(5) {
-    transition-delay: 0.3s;
+  nav.menu-open .mobile-menu-links li:nth-child(4) {
+    transition-delay: 0.32s;
+  }
+  nav.menu-open .mobile-menu-links li:nth-child(5) {
+    transition-delay: 0.38s;
   }
 
   .mobile-menu-links a {
