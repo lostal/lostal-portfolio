@@ -9,7 +9,6 @@ const prefersReducedMotion = window.matchMedia(
 ).matches;
 
 let lenisInstance: Lenis | null = null;
-let rafId: number | null = null;
 
 function initLenis(): void {
   if (prefersReducedMotion || isPrimaryInputTouch()) {
@@ -33,23 +32,11 @@ function initLenis(): void {
   function raf(time: number): void {
     if (lenisInstance) {
       lenisInstance.raf(time);
-      rafId = requestAnimationFrame(raf);
+      requestAnimationFrame(raf);
     }
   }
 
-  rafId = requestAnimationFrame(raf);
-}
-
-export function destroyLenis(): void {
-  if (rafId !== null) {
-    cancelAnimationFrame(rafId);
-    rafId = null;
-  }
-  if (lenisInstance) {
-    lenisInstance.destroy();
-    lenisInstance = null;
-    window.lenis = null;
-  }
+  requestAnimationFrame(raf);
 }
 
 onReady(initLenis);

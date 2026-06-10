@@ -1,20 +1,17 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
-/**
- * Esquema de validación para la colección de proyectos
- * Cada proyecto incluye sus propias traducciones (es/en)
- * Las imágenes se procesan automáticamente con astro:assets
- */
 const projectsCollection = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: '**/*.json', base: './src/content/projects' }),
   schema: ({ image }) =>
     z.object({
       id: z.string(),
       order: z.number(),
       image: image(),
       imageAlt: z.string(),
-      liveUrl: z.string().url(),
-      repoUrl: z.string().url(),
+      liveUrl: z.url(),
+      repoUrl: z.url(),
       technologies: z.array(
         z.object({
           name: z.string(),

@@ -4,15 +4,13 @@
  */
 export {};
 
-import type Lenis from 'lenis';
-
 declare global {
   /** Propiedades custom añadidas al objeto Window */
   interface Window {
     setManualNavigation?: (isManual: boolean) => void;
     resetAutoScroll?: () => void;
     orientation?: number | string;
-    lenis: Lenis | null;
+    lenis: LenisInstance | null;
   }
 
   /** Tipo para View Transitions API (experimental) */
@@ -26,4 +24,13 @@ declare global {
   interface Document {
     startViewTransition?(callback: () => void | Promise<void>): ViewTransition;
   }
+}
+
+interface LenisInstance {
+  raf(time: number): void;
+  destroy(): void;
+  scrollTo(
+    target: number | string | HTMLElement,
+    options?: Record<string, unknown>
+  ): void;
 }

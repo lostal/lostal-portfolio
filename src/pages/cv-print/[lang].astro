@@ -5,6 +5,8 @@
  * Orden de secciones igual que la web: Sobre mí → Proyectos → Experiencia/Educación → Tecnologías
  */
 import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
+import alvaroImg from '../../assets/alvaro.png';
 import { experience, education, technologies, profile } from '../../data';
 import {
   useTranslations,
@@ -19,6 +21,14 @@ export function getStaticPaths() {
 type Lang = keyof typeof languages;
 const { lang } = Astro.params as { lang: Lang };
 const t = useTranslations(lang);
+
+const cvPhoto = await getImage({
+  src: alvaroImg,
+  width: 280,
+  height: 280,
+  format: 'jpeg',
+  quality: 85,
+});
 
 const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order
@@ -316,7 +326,7 @@ const accentColor = '#d5bd37';
       <!-- Header con foto y datos -->
       <header role="banner">
         <img
-          src="/assets/alvaro.png"
+          src={cvPhoto.src}
           alt={`${lang === 'es' ? 'Foto profesional de' : 'Professional photo of'} ${profile.name}`}
           class="header-photo"
         />

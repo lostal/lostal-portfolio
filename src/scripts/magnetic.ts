@@ -135,5 +135,3 @@ function initMagneticButtons(): void {
 }
 
 onReady(initMagneticButtons);
-
-export { MagneticButton, initMagneticButtons };
