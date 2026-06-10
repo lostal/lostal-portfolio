@@ -34,3 +34,7 @@ Desktop.ini
 *.temp
 *.swp
 *~
+
+# Generated CV PDFs
+public/AlvaroLostal_CV.pdf
+public/AlvaroLostal_Resume.pdf
