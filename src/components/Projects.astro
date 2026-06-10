@@ -94,18 +94,22 @@ const totalProjects = projects.length;
 
                       <div class="carousel-item__footer">
                         <div class="carousel-item__actions">
-                          <a
-                            class="carousel-item__action"
-                            href={data.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <i
-                              class="fas fa-arrow-up-right-from-square"
-                              aria-hidden="true"
-                            />
-                            <span>{translation.preview}</span>
-                          </a>
+                          {
+                            data.liveUrl && (
+                              <a
+                                class="carousel-item__action"
+                                href={data.liveUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <i
+                                  class="fas fa-arrow-up-right-from-square"
+                                  aria-hidden="true"
+                                />
+                                <span>{translation.preview}</span>
+                              </a>
+                            )
+                          }
                           <a
                             class="carousel-item__action"
                             href={data.repoUrl}

@@ -10,7 +10,7 @@ const projectsCollection = defineCollection({
       order: z.number(),
       image: image(),
       imageAlt: z.string(),
-      liveUrl: z.url(),
+      liveUrl: z.url().optional(),
       repoUrl: z.url(),
       technologies: z.array(
         z.object({

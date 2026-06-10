@@ -1,0 +1,37 @@
+{
+  "id": "seven-suite",
+  "order": 1,
+  "image": "../../assets/projects/seven-suite.png",
+  "imageAlt": "Seven Suite",
+  "repoUrl": "https://github.com/lostal/seven-suite",
+  "technologies": [
+    {
+      "name": "TypeScript",
+      "icon": "/assets/tech-icons/typescript.svg"
+    },
+    {
+      "name": "Next.js",
+      "icon": "/assets/tech-icons/nextjs.svg"
+    },
+    {
+      "name": "PostgreSQL",
+      "icon": "/assets/tech-icons/postgresql.svg"
+    },
+    {
+      "name": "shadcn/ui",
+      "icon": "/assets/tech-icons/shadcnui.svg"
+    }
+  ],
+  "translations": {
+    "es": {
+      "title": "Seven Suite",
+      "description": "Portal del empleado modular con parking, reserva de oficinas, vacaciones y directorio. Desarrollado con Next.js 16, PostgreSQL autoalojado y shadcn/ui.",
+      "preview": "Código"
+    },
+    "en": {
+      "title": "Seven Suite",
+      "description": "Modular employee portal with parking, office booking, vacations and directory. Built with Next.js 16, self-hosted PostgreSQL and shadcn/ui.",
+      "preview": "Code"
+    }
+  }
+}

@@ -24,7 +24,7 @@ export const technologies: TechCategory[] = [
       { name: 'JavaScript', icon: '/assets/tech-icons/javascript.svg' },
       { name: 'TypeScript', icon: '/assets/tech-icons/typescript.svg' },
       { name: 'HTML5', icon: '/assets/tech-icons/html5.svg' },
-      { name: 'CSS3', icon: '/assets/tech-icons/css3.svg' },
+      { name: 'CSS', icon: '/assets/tech-icons/css3.svg' },
       { name: 'Tailwind CSS', icon: '/assets/tech-icons/tailwind.svg' },
     ],
   },
@@ -32,12 +32,10 @@ export const technologies: TechCategory[] = [
     id: 'frameworks',
     iconClass: 'fas fa-cubes',
     items: [
-      { name: 'React.js', icon: '/assets/tech-icons/react.svg' },
       { name: 'Next.js', icon: '/assets/tech-icons/nextjs.svg' },
       { name: 'Astro', icon: '/assets/tech-icons/astro.svg' },
       { name: 'Node.js', icon: '/assets/tech-icons/nodejs.svg' },
-      { name: 'Supabase', icon: '/assets/tech-icons/supabase.svg' },
-      { name: 'MongoDB', icon: '/assets/tech-icons/mongodb.svg' },
+      { name: 'PostgreSQL', icon: '/assets/tech-icons/postgresql.svg' },
     ],
   },
   {

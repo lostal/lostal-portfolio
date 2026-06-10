@@ -1,0 +1,38 @@
+{
+  "id": "tally",
+  "order": 2,
+  "image": "../../assets/projects/tally.png",
+  "imageAlt": "Tally POS",
+  "liveUrl": "https://www.paytally.app/",
+  "repoUrl": "https://github.com/lostal/tally",
+  "technologies": [
+    {
+      "name": "TypeScript",
+      "icon": "/assets/tech-icons/typescript.svg"
+    },
+    {
+      "name": "Next.js",
+      "icon": "/assets/tech-icons/nextjs.svg"
+    },
+    {
+      "name": "Supabase",
+      "icon": "/assets/tech-icons/supabase.svg"
+    },
+    {
+      "name": "Stripe",
+      "icon": "/assets/tech-icons/stripe.svg"
+    }
+  ],
+  "translations": {
+    "es": {
+      "title": "Tally",
+      "description": "POS para hostelería con división de cuentas QR y KDS semáforo. SaaS multi-tenant desarrollado con Next.js 15, Supabase, Stripe y cumplimiento fiscal español.",
+      "preview": "Visitar"
+    },
+    "en": {
+      "title": "Tally",
+      "description": "Hospitality POS with QR bill splitting and traffic-light KDS. Multi-tenant SaaS built with Next.js 15, Supabase, Stripe and Spanish fiscal compliance.",
+      "preview": "Visit"
+    }
+  }
+}

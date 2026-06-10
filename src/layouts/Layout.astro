@@ -20,7 +20,7 @@ const {
 const title = propTitle || 'Álvaro Lostal - Portafolio';
 const description =
   propDescription ||
-  'Portafolio profesional de Álvaro Lostal, desarrollador web e ingeniero informático.';
+  'Portafolio profesional de Álvaro Lostal, Design Engineer.';
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const defaultOgImage = new URL('/assets/og/azulejos.jpg', Astro.site).href;
 const ogImage = propOgImage || defaultOgImage;
@@ -147,8 +147,8 @@ const alternateUrls = getAlternateUrls(currentPath, lang);
     <meta
       property="og:site_name"
       content={lang === 'es'
-        ? 'Álvaro Lostal · Desarrollador Web'
-        : 'Álvaro Lostal · Web Developer'}
+        ? 'Álvaro Lostal · Design Engineer'
+        : 'Álvaro Lostal · Design Engineer'}
     />
 
     <!-- Twitter/X Cards -->

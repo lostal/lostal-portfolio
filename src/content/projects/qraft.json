@@ -1,0 +1,34 @@
+{
+  "id": "qraft",
+  "order": 3,
+  "image": "../../assets/projects/qraft.png",
+  "imageAlt": "Qraft QR Generator",
+  "liveUrl": "https://qraft-9rf.pages.dev/",
+  "repoUrl": "https://github.com/lostal/qraft",
+  "technologies": [
+    {
+      "name": "TypeScript",
+      "icon": "/assets/tech-icons/typescript.svg"
+    },
+    {
+      "name": "HTML5",
+      "icon": "/assets/tech-icons/html5.svg"
+    },
+    {
+      "name": "CSS3",
+      "icon": "/assets/tech-icons/css3.svg"
+    }
+  ],
+  "translations": {
+    "es": {
+      "title": "Qraft",
+      "description": "Generador QR 100% cliente-side. Extrae colores y favicon de cualquier URL. Sin backend, sin cuenta, sin datos guardados.",
+      "preview": "Visitar"
+    },
+    "en": {
+      "title": "Qraft",
+      "description": "QR generator, 100% client-side. Extracts colors and favicon from any URL. No backend, no account, no data stored.",
+      "preview": "Visit"
+    }
+  }
+}

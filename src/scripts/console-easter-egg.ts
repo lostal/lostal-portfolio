@@ -1,4 +1,4 @@
-/** console-easter-egg.ts - ASCII art en consola para desarrolladores curiosos */
+/** console-easter-egg.ts - ASCII art en consola para curiosos */
 
 const ASCII_LOGO = `
    █████╗ ██╗
