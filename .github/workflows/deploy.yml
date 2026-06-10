@@ -57,19 +57,6 @@ jobs:
             echo "✅ $pdf - $(du -h $pdf | cut -f1)"
           done
 
-      - name: Commit generated PDFs to public/
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/AlvaroLostal_CV.pdf public/AlvaroLostal_Resume.pdf
-          if ! git diff --staged --quiet; then
-            git commit -m "chore: update CV PDFs [skip ci]"
-            git push
-            echo "✅ PDFs actualizados en public/"
-          else
-            echo "ℹ️ PDFs sin cambios, no se requiere commit"
-          fi
-
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
