@@ -21,11 +21,10 @@ export const technologies: TechCategory[] = [
     id: 'languages',
     iconClass: 'fas fa-code',
     items: [
-      { name: 'JavaScript', icon: '/assets/tech-icons/javascript.svg' },
       { name: 'TypeScript', icon: '/assets/tech-icons/typescript.svg' },
-      { name: 'HTML5', icon: '/assets/tech-icons/html5.svg' },
+      { name: 'JavaScript', icon: '/assets/tech-icons/javascript.svg' },
       { name: 'CSS', icon: '/assets/tech-icons/css3.svg' },
-      { name: 'Tailwind CSS', icon: '/assets/tech-icons/tailwind.svg' },
+      { name: 'SQL', icon: '/assets/tech-icons/sql.svg' },
     ],
   },
   {
@@ -34,18 +33,18 @@ export const technologies: TechCategory[] = [
     items: [
       { name: 'Next.js', icon: '/assets/tech-icons/nextjs.svg' },
       { name: 'Astro', icon: '/assets/tech-icons/astro.svg' },
-      { name: 'Node.js', icon: '/assets/tech-icons/nodejs.svg' },
-      { name: 'PostgreSQL', icon: '/assets/tech-icons/postgresql.svg' },
+      { name: 'Framer Motion', icon: '/assets/tech-icons/framer.svg' },
+      { name: 'Vitest', icon: '/assets/tech-icons/vitest.svg' },
     ],
   },
   {
     id: 'tools',
     iconClass: 'fas fa-tools',
     items: [
-      { name: 'VS Code', icon: '/assets/tech-icons/vscode.svg' },
       { name: 'Figma', icon: '/assets/tech-icons/figma.svg' },
       { name: 'GitHub', icon: '/assets/tech-icons/github.svg' },
-      { name: 'Photoshop', icon: '/assets/tech-icons/photoshop.svg' },
+      { name: 'Docker', icon: '/assets/tech-icons/docker.svg' },
+      { name: 'VS Code', icon: '/assets/tech-icons/vscode.svg' },
     ],
   },
 ];
