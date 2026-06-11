@@ -9,6 +9,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+const buildTime = Date.now().toString();
 ---
 
 <section id="hero" class="hero bg-dots">
@@ -46,9 +47,7 @@ const t = useTranslations(lang);
     </p>
     <div class="hero-cta">
       <a
-        href={lang === 'es'
-          ? '/AlvaroLostal_CV.pdf'
-          : '/AlvaroLostal_Resume.pdf'}
+        href={`${lang === 'es' ? '/AlvaroLostal_CV.pdf' : '/AlvaroLostal_Resume.pdf'}?v=${buildTime}`}
         download
         class="btn btn-primary"
       >
