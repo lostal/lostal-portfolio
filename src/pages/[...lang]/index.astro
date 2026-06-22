@@ -8,6 +8,7 @@ import Technologies from '../../components/Technologies.astro';
 import Contact from '../../components/Contact.astro';
 import Footer from '../../components/Footer.astro';
 import FloatingContact from '../../components/FloatingContact.astro';
+import { useTranslations } from '../../i18n/utils';
 
 /**
  * Genera rutas estáticas para cada idioma soportado.
@@ -20,22 +21,10 @@ export function getStaticPaths() {
 
 type Lang = 'es' | 'en';
 const lang: Lang = (Astro.params.lang as Lang) || 'es';
+const t = useTranslations(lang);
 
-// Metadatos SEO por idioma
-const seoData = {
-  es: {
-    title: 'Álvaro Lostal · Design Engineer',
-    description:
-      'Design Engineer en Santander. Ingeniería de software, diseño de producto digital y rendimiento web.',
-  },
-  en: {
-    title: 'Álvaro Lostal · Design Engineer',
-    description:
-      'Design Engineer based in Santander. Software engineering, digital product design and web performance.',
-  },
-};
-
-const { title, description } = seoData[lang];
+const title = 'Álvaro Lostal · Design Engineer';
+const description = t('about.text');
 ---
 
 <Layout lang={lang} title={title} description={description}>

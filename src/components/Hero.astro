@@ -32,7 +32,9 @@ const buildTime = Date.now().toString();
         quality={90}
       />
       <div class="profile-indicator" aria-hidden="true">
-        <span class="profile-indicator__text">{t('about.title')}</span>
+        <span class="profile-indicator__text" data-nosnippet
+          >{t('about.title')}</span
+        >
         <i class="fas fa-circle-info profile-indicator__icon" aria-hidden="true"
         ></i>
       </div>
@@ -67,7 +69,9 @@ const buildTime = Date.now().toString();
       <i class="fas fa-times"></i>
     </button>
     <div class="about-card__content">
-      <h3 class="about-card__title">{t('about.title')}</h3>
+      <h3 class="about-card__title">
+        <span data-nosnippet>{t('about.title')}</span>
+      </h3>
       <p class="about-card__text">
         {t('about.text')}
       </p>
