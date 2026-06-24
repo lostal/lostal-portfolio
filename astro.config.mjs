@@ -28,6 +28,9 @@ export default defineConfig({
     },
   },
 
+  // Compresión HTML (mantener comportamiento v6: compresión HTML-aware)
+  compressHTML: true,
+
   // Configuración de build
   build: {
     inlineStylesheets: 'auto',

@@ -10,12 +10,10 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-// Obtener proyectos ordenados por el campo 'order'
 type Project = CollectionEntry<'projects'>;
 const projects = (await getCollection('projects')).sort(
   (a: Project, b: Project) => a.data.order - b.data.order
 );
-const totalProjects = projects.length;
 ---
 
 <section class="projects-section" id="projects">
@@ -29,157 +27,88 @@ const totalProjects = projects.length;
     </div>
   </div>
 
-  <div class="projects-section__content">
-    <div class="projects-carousel">
-      <div class="projects-carousel__slider swiper">
-        <div class="projects-carousel__wrapper swiper-wrapper">
-          {
-            projects.map((project: Project, index: number) => {
-              const { data } = project;
-              const translation = data.translations[lang];
+  <div class="projects-scroll" role="region" aria-label={t('projects.title')}>
+    {
+      projects.map((project: Project) => {
+        const { data } = project;
+        const translation = data.translations[lang];
 
-              return (
-                <div
-                  class="projects-carousel__slide swiper-slide"
-                  role="group"
-                  aria-roledescription="slide"
-                  aria-label={`${index + 1} / ${totalProjects}`}
-                >
-                  <div class="carousel-item">
-                    <Picture
-                      src={data.image}
-                      alt={data.imageAlt}
-                      widths={[280, 350, 480, 640, 960]}
-                      sizes="(max-width: 480px) 70vw, (max-width: 768px) 45vw, (max-width: 1280px) 38vw, 480px"
-                      formats={['avif', 'webp']}
-                      quality={85}
-                      loading="lazy"
-                      decoding="async"
-                      class="carousel-item__image"
-                    />
-
-                    <div class="carousel-item__content">
-                      <div class="carousel-item__header">
-                        <div class="carousel-item__header-inner">
-                          <div class="carousel-item__price">
-                            <div class="carousel-item__tech">
-                              {data.technologies.map(
-                                (tech: { name: string; icon: string }) => (
-                                  <span class="tag">
-                                    <img
-                                      src={tech.icon}
-                                      alt={tech.name}
-                                      class="tech-mini-icon"
-                                      width="14"
-                                      height="14"
-                                      loading="lazy"
-                                    />
-                                    {tech.name}
-                                  </span>
-                                )
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="carousel-item__info">
-                        <h2 class="carousel-item__title">
-                          {translation.title}
-                        </h2>
-                        <div class="carousel-item__text">
-                          {translation.description}
-                        </div>
-                      </div>
-
-                      <div class="carousel-item__footer">
-                        <div class="carousel-item__actions">
-                          {data.liveUrl && (
-                            <a
-                              class="carousel-item__action"
-                              href={data.liveUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <i
-                                class="fas fa-arrow-up-right-from-square"
-                                aria-hidden="true"
-                              />
-                              <span>{translation.preview}</span>
-                            </a>
-                          )}
-                          <a
-                            class="carousel-item__action"
-                            href={data.repoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <i class="fab fa-github" aria-hidden="true" />
-                            <span>{t('projects.more')}</span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })
-          }
-        </div>
-      </div>
-
-      <!-- Líneas táctiles de navegación (generadas dinámicamente) -->
-      <nav class="carousel-lines" aria-label={t('projects.carousel.nav')}>
-        {
-          projects.map((_: Project, index: number) => (
-            <button
-              class:list={['carousel-line', { 'is-active': index === 0 }]}
-              data-slide={index}
-              aria-label={`${t('projects.carousel.goto')} ${index + 1}`}
-              aria-current={index === 0 ? 'true' : undefined}
-              type="button"
+        return (
+          <article class="carousel-item" aria-label={translation.title}>
+            <Picture
+              src={data.image}
+              alt={data.imageAlt}
+              widths={[400, 640, 800, 960]}
+              sizes="(max-width: 480px) 92vw, (max-width: 768px) 85vw, (max-width: 1024px) 70vw, 800px"
+              formats={['avif', 'webp']}
+              quality={85}
+              loading="lazy"
+              decoding="async"
+              class="carousel-item__image"
             />
-          ))
-        }
-      </nav>
 
-      <!-- Screen reader announcement for slide changes -->
-      <div
-        id="carousel-live-region"
-        class="sr-only"
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        {t('projects.carousel.viewing')} 1 {t('projects.carousel.of')}
-        {totalProjects}
-      </div>
-    </div>
+            <div class="carousel-item__content">
+              <div class="carousel-item__tech">
+                {data.technologies.map(
+                  (tech: { name: string; icon: string }) => (
+                    <span class="tag">
+                      <img
+                        src={tech.icon}
+                        alt={tech.name}
+                        class="tech-mini-icon"
+                        width="14"
+                        height="14"
+                        loading="lazy"
+                      />
+                      {tech.name}
+                    </span>
+                  )
+                )}
+              </div>
+
+              <div class="carousel-item__info">
+                <h2 class="carousel-item__title">{translation.title}</h2>
+                <div class="carousel-item__text">{translation.description}</div>
+              </div>
+
+              <div class="carousel-item__actions">
+                {data.liveUrl && (
+                  <a
+                    class="carousel-item__action"
+                    href={data.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i
+                      class="fas fa-arrow-up-right-from-square"
+                      aria-hidden="true"
+                    />
+                    <span>{translation.preview}</span>
+                  </a>
+                )}
+                <a
+                  class="carousel-item__action"
+                  href={data.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fab fa-github" aria-hidden="true" />
+                  <span>{t('projects.more')}</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        );
+      })
+    }
   </div>
 </section>
-
-<script>
-  import '../scripts/projects-carousel.ts';
-</script>
 
 <style>
   #projects {
     position: relative;
   }
 
-  /* Screen reader only - visually hidden but accessible */
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  /* Animación de flujo - representa output/producción */
   .divider-slider::before {
     content: '>>>';
     animation: flow-output 1.8s step-end infinite;
@@ -200,7 +129,6 @@ const totalProjects = projects.length;
     }
   }
 
-  /* Projects Carousel Styles */
   .projects-section .wrapper {
     max-width: 1560px;
     margin: 0 auto;
@@ -225,18 +153,6 @@ const totalProjects = projects.length;
     }
   }
 
-  .projects-section__content {
-    position: relative;
-    margin: 0;
-    padding: 0;
-  }
-
-  .swiper {
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-
   section.projects-section {
     padding-left: 0;
     padding-right: 0;
@@ -249,198 +165,80 @@ const totalProjects = projects.length;
     }
   }
 
-  .projects-carousel {
-    position: relative;
-    overflow: hidden;
-    /* Altura controlada por JS ahora */
-    min-height: auto;
-    outline: none;
-    /* Mejora precisión del swipe en móvil */
-    touch-action: pan-y pinch-zoom;
-  }
+  /* ── Vertical stack container ── */
 
-  /* Indicador visual cuando el carrusel tiene foco (para navegación por teclado) */
-  .projects-carousel:focus-visible {
-    outline: 2px solid var(--accent-primary);
-    outline-offset: -4px;
-    border-radius: var(--radius-md);
-  }
-
-  .projects-carousel__slider {
-    overflow: visible !important;
-    padding: 20px 0;
-  }
-
-  .projects-carousel__wrapper {
+  .projects-scroll {
     display: flex;
-    align-items: center;
-  }
-
-  .projects-carousel__slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* Altura controlada por JS */
-    height: auto;
-  }
-
-  /* === Líneas táctiles de navegación === */
-  .carousel-lines {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    padding: 20px 24px 8px;
-  }
-
-  .carousel-line {
-    width: 24px;
-    height: 3px;
-    background: var(--border);
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    border-radius: var(--radius-xs);
-    transition:
-      width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-      background-color 0.3s ease,
-      opacity 0.3s ease;
-    opacity: 0.6;
-    position: relative;
-  }
-
-  .carousel-line::before {
-    content: '';
-    position: absolute;
-    inset: -8px -6px;
-  }
-
-  .carousel-line:focus-visible {
-    outline: 2px solid var(--accent-primary);
-    outline-offset: 4px;
-  }
-
-  .carousel-line.is-active {
-    width: 48px;
-    background: var(--accent-primary);
-    opacity: 1;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .carousel-line:not(.is-active):hover {
-      background: var(--text-secondary);
-      opacity: 0.8;
-      width: 32px;
-    }
-  }
-
-  @media (hover: none) {
-    .carousel-line:not(.is-active):active {
-      background: var(--text-secondary);
-      opacity: 0.8;
-    }
+    flex-direction: column;
+    gap: 0;
+    padding: 0 24px;
   }
 
   @media (min-width: 768px) {
-    .carousel-lines {
-      gap: 16px;
-      padding: 24px 48px 12px;
-    }
-
-    .carousel-line {
-      width: 28px;
-    }
-
-    .carousel-line.is-active {
-      width: 56px;
+    .projects-scroll {
+      padding: 0 48px;
     }
   }
 
   @media (min-width: 1024px) {
-    .carousel-lines {
-      padding: 28px 56px 16px;
+    .projects-scroll {
+      padding: 0 56px;
     }
   }
 
-  .swiper-slide {
-    width: auto;
-    height: auto;
-  }
+  /* ── Card ── */
 
   .carousel-item {
-    --border-radius: var(--radius-lg);
-
     width: 100%;
-    max-width: 100%;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    position: sticky;
+    top: 140px;
     background: var(--bg-secondary);
-    border-radius: var(--border-radius);
-    position: relative;
-    overflow: hidden;
-    /* Snappy transitions synced with Swiper */
-    transition:
-      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      border-color 0.3s ease;
-    opacity: 0.5;
-    transform: scale(0.92) perspective(1000px) translateZ(-30px);
-    filter: blur(1px);
+    border-radius: 20px;
     border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 24px;
   }
 
-  .swiper-slide-active .carousel-item {
-    opacity: 1;
-    transform: scale(1) perspective(1000px) translateZ(0);
-    filter: blur(0);
-    border-color: var(--accent-primary);
-    box-shadow: var(--shadow-md);
+  .carousel-item:last-child {
+    margin-bottom: 0;
   }
 
-  @media screen and (min-width: 769px) and (max-width: 1024px) {
+  .carousel-item:nth-child(1) { z-index: 1; }
+  .carousel-item:nth-child(2) { z-index: 2; }
+  .carousel-item:nth-child(3) { z-index: 3; }
+  .carousel-item:nth-child(4) { z-index: 4; }
+  .carousel-item:nth-child(5) { z-index: 5; }
+
+  @media (min-width: 480px) {
+    .carousel-item { max-width: 540px; }
+  }
+
+  @media (min-width: 768px) {
     .carousel-item {
-      transform: scale(0.94) perspective(1000px) translateZ(-20px);
-    }
-
-    .swiper-slide-active .carousel-item {
-      transform: scale(1) perspective(1000px) translateZ(0);
+      top: 180px;
+      max-width: 680px;
+      margin-bottom: 64px;
     }
   }
 
-  @media screen and (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1024px) {
     .carousel-item {
-      transform: scale(0.94) perspective(1000px) translateZ(-20px);
-      filter: blur(1px);
-    }
-
-    .swiper-slide-active .carousel-item {
-      transform: scale(1) perspective(1000px) translateZ(0);
-      filter: blur(0);
+      max-width: 860px;
+      margin-bottom: 96px;
     }
   }
 
-  /* Reduce blur on mobile for performance */
-  @media screen and (max-width: 480px) {
-    .carousel-item {
-      filter: blur(1px);
-    }
-
-    .swiper-slide-active .carousel-item {
-      filter: blur(0);
-    }
+  @media (min-width: 1280px) {
+    .carousel-item { max-width: 900px; }
   }
 
-  /* Respect reduced motion preference */
-  @media (prefers-reduced-motion: reduce) {
-    .carousel-item {
-      filter: none;
-      transition-duration: 0.1s;
-    }
-  }
+  /* ── Image ── */
 
   .carousel-item__image {
     aspect-ratio: 400 / 270;
-    overflow: hidden;
     width: 100%;
     height: auto;
     display: block;
@@ -448,24 +246,19 @@ const totalProjects = projects.length;
     object-position: center;
   }
 
+  /* ── Content ── */
+
   .carousel-item__content {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
     padding: 24px 20px;
   }
 
   @media screen and (min-width: 1440px) {
     .carousel-item__content {
-      gap: 28px;
+      gap: 24px;
       padding: 28px 24px;
-    }
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1439px) {
-    .carousel-item__content {
-      gap: 20px;
-      padding: 20px 18px;
     }
   }
 
@@ -476,35 +269,23 @@ const totalProjects = projects.length;
     }
   }
 
-  .carousel-item__header,
-  .carousel-item__footer {
-    max-height: 50px;
-    overflow: hidden;
-    transition:
-      max-height var(--animation-duration) ease,
-      opacity var(--animation-duration) ease,
-      visibility var(--animation-duration) ease;
-  }
+  /* ── Tech tags ── */
 
-  .carousel-item__header-inner {
+  .carousel-item__tech {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 8px;
+    align-items: center;
   }
 
-  .carousel-item__price {
-    font-weight: 600;
-    font-size: 22px;
-    line-height: calc(24 / 22);
+  .carousel-item__tech .tech-mini-icon,
+  .carousel-item__tech img.tech-mini-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
   }
 
-  @media screen and (max-width: 768px) {
-    .carousel-item__price {
-      font-size: 18px;
-    }
-  }
+  /* ── Title (line-clamp 2) ── */
 
   .carousel-item__title {
     font-weight: var(--font-weight-semibold);
@@ -512,6 +293,12 @@ const totalProjects = projects.length;
     line-height: 1.2;
     margin-bottom: 8px;
     color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   @media screen and (min-width: 1920px) {
@@ -535,11 +322,18 @@ const totalProjects = projects.length;
     }
   }
 
+  /* ── Description (line-clamp 3) ── */
+
   .carousel-item__text {
     font-weight: 300;
     font-size: var(--font-size-base);
     line-height: 1.5;
     color: var(--text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   @media screen and (min-width: 1920px) {
@@ -562,42 +356,7 @@ const totalProjects = projects.length;
     }
   }
 
-  .projects-carousel__slide:not(.swiper-slide-active) .carousel-item__header,
-  .projects-carousel__slide:not(.swiper-slide-active) .carousel-item__footer {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  .swiper-slide-active .carousel-item__header,
-  .swiper-slide-active .carousel-item__footer {
-    overflow: visible;
-    opacity: 1;
-    visibility: visible;
-  }
-
-  /* Minimal styles for badges and action links inside the card
-   We removed the modal markup; keep compact styles for actions/badges */
-
-  .carousel-item__tech {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-  }
-
-  /* Reutilizar la clase global `.tag` definida en components.css para
-   asegurar consistencia con la sección Technologies. No sobreescribimos valores
-   de padding, tamaño o borde aquí. */
-
-  /* Asegurarnos de que los iconos de tech coincidan con Technologies */
-  .carousel-item__tech .tech-mini-icon,
-  .carousel-item__tech img.tech-mini-icon {
-    width: 14px;
-    height: 14px;
-    flex-shrink: 0;
-  }
+  /* ── Action links ── */
 
   .carousel-item__actions {
     display: flex;
@@ -611,7 +370,6 @@ const totalProjects = projects.length;
     gap: 8px;
     padding: 10px 18px;
     background: var(--bg-secondary);
-    /* Modo oscuro: contenido gris siempre */
     color: var(--text-primary);
     font-family: var(--font-mono);
     font-size: 11px;
@@ -634,40 +392,5 @@ const totalProjects = projects.length;
       color: var(--text-on-accent);
       border-color: var(--accent-primary);
     }
-  }
-
-  /* Limitar la descripción para evitar que la card crezca y provoque
-   solapamientos. Mostramos hasta 3 líneas y ocultamos el resto con
-   truncado (compatible con la mayoría de navegadores modernos). */
-  .carousel-item__text {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  /* Cuando el slide está activo permitimos más altura para header/footer,
-   evitando que el contenido visible se desborde y se superponga al texto. */
-  .swiper-slide-active .carousel-item__header,
-  .swiper-slide-active .carousel-item__footer {
-    max-height: 160px;
-  }
-
-  @media screen and (max-width: 768px) {
-    .swiper-slide-active .carousel-item__header,
-    .swiper-slide-active .carousel-item__footer {
-      max-height: 120px;
-    }
-  }
-
-  /* Evitar que títulos largos rompan el layout */
-  .carousel-item__title {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
   }
 </style>

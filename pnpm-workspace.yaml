@@ -2,3 +2,7 @@ allowBuilds:
   esbuild: true
   puppeteer: true
   sharp: true
+minimumReleaseAgeExclude:
+  - eslint-plugin-astro@2.1.0
+  - puppeteer-core@25.2.1
+  - puppeteer@25.2.1

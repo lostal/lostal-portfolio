@@ -2,7 +2,6 @@ import js from '@eslint/js';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import astroPlugin from 'eslint-plugin-astro';
-import astroParser from 'astro-eslint-parser';
 
 /**
  * Configuración ESLint con flat config format (ESLint 9+)
@@ -62,11 +61,10 @@ export default [
     },
   },
 
-  // Archivos Astro
+  // Archivos Astro - parser gestionado por eslint-plugin-astro v2
   {
     files: ['**/*.astro'],
     languageOptions: {
-      parser: astroParser,
       parserOptions: {
         parser: tsParser,
         extraFileExtensions: ['.astro'],
