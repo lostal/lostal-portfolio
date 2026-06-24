@@ -164,18 +164,16 @@ import usFlag from '../assets/flags/us.svg';
 </header>
 
 <style>
-  /* ── Wrapper: full-width fixed ghost layer that centers the pill ── */
+  /* ── Wrapper: centered fixed layer ── */
   .nav-wrapper {
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: calc(860px + 2rem);
     padding: 14px 1rem 0;
     z-index: var(--z-navigation);
-    pointer-events: none; /* clicks pass through the empty space around the pill */
   }
 
   /* SVG filter defs – zero dimensions, only defines the filter */

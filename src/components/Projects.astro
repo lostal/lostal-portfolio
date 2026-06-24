@@ -135,19 +135,19 @@ const projects = (await getCollection('projects')).sort(
     padding: 0 24px;
   }
 
-  @media screen and (min-width: 768px) {
+  @media (min-width: 768px) {
     .projects-section .wrapper {
       padding: 0 48px;
     }
   }
 
-  @media screen and (max-width: 600px) {
+  @media (max-width: 600px) {
     .projects-section .wrapper {
       padding: 0 28px;
     }
   }
 
-  @media screen and (max-width: 480px) {
+  @media (max-width: 480px) {
     .projects-section .wrapper {
       padding: 0 24px;
     }
@@ -168,6 +168,8 @@ const projects = (await getCollection('projects')).sort(
   /* ── Vertical stack container ── */
 
   .projects-scroll {
+    --sticky-base: 100px;
+    --sticky-step: 18px;
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -176,12 +178,16 @@ const projects = (await getCollection('projects')).sort(
 
   @media (min-width: 768px) {
     .projects-scroll {
+      --sticky-base: 120px;
+      --sticky-step: 22px;
       padding: 0 48px;
     }
   }
 
   @media (min-width: 1024px) {
     .projects-scroll {
+      --sticky-base: 140px;
+      --sticky-step: 26px;
       padding: 0 56px;
     }
   }
@@ -194,7 +200,7 @@ const projects = (await getCollection('projects')).sort(
     margin-left: auto;
     margin-right: auto;
     position: sticky;
-    top: 140px;
+    top: calc(var(--sticky-base) + var(--sticky-offset, 0px));
     background: var(--bg-secondary);
     border-radius: 20px;
     border: 1px solid var(--border);
@@ -203,14 +209,17 @@ const projects = (await getCollection('projects')).sort(
   }
 
   .carousel-item:last-child {
-    margin-bottom: 0;
+    margin-bottom: 80px;
   }
 
-  .carousel-item:nth-child(1) { z-index: 1; }
-  .carousel-item:nth-child(2) { z-index: 2; }
-  .carousel-item:nth-child(3) { z-index: 3; }
-  .carousel-item:nth-child(4) { z-index: 4; }
-  .carousel-item:nth-child(5) { z-index: 5; }
+  .carousel-item:nth-child(1) { --sticky-offset: calc(var(--sticky-step) * 0); z-index: 1; }
+  .carousel-item:nth-child(2) { --sticky-offset: calc(var(--sticky-step) * 1); z-index: 2; }
+  .carousel-item:nth-child(3) { --sticky-offset: calc(var(--sticky-step) * 2); z-index: 3; }
+  .carousel-item:nth-child(4) { --sticky-offset: calc(var(--sticky-step) * 3); z-index: 4; }
+  .carousel-item:nth-child(5) { --sticky-offset: calc(var(--sticky-step) * 4); z-index: 5; }
+  .carousel-item:nth-child(6) { --sticky-offset: calc(var(--sticky-step) * 5); z-index: 6; }
+  .carousel-item:nth-child(7) { --sticky-offset: calc(var(--sticky-step) * 6); z-index: 7; }
+  .carousel-item:nth-child(8) { --sticky-offset: calc(var(--sticky-step) * 7); z-index: 8; }
 
   @media (min-width: 480px) {
     .carousel-item { max-width: 540px; }
@@ -218,7 +227,6 @@ const projects = (await getCollection('projects')).sort(
 
   @media (min-width: 768px) {
     .carousel-item {
-      top: 180px;
       max-width: 680px;
       margin-bottom: 64px;
     }
