@@ -40,8 +40,8 @@ const buildTime = Date.now().toString();
       </div>
     </button>
     <div class="hero-subtitle">{t('hero.greeting')}</div>
-    <h1 class="hero-title typing-effect" data-text={t('hero.name')}>
-      {t('hero.name')}
+    <h1 class="hero-title typing-effect">
+      <span class="typing-effect__text">{t('hero.name')}</span>
     </h1>
     <p class="hero-description">
       <span>{t('hero.description')}</span>
@@ -157,43 +157,59 @@ const buildTime = Date.now().toString();
         resizeTimeout = window.setTimeout(evaluateScrollArrowVisibility, 150);
       });
 
-      // Animación de escritura para el título
-      const heroTitle = document.querySelector(
-        '.hero-title.typing-effect'
-      ) as HTMLElement;
-      if (heroTitle) {
-        const text =
-          heroTitle.getAttribute('data-text') || heroTitle.textContent || '';
-        heroTitle.textContent = '';
-        heroTitle.classList.add('typing');
-
-        let i = 0;
-        const typeWriter = () => {
-          if (i < text.length) {
-            heroTitle.textContent += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, 60);
-          } else {
-            // Mantener cursor parpadeando 2s y luego quitar
-            setTimeout(() => {
-              heroTitle.classList.remove('typing');
-            }, 2000);
-          }
-        };
-
-        // Retrasar inicio para que la página se estabilice
-        setTimeout(typeWriter, 500);
-      }
+      // La animación de escritura del título es CSS puro (ver <style>):
+      // el texto completo permanece en el DOM para SEO y lectores de pantalla.
     });
   </script>
 </section>
 <style>
   /* Contenido de src/styles/hero.css movido aquí */
 
-  /* Typing Animation Effect - Específico de Hero */
+  /* Typing Animation Effect - Específico de Hero
+     El texto ya está en el DOM: solo se revela de izquierda a derecha con
+     clipping (sin borrar ni reescribir el texto, así el H1 nunca queda vacío
+     y no hay cambios que anuncien los lectores de pantalla). */
   .typing-effect {
     position: relative;
     display: inline-block;
+  }
+
+  .typing-effect__text {
+    display: inline-block;
+    animation: hero-typing 1s steps(13, end) 0.55s both;
+  }
+
+  @keyframes hero-typing {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  /* Cursor que aparece al terminar de escribirse */
+  .typing-effect::after {
+    content: '';
+    position: absolute;
+    top: 0.1em;
+    right: -0.12em;
+    width: 0.05em;
+    height: 0.85em;
+    background: var(--accent-primary);
+    opacity: 0;
+    animation: hero-caret 1.2s step-end 1.6s 2;
+    pointer-events: none;
+  }
+
+  @keyframes hero-caret {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
   }
 
   /* Patrón de puntos industrial - Estética de cuadrícula técnica */
@@ -343,6 +359,16 @@ const buildTime = Date.now().toString();
     .hero-image-wrapper::before {
       animation: none;
       opacity: 0.6;
+    }
+
+    /* El título se muestra completo desde el primer frame */
+    .typing-effect__text,
+    .typing-effect::after {
+      animation: none;
+    }
+
+    .typing-effect__text {
+      clip-path: none;
     }
   }
 

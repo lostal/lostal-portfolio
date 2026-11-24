@@ -52,15 +52,12 @@ class NavigationManager {
   }
 
   /**
-   * Detecta el nivel real de soporte para backdrop-filter y escribe
-   * data-glass en el <nav> para que el CSS lo use como hook:
+   * Detecta si el navegador soporta backdrop-filter. Si no, escribe
+   * data-glass="none" para que el CSS use un fondo sólido legible.
    *
-   *   (sin atributo)       – blur estándar + opacidad segura (Safari / Firefox / todos)
-   *   data-glass="enhanced" – SVG displacement map (Chromium únicamente)
-   *   data-glass="none"    – fondo sólido, sin blur (navegadores muy antiguos)
-   *
-   * Se usa navigator.userAgentData para identificar Chromium sin user-agent
-   * sniffing frágil; dicho API solo existe en navegadores Blink.
+   * El antiguo modo "enhanced" (url(#filtro-svg) en backdrop-filter) se
+   * retiró: Chrome lo declaraba válido pero computaba `none`, dejando el
+   * nav con un 24% de fondo y sin desenfoque.
    */
   private initGlass(): void {
     if (!this.navbar) return;
@@ -72,21 +69,7 @@ class NavigationManager {
     if (!supportsBackdropFilter) {
       // Navegador muy antiguo → fondo sólido para que sea legible
       this.navbar.dataset.glass = 'none';
-      return;
     }
-
-    // SVG url() en backdrop-filter es una extensión no estándar de Chromium.
-    // navigator.userAgentData solo existe en navegadores basados en Blink/Chromium;
-    // Safari e Firefox devuelven undefined → no se aplica el efecto mejorado.
-    const isChromium =
-      typeof (navigator as unknown as { userAgentData?: unknown })
-        .userAgentData !== 'undefined';
-    const cssSupportsUrl = CSS.supports('backdrop-filter', 'url(#x)');
-
-    if (isChromium && cssSupportsUrl) {
-      this.navbar.dataset.glass = 'enhanced';
-    }
-    // En cualquier otro caso no se toca data-glass → estilo base (blur seguro)
   }
 
   private initNavbarScroll(): void {
@@ -230,6 +213,14 @@ class NavigationManager {
       });
     });
 
+    // Escape cierra el menú y devuelve el foco al botón
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && this.navbar?.classList.contains('menu-open')) {
+        this.closeMobileMenu();
+        this.mobileMenuBtn?.focus();
+      }
+    });
+
     // Cerrar menú al hacer clic fuera de la pill
     document.addEventListener('click', e => {
       if (!this.navbar?.classList.contains('menu-open')) return;
@@ -247,6 +238,7 @@ class NavigationManager {
     this.navbar?.classList.add('menu-open');
     this.mobileMenu?.classList.add('active');
     this.mobileMenuBtn?.classList.add('active');
+    this.mobileMenuBtn?.setAttribute('aria-expanded', 'true');
     this.mobileMenu?.removeAttribute('inert');
   }
 
@@ -254,6 +246,7 @@ class NavigationManager {
     this.navbar?.classList.remove('menu-open');
     if (this.mobileMenu) this.mobileMenu.classList.remove('active');
     if (this.mobileMenuBtn) this.mobileMenuBtn.classList.remove('active');
+    this.mobileMenuBtn?.setAttribute('aria-expanded', 'false');
     this.mobileMenu?.setAttribute('inert', '');
   }
 

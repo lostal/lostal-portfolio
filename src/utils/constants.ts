@@ -16,6 +16,4 @@ export const FLOATING_CONTACT = {
   WIDGET_HEIGHT: 72,
   /** Distancia entre el fondo del widget y el borde de la ventana cuando está visible */
   WIDGET_BOTTOM_OFFSET: 37,
-  /** Offset para mostrar widget después de proyectos */
-  PROJECTS_TRIGGER_OFFSET: 200,
 } as const;

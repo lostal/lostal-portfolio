@@ -13,7 +13,11 @@ class FloatingContactWidget {
   originalParent: HTMLElement | null = null;
   state: WidgetState = 'hidden';
   isAnimating = false;
-  cachedPositions = { projectsTop: 0, dockPointTop: 0, lastUpdate: 0 };
+  cachedPositions = {
+    projectsBottom: 0,
+    dockPointTop: 0,
+    lastUpdate: 0,
+  };
   ticking = false;
 
   constructor() {
@@ -72,7 +76,9 @@ class FloatingContactWidget {
     const scrollY = window.scrollY;
 
     this.cachedPositions = {
-      projectsTop: projectsRect.top + scrollY,
+      // Se usa el final de la sección, no el inicio: mientras haya una
+      // tarjeta de proyecto en pantalla el widget taparía su texto.
+      projectsBottom: projectsRect.bottom + scrollY,
       dockPointTop: dockRect.top + scrollY,
       lastUpdate: Date.now(),
     };
@@ -91,13 +97,12 @@ class FloatingContactWidget {
     const scrollY = window.scrollY;
     const windowHeight = window.innerHeight;
 
-    const { projectsTop, dockPointTop } = this.cachedPositions;
+    const { projectsBottom, dockPointTop } = this.cachedPositions;
 
     // LÓGICA DE ESTADOS:
-    // 1. HIDDEN: Aún no hemos pasado proyectos
-    const afterProjects =
-      scrollY + windowHeight >
-      projectsTop + FLOATING_CONTACT.PROJECTS_TRIGGER_OFFSET;
+    // 1. HIDDEN: la sección de proyectos todavía no ha pasado por completo.
+    //    Así el widget nunca se superpone a las tarjetas ni a su texto.
+    const afterProjects = scrollY + windowHeight > projectsBottom;
 
     // 2. Calcular posición visual del widget flotante
     const { WIDGET_HEIGHT, WIDGET_BOTTOM_OFFSET } = FLOATING_CONTACT;

@@ -14,35 +14,6 @@ import usFlag from '../assets/flags/us.svg';
 ---
 
 <header class="nav-wrapper">
-  <!-- Hidden SVG definitions for the liquid glass backdrop filter (Chromium-only) -->
-  <svg class="nav-glass-svg" aria-hidden="true" focusable="false">
-    <defs>
-      <filter
-        id="nav-lg-dist"
-        x="-5%"
-        y="-5%"
-        width="110%"
-        height="110%"
-        color-interpolation-filters="sRGB"
-      >
-        <feTurbulence
-          type="fractalNoise"
-          baseFrequency="0.0052 0.004"
-          numOctaves="2"
-          seed="71"
-          result="noise"></feTurbulence>
-        <feGaussianBlur in="noise" stdDeviation="3.5" result="blurred"
-        ></feGaussianBlur>
-        <feDisplacementMap
-          in="SourceGraphic"
-          in2="blurred"
-          scale="35"
-          xChannelSelector="R"
-          yChannelSelector="G"></feDisplacementMap>
-      </filter>
-    </defs>
-  </svg>
-
   <nav id="navbar">
     <div class="nav-content">
       <a href="#top" class="logo" aria-label={t('nav.home')}>AL</a>
@@ -105,6 +76,8 @@ import usFlag from '../assets/flags/us.svg';
           class="mobile-menu-btn"
           id="mobileMenuBtn"
           aria-label={t('nav.menu')}
+          aria-expanded="false"
+          aria-controls="mobileMenu"
         >
           <svg
             class="hamburger-icon"
@@ -176,14 +149,7 @@ import usFlag from '../assets/flags/us.svg';
     z-index: var(--z-navigation);
   }
 
-  /* SVG filter defs – zero dimensions, only defines the filter */
-  .nav-glass-svg {
-    position: absolute;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-    pointer-events: none;
-  }
+  /* SVG filter definitions removed with the liquid-glass effect. */
 
   /* ── Pill nav ── */
   nav {
@@ -228,12 +194,14 @@ import usFlag from '../assets/flags/us.svg';
 
   /* ── Glass pill: materializes when scrolled or mobile menu opens ──
      Both scrolled and menu-open need the glass background so the pill
-     is always visible when content is shown inside it. */
+     is always visible when content is shown inside it.
+     El fondo necesita opacidad suficiente: el blur solo no separa el
+     contenido que pasa por debajo (texto de las tarjetas, etc.). */
   nav.scrolled,
   nav.menu-open {
-    background: rgba(var(--bg-primary-rgb), 0.38);
-    backdrop-filter: blur(18px) saturate(190%) brightness(1.05);
-    -webkit-backdrop-filter: blur(18px) saturate(190%) brightness(1.05);
+    background: rgba(var(--bg-primary-rgb), 0.68);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     border-top-color: rgba(255, 255, 255, 0.22);
     border-left-color: rgba(255, 255, 255, 0.1);
     border-right-color: rgba(255, 255, 255, 0.1);
@@ -243,6 +211,11 @@ import usFlag from '../assets/flags/us.svg';
       0 1px 3px rgba(0, 0, 0, 0.08),
       inset 0 1px 0 rgba(255, 255, 255, 0.25);
     transform: translateY(0);
+  }
+
+  /* Menú móvil abierto: el panel contiene enlaces, así que va casi opaco */
+  nav.menu-open {
+    background: rgba(var(--bg-primary-rgb), 0.88);
   }
 
   /* ── Fallback: navegadores sin backdrop-filter ──
@@ -262,18 +235,10 @@ import usFlag from '../assets/flags/us.svg';
     transform: translateY(0);
   }
 
-  /* ── Chromium only: SVG displacement liquid glass ──
-     data-glass="enhanced" is written by JS only on Blink browsers.
-     Only applied when scrolled/menu-open — at-top the nav is transparent. */
-  nav[data-glass='enhanced'].scrolled,
-  nav[data-glass='enhanced'].menu-open {
-    backdrop-filter: url(#nav-lg-dist) blur(12px) saturate(210%)
-      brightness(1.07);
-    -webkit-backdrop-filter: url(#nav-lg-dist) blur(12px) saturate(210%)
-      brightness(1.07);
-    background: rgba(var(--bg-primary-rgb), 0.24);
-    border-top-color: rgba(255, 255, 255, 0.28);
-  }
+  /* ── Chromium: se mantiene el mismo blur estándar ──
+     El fondo con desplazamiento SVG (data-glass="enhanced") se retiró:
+     Chrome computaba backdrop-filter: none y el texto de debajo se
+     mezclaba con los enlaces. Un blur real basta y cuesta menos. */
 
   /* Dark mode glass: only when scrolled or menu-open (transparent at top) */
   :global([data-theme='dark']) nav.scrolled,
@@ -297,14 +262,9 @@ import usFlag from '../assets/flags/us.svg';
     -webkit-backdrop-filter: none;
   }
 
-  :global([data-theme='dark']) nav[data-glass='enhanced'].scrolled,
-  :global([data-theme='dark']) nav[data-glass='enhanced'].menu-open {
-    background: rgba(255, 255, 255, 0.05);
-    border-top-color: rgba(255, 255, 255, 0.32);
-    backdrop-filter: url(#nav-lg-dist) blur(12px) saturate(210%)
-      brightness(1.14);
-    -webkit-backdrop-filter: url(#nav-lg-dist) blur(12px) saturate(210%)
-      brightness(1.14);
+  /* El menú móvil deja de ser translúcido: es un panel con enlaces */
+  :global([data-theme='dark']) nav.menu-open {
+    background: rgba(0, 0, 0, 0.9);
   }
 
   /* Scrolled gets a deeper shadow than the menu-open state */
